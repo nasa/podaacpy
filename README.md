@@ -10,13 +10,13 @@ The EOSDIS provides science  data to a wide community of users for NASA's Scienc
 ## What does podaac-python offer?
 The library provides a Python toolkit for interacting with all of PO.DAACs API's, namely
  * [PO.DAAC Web Services](https://podaac.jpl.nasa.gov/ws/): services include 
- [Dataset Metadata](http://podaac.jpl.nasa.gov/ws/search/dataset/index.html)
- [Granule Metadata](http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html)
- [Search Dataset](http://podaac.jpl.nasa.gov/ws/search/dataset/index.html)
- [Search Granule](http://podaac.jpl.nasa.gov/ws/search/granule/index.html)
- [Image Granule](http://podaac.jpl.nasa.gov/ws/image/granule/index.html)
- [Extract Granule](http://podaac.jpl.nasa.gov/ws/extract/granule/index.html)
- * [Metadata Compliance Checker](http://podaac-uat.jpl.nasa.gov/mcc): an online tool and web 
+   * [Dataset Metadata](http://podaac.jpl.nasa.gov/ws/search/dataset/index.html)
+   * [Granule Metadata](http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html)
+   * [Search Dataset](http://podaac.jpl.nasa.gov/ws/search/dataset/index.html)
+   * [Search Granule](http://podaac.jpl.nasa.gov/ws/search/granule/index.html)
+   * [Image Granule](http://podaac.jpl.nasa.gov/ws/image/granule/index.html)
+   * [Extract Granule](http://podaac.jpl.nasa.gov/ws/extract/granule/index.html)
+   * [Metadata Compliance Checker](http://podaac-uat.jpl.nasa.gov/mcc): an online tool and web 
  service designed to check and validate the contents of netCDF and HDF granules for the 
  Climate and Forecast (CF) and Attribute Convention for Dataset Discovery (ACDD) metadata conventions.
 
@@ -30,6 +30,13 @@ or from source
 git clone ... && cd podaac-python
 python setup.py install
 ```
+
+## Documentation
+You can build the documentation as follows
+```
+cd docs && make html
+```
+Documentation is then available in docs/build/html/
 
 ## Community, Support and Development
 Please open a ticket in the issue tracker. 
