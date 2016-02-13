@@ -24,7 +24,7 @@ The library provides a Python toolkit for interacting with all of PO.DAACs API's
 ## Installation
 From the cheeseshop
 ```
-pip install
+pip install podaac-python
 ```
 or from source
 ```
