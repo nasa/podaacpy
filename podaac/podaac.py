@@ -35,7 +35,6 @@ def load_dataset_md(datasetId, shortName, format=iso):
 	are 'iso' and 'gcmd'.
 
 	'''
-	http://podaac.jpl.nasa.gov/ws/metadata/dataset?format=gcmd&shortName=OSDPD-L2P-MSG02
 
 	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset'
 
