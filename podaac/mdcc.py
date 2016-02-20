@@ -15,7 +15,7 @@
 
 import requests 
 
-def check_remote_file(checkers, url_upload, response=json):
+def check_remote_file(checkers, url_upload, response='json'):
     '''GET a remote file e.g. from en OPeNDAP URL and compliance
 	check it against the endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check
 
@@ -38,14 +38,14 @@ def check_remote_file(checkers, url_upload, response=json):
     or if the requested dataset is a multi-file dataset.
 	'''
 
-	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
-	url += '?checkers={}&url-upload={}&response={}'
+    url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
+    url += '?checkers={}&url-upload={}&response={}'
     url = url.format(checkers, url_upload, response)
 
     r = requests.get(url)
     return r
 
-def check_local_file(acdd_version, gds2_parameters, file_upload, response=json):
+def check_local_file(acdd_version, gds2_parameters, file_upload, response='json'):
 	'''POST a local file to the metadata compliance checker endpoint
 	at http://podaac-uat.jpl.nasa.gov/mcc/check
 
@@ -73,6 +73,6 @@ def check_local_file(acdd_version, gds2_parameters, file_upload, response=json):
 	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
 	url += '?ACDD=on&ACDD-version={}&CF=on&GDS2=on&GDS2-parameters={}&file-upload={}&response{}'
 	url = url.format(acdd_version, gds2_parameters, file_upload, response)
-	files={file_upload: open(file_upload, 'rb')})
+	files={file_upload: open(file_upload, 'rb')}
 	r = requests.post(url, files=files)
 	return r

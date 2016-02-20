@@ -15,7 +15,7 @@
 
 import requests
 
-def load_dataset_md(datasetId, shortName, format=iso):
+def load_dataset_md(datasetId, shortName, format='iso'):
 	'''Dataset metadata service retrieves the metadata of a 
 	dataset on PO.DAACs dataset catalog using the following 
 	parameters: datasetId, shortName, and format.
@@ -38,7 +38,7 @@ def load_dataset_md(datasetId, shortName, format=iso):
 
 	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset'
 
-def load_granule_md(datasetId, shortName, granuleName, format=iso):
+def load_granule_md(datasetId, shortName, granuleName, format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule 
 	on PO.DAACs catalog in ISO-19115.
 	
@@ -90,7 +90,7 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format, itemsP
 
 	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule'
 
-def search_dataset(keyword, startTime, endTime, startIndex, itemsPerPage=7, datasetId, shortName, instrument, satellite, fileFormat, status, processLevel, pretty=true, format=atom, sortBy, bbox, full=false):
+def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName, instrument, satellite, fileFormat, status, processLevel, sortBy, bbox, itemsPerPage=7, pretty=True, format='atom', full=False):
 	'''Dataset Search service searches PO.DAAC's dataset catalog, over 
 	Level 2, Level 3, and Level 4 datasets, using the following parameters: 
 	datasetId, shortName, startTime, endTime, bbox, and others.
@@ -176,7 +176,7 @@ def search_dataset(keyword, startTime, endTime, startIndex, itemsPerPage=7, data
 
 	url = 'http://podaac.jpl.nasa.gov/ws/search/dataset'
 
-def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, itemsPerPage=7, sortBy, format=atom, pretty=true):
+def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
 	'''Search Granule does granule searching on PO.DAAC level 2 swath 
 	datasets (individual orbits of a satellite), and level 3 & 4 
 	gridded datasets (time averaged to span the globe). Coverage 
@@ -245,7 +245,7 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, i
 
 	url = 'http://podaac.jpl.nasa.gov/ws/search/granule'
 
-def load_image_granule(datasetId, shortName, granuleName, request, service=WMS, version=1.3.0, format=image/png, bbox, height, width, layers=None, style, srs):
+def load_image_granule(datasetId, shortName, granuleName, request, bbox, height, width, style, srs, service='WMS', version='1.3.0', format='image/png', layers=None):
 	'''The PODAAC Image service renders granules in the 
 	PO.DAACs catalog to images such as jpeg and/or png. 
 	This image service also utilizes OGC WMS protocol. 

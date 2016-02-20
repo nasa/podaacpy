@@ -1,4 +1,4 @@
-# podaac-python
+# podaacpy
 <img src="http://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png" align="right" width="300" />
 A python utility library for interacting with NASA JPL's [PO.DAAC](http://podaac.jpl.nasa.gov)
 
@@ -7,7 +7,7 @@ The Physical Oceanography Distributed Active Archive Center (PO.DAAC) is an elem
 Earth Observing System Data and Information System ([EOSDIS](https://earthdata.nasa.gov/)). 
 The EOSDIS provides science  data to a wide community of users for NASA's Science Mission Directorate.
 
-## What does podaac-python offer?
+## What does podaacpy offer?
 The library provides a Python toolkit for interacting with all of PO.DAACs API's, namely
  * [PO.DAAC Web Services](https://podaac.jpl.nasa.gov/ws/): services include 
    * [Dataset Metadata](http://podaac.jpl.nasa.gov/ws/search/dataset/index.html) - retrieves the metadata of a dataset
@@ -24,11 +24,11 @@ The library provides a Python toolkit for interacting with all of PO.DAACs API's
 ## Installation
 From the cheeseshop
 ```
-pip install podaac-python
+pip install podaacpy
 ```
 or from source
 ```
-git clone https://github.com/lewismc/podaac-python.git && cd podaac-python
+git clone https://github.com/lewismc/podaacpy.git && cd podaacpy
 python setup.py install
 ```
 
@@ -45,5 +45,5 @@ Please use [labels](https://help.github.com/articles/applying-labels-to-issues-a
 classify your issue. 
 
 ## License
-podaac-python is licensed permissively under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
+podaacpy is licensed permissively under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
 A copy of that license is distributed with this software.

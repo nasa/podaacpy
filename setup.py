@@ -35,7 +35,7 @@ _classifiers  = [
     'Topic :: Internet :: WWW/HTTP',
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
-_description  = 'PO.DAAC Python'
+_description  = 'PO.DAAC Python API'
 _downloadURL  = 'http://pypi.python.org/pypi/podaacpy/'
 _requirements = []
 _keywords     = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
@@ -44,7 +44,7 @@ _long_description    = 'A python utility library for interacting with NASA JPLs 
 _name         = 'podaacpy'
 _namespaces   = []
 _testSuite    = 'podaac.tests'
-_url          = 'https://github.com/lewismc/podaac-python'
+_url          = 'https://github.com/lewismc/podaacpy'
 _version      = '1.0.0'
 _zipSafe      = True
 
