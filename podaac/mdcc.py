@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import requests 
+
 def check_remote_file(checkers, url_upload, response=json):
     '''GET a remote file e.g. from en OPeNDAP URL and compliance
 	check it against the endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check
@@ -36,28 +38,23 @@ def check_remote_file(checkers, url_upload, response=json):
     or if the requested dataset is a multi-file dataset.
 	'''
 
-def check_local_file(acdd, acdd_version, cd, gds2, gds2_parameter, file_upload, response=json):
-    '''POST a local file to the metadata compliance checker endpoint
+	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
+	url += '?checkers={}&url-upload={}&response={}'
+    url = url.format(checkers, url_upload, response)
+
+    r = requests.get(url)
+    return r
+
+def check_local_file(acdd_version, gds2_parameters, file_upload, response=json):
+	'''POST a local file to the metadata compliance checker endpoint
 	at http://podaac-uat.jpl.nasa.gov/mcc/check
 
-	:param acdd: Must be present and and set to either 1.1 or 1.3.
-	'acdd_version' tag must also be present and must be set to 'on'.
-	:type acdd: :mod:`string`
-
-	:param acdd_version: Must be present and must be set to 'on'. 'acdd'
-	tag must also be present and set to either 1.1 or 1.3.
+	:param acdd_version: Must be present and and set to either 1.1 or 1.3.
+	'acdd' tag must also be present and must be set to 'on'.
 	:type acdd_version: :mod:`string`
 
-	:param cd: Must be set to 'on'.
-	:type cd: :mod:`string`
-
-	:param gds2: Must be present and set to either 'L2P', 'L3', 'L4'.
-	'gds2_parameter' tag must also be present and must be set to 'on'.
-	:type gds2: :mod:`string`
-
-	:param gds2: Must be present and must be set to 'on'.
-	'GDS2' tag must also be present and set to either 'L2P', 'L3', 'L4'.
-	:type gds2_parameter: :mod:`string`
+	:param gds2_parameters: Must be present and set to either 'L2P', 'L3', 'L4'.
+	:type gds2_parameters: :mod:`string`
 
 	:param file_upload: A valid location of a netCDF file; maximum 5.00 GB.
 	:type file_upload: :mod:`string`
@@ -72,3 +69,10 @@ def check_local_file(acdd, acdd_version, cd, gds2, gds2_parameter, file_upload, 
     or if the requested dataset is a multi-file dataset.
 
 	'''
+
+	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
+	url += '?ACDD=on&ACDD-version={}&CF=on&GDS2=on&GDS2-parameters={}&file-upload={}&response{}'
+	url = url.format(acdd_version, gds2_parameters, file_upload, response)
+	files={file_upload: open(file_upload, 'rb')})
+	r = requests.post(url, files=files)
+	return r
