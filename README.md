@@ -33,14 +33,18 @@ python setup.py install
 ```
 
 ## Documentation
-You can build the documentation as follows
+You can view the documentation online at 
+
+http://podaacpy.readthedocs.org/en/latest/
+
+Alternatively, you can build the documentation manually as follows
 ```
 cd docs && make html
 ```
 Documentation is then available in docs/build/html/
 
 ## Community, Support and Development
-Please open a ticket in the issue tracker. 
+Please open a ticket in the [issue tracker](https://github.com/lewismc/podaacpy/issues). 
 Please use [labels](https://help.github.com/articles/applying-labels-to-issues-and-pull-requests/) to
 classify your issue. 
 

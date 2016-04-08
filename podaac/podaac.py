@@ -335,7 +335,7 @@ def load_image_granule(datasetId, shortName, granuleName, request, bbox, height,
 
 	url='http://podaac.jpl.nasa.gov/ws/image/granule'
 
-def extract_granule():
+def extract_granule(datasetId, shortName, granuleName, bbox, format):
 	'''Extract service subsets a granule in PO.DAAC catalog 
 	and produces either netcdf3 or hdf4 files. If the granule 
 	does not have any data in the given selected bounding box, 
@@ -379,18 +379,34 @@ def extract_granule():
 
 	url = 'http://podaac.jpl.nasa.gov/ws/extract/granule'
 
-def list_available_datasetIds():
+def list_available_granule_search_datasetIds():
 	datasetIds = ['']
 	return datasetIds
 
-def list_available_datasetShortNames():
+def list_available_granule_search_datasetShortNames():
 	datasetShortNames = ['']
 	return datasetShortNames
 
-def list_available_Level2_datasetIds():
+def list_available_granule_search_level2_datasetIds():
 	datasetIds = ['']
 	return datasetIds
 
-def list_available_level2_datasetShortNames():
+def list_available_granule_search_level2_datasetShortNames():
+	datasetShortNames = ['']
+	return datasetShortNames
+
+def list_available_image_granule_datasetIds():
+	datasetIds = ['']
+	return datasetIds
+
+def list_available_image_granule_datasetShortNames():
+	datasetShortNames = ['']
+	return datasetShortNames
+
+def list_available_extract_granule_datasetIds():
+	datasetIds = ['']
+	return datasetIds
+
+def list_available_extract_granule_datasetShortNames():
 	datasetShortNames = ['']
 	return datasetShortNames
