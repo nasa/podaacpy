@@ -109,9 +109,8 @@ def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName
 		offset can be used. Example: 2012-01-22T01:21:21Z
 	:type endTime: :mod:`time`
 
-	:param startIndex: start index of entries found for search. \
-	 	Example: 1
-	 :type startIndex: :mod:`int`
+	:param startIndex: start index of entries found for search. Example: 1
+	:type startIndex: :mod:`int`
 
 	:param itemsPerPage: number of results per page for \
 		opensearch result. If format is not specified, format is set \
@@ -124,7 +123,7 @@ def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName
 
 	:param shortName: dataset shortname. \
 	 	Example: MODIS_AQUA_L3_SST_THERMAL_8DAY_9KM_NIGHTTIME
-	 :type shortName: :mod:`string`
+	:type shortName: :mod:`string`
 
 	:param instrument: dataset instrument. Example: MODIS
 	:type instrument: :mod:`string`
@@ -138,11 +137,11 @@ def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName
 
 	:param status: dataset status. \
 	 	Possible values: OPEN, PREVIEW, SIMULATED, RETIRED
-	 :type status: :mod:`string`
+	:type status: :mod:`string`
 
 	:param processLevel: dataset processing level. \
 	 	Possible values: 1B, 2, 2P, 3, 4
-	 :type processLevel: :mod:`string`
+	:type processLevel: :mod:`string`
 
 	:param pretty: "true" to enable pretty output for xml. \
 		If pretty is not specified, pretty is set to true.
@@ -189,18 +188,22 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 		shortName, startTime, endTime, bbox, and others. 
 	
 	:param datasetId: dataset persistent ID. datasetId or shortName \
-		is required for a granule search. Example: PODAAC-ASOP2-25X01 :mod:`string`
+		is required for a granule search. Example: PODAAC-ASOP2-25X01
+	:type datasetId: :mod:`string`
 
 	:param shortName: dataset shortname. datasetId or shortName is \
-		required for a granule search. Example: ASCATA-L2-25km :mod:`string`
+		required for a granule search. Example: ASCATA-L2-25km
+	:type shortName: :mod:`string`
 
 	:param startTime: start time in the format of YYYY-MM-DDTHH:mm:ssZ. \
 		'Z' is the time-offset, where 'Z' signifies UTC or an actual offset \
-		can be used. Example: 2013-01-01T01:30:00Z :mod:`time`
+		can be used. Example: 2013-01-01T01:30:00Z
+	:type startTime: :mod:`time`
 
 	:param endTime: stop time in the format of YYYY-MM-DDTHH:mm:ssZ. \
 		'Z' is the time-offset, where 'Z' signifies UTC or an actual \
-		offset can be used. Example: 2014-01-01T00:00:00Z :mod:`time`
+		offset can be used. Example: 2014-01-01T00:00:00Z
+	:type endTime: :mod:`time`
 
 	:param bbox: bounding box for spatial search. format should look \
 		like "bbox=0,0,180,90" which is in order of west, south, east, \
@@ -209,24 +212,30 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 		2 datasets, spatial search is available for a subset. Call the \
 		list_available_Level2_datasetIds and \
 		list_available_level2_datasetShortNames functions to see the \
-		subset. BBox example: 0,0,180,90 :mod:`string`
+		subset. BBox example: 0,0,180,90
+	:type bbox: :mod:`string`
 
 	:param startIndex: start index of entries found for search. \
-		Example: 1 :mod:`int`
+		Example: 1
+	:type startIndex: :mod:`int`
 
 	:param itemsPerPage: number of results per page for opensearch \
 		result. If format is not specified, format is set to 7. The \
-		value range is from 0 to 400 :mod:`int`
+		value range is from 0 to 400
+	:type itemsPerPage: :mod:`int`
 
 	:param sortBy: determines ordering of response. Possible \
-		values: timeAsc, timeDesc. :mod:`string`
+		values: timeAsc, timeDesc.
+	:type sortBy: :mod:`string`
 
 	:param format: response format. If format is not specified, \
-		format is set to atom. Possible values: atom, html.  :mod:`string`
+		format is set to atom. Possible values: atom, html.
+	:type format: :mod:`string`
 
 	:param pretty: "true" to enable pretty output for xml. \
 		If pretty is not specified, pretty is set to true. Possible \
-		values: true, false :mod:`true`
+		values: true, false.
+	:type pretty: :mod:`boolean`
 
 	:returns: an xml response based on the requested 'format'. Options \
 		are 'atom' and 'html'.
@@ -254,57 +263,70 @@ def load_image_granule(datasetId, shortName, granuleName, request, bbox, height,
 	:param datasetId: dataset persistent ID. datasetId or \
 		shortName is required for a granule search. Example: \
 		PODAAC-ASOP2-25X01 :mod:`string`
+	:type datasetId: :mod:`string`
 
 	:param shortName: the shorter name for a dataset. \
 		Either shortName or datasetId is required for a \
-		granule search. Example: ASCATA-L2-25km :mod:`string`
+		granule search. Example: ASCATA-L2-25km
+	:type shortName: :mod:`string`
 
 	:param granuleName: name of the granule. \
 		Specifying granuleName insures only that granule \
 		is returned. Example: \
-		ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc :mod:`string`
+		ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc
+	:type granuleName: :mod:`string`
 
 	:param request: The service response requested. Valid \
 		entries for WMS 1.3.0 are GetCapabilities, GetMap, \
-		GetLegendGraphic. Example: request=GetMap :mod:`string`
+		GetLegendGraphic. Example: request=GetMap
+	:type request: :mod:`string`
 
 	:param service: service should be set to WMS. \
-		Example: service=WMS :mod:`string`
+		Example: service=WMS
+	:type service: :mod:`string`
 
 	:param version: The WMS version of the client, accepts \
-		values of 1.3.0 Example: version=1.3.0 :mod:`string`
+		values of 1.3.0 Example: version=1.3.0
+	:type version: :mod:`string`
 
 	:param format: Image format. Format is required for \
-		GetMap and GetLegendGraphic. Possible value : image/png :mod:`string`
+		GetMap and GetLegendGraphic. Possible value : image/png
+	:type format: :mod:`string`
 
 	:param bbox: bounding box for spatial search. format should \
 		look like "bbox=45,0,180,90" which is in order of \
 		west, south, east, north. Longitude values needs to \
 		be in range of [-180, 180]. Latitude values needs to \
 		be in range of [-90, 90]. bbox is used for getMap \
-		request. Example: 45,0,180,90 :mod:`string`
+		request. Example: 45,0,180,90
+	:type bbox: :mod:`string`
 
 	:param height: Maximum height in pixels of the image. \
-		Height is required for getMap request. Example: 300 :mod:`int`
+		Height is required for getMap request. Example: 300
+	:type height: :mod:`int`
 
 	:param width: Maximum width in pixels of the image. \
-		width is used for getMap request. Example: 200 :mod:`string`
+		width is used for getMap request. Example: 200
+	:type width: :mod:`int`
 
 	:param layers: A variable to image. This can be \
 		left blank, which then selects the default layer. \
 		layer is required for GetMap and GetLegendGraphic request. \
-		Example: wind_speed :mod:`string`
+		Example: wind_speed
+	:type layers: :mod:`string`
 
 	:param style: A colorbar to use when creating \
 		the image. This can be left blank, which then \
 		selects the default style. style is required in \
 		GetMap and GetLegendGraphic request. Example: \
-		paletteMedspirationIndexed :mod:`string`
+		paletteMedspirationIndexed
+	:type style: :mod:`string`
 
 	:param srs: The spatial reference system to project \
 		the data to. Currently only supports EPSG:4326. \
 		srs is used for getMap request. Leave blank for \
-		default projection. Example: EPSG:4326 :mod:`string`
+		default projection. Example: EPSG:4326
+	:type srs: :mod:`string`
 
 	:returns: a png image file.
 

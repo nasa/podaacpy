@@ -32,11 +32,11 @@ Importing podaacpy
 ^^^^^^^^^^^^^^^^^^
 This is very simple... ::
   
-  import podaacpy
+  import podaac
 
 Convenience Functions
 ^^^^^^^^^^^^^^^^^^^^^
-There are a number of convenience functions which aid various types of search. These help decypher the cryptic dataset id's, dataset short names, etc. The functions are; ::
+There are a number of convenience functions which aid various types of search. These help decypher the rather cryptic dataset id's, dataset short names, etc. present within PO.DAAC.  These functions accept no parameters. They do however account for the fact that availaility of certain datasets within PO.DAAC is not constant. Additionally some services are only available for certain datasets. The functions encapsulate those underlying variables and always return current, available results which can be interpreted and used within the other functions in this file. The functions are; ::
 
 
    result = podaacpy.list_available_granule_search__datasetIds()
@@ -65,7 +65,7 @@ Retrieving Dataset Metadata
   result = podaacpy.load_dataset_md(datasetId='PODAAC-GHMG2-2PO01')
 
 The variable **result** now contains an XML response which can be processed appropriately.
-For more information on this function, see X
+For more information on this function, see :doc:`webservices`
 
 Retrieving Granule Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -74,14 +74,14 @@ Retrieving Granule Metadata
   result = podaacpy.load_granule_md(datasetId='PODAAC-GHMG2-2PO01', granuleName='20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc')
 
 The variable **result** now contains an XML response which can be processed appropriately.
-For more information on this function, see X
+For more information on this function, see :doc:`webservices`
 
 Additionally, we can search metadata for list of granules archived within the last 24 hours in `Datacasting <http://datacasting.jpl.nasa.gov/xml_specification/>`_ format. ::
 
   result = load_last24hours_datacasting_granule_md(datasetId='PODAAC-GHMG2-2PO01')
 
 The variable **result** now contains an XML response containing a list of data granules which can be processed appropriately.
-For more information on this function, see X
+For more information on this function, see :doc:`webservices`
 
 Searching for Datasets
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -90,7 +90,7 @@ Searching for Datasets
    result = podaacpy.search_dataset(keyword='modis')
 
 The variable **result** now contains an XML response containing a list of datasets which can be processed appropriately.
-For more information on this function, see X
+For more information on this function, see :doc:`webservices`
 
 Searching for Granules
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -99,7 +99,7 @@ Searching for Granules
    result = podaacpy.search_granule(datasetId='PODAAC-ASOP2-25X01')
 
 The variable **result** now contains an XML response containing a list of granules for the given dataset which can be processed appropriately.
-For more information on this function, see X
+For more information on this function, see :doc:`webservices`
 
 Retrieve granule images
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -111,13 +111,15 @@ The above request returns us a nice image shown below
 
 .. image:: granule.png
 
+For more information on this function, see :doc:`webservices`
+
 Exract a granule
 ^^^^^^^^^^^^^^^^
 `Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, shortName of **QSCAT_LEVEL_2B_V2**, granuleName **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and have it saved as **netcdf** ::
 
    result = podaacpy.extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf')
 
-The above request returns the relevant .netcdf file.
+The above request returns the relevant .netcdf file. For more information on this function, see :doc:`webservices`
 
 .. _mcc:
 
