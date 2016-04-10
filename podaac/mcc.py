@@ -16,26 +16,24 @@
 import requests 
 
 def check_remote_file(checkers, url_upload, response='json'):
-    '''GET a remote file e.g. from en OPeNDAP URL and compliance
-	check it against the endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check
+    '''GET a remote file e.g. from en OPeNDAP URL and compliance \
+		check it against the endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check
 
-	:param checkers: Must specify at least one test. Multiple tests are
-	delimited by commas.
-	Possible values include 'ACDD-x.x' (specify version), 'CF' and 'GDS2'
-	which also requires 'GDS2-parameters:levelAvailable'. Levels are
-	'L2P','L3', and 'L4'.
-    :type checkers: :mod:`string`
+	:param checkers: Must specify at least one test. Multiple tests are \
+		delimited by commas. Possible values include 'ACDD-x.x' (specify version), \
+		'CF' and 'GDS2' which also requires 'GDS2-parameters:levelAvailable'. \
+		Levels are 'L2P','L3', and 'L4'. :mod:`string`
 
-    :param url_upload: A valid url to a netCDF file; maximum 5.00 GB
-    :type url_upload: :mod:`string`
+    :param url_upload: A valid url to a netCDF file; maximum 5.00 GB :mod:`string`
 
-    :param response: (Optional) Specify 'html', 'json', or 'pdf' result output.
-    :type response: :mod:`string`
+    :param response: (Optional) Specify 'html', 'json', or 'pdf' result output. \
+    	:mod:`string`
 
     :returns: one of 'html', 'json', or 'pdf'.
 
-    :raises ValueError: If no dataset can be found for the supplied url_upload
-    or if the requested dataset is a multi-file dataset.
+    :raises ValueError: If no dataset can be found for the supplied url_upload \
+    	or if the requested dataset is a multi-file dataset.
+
 	'''
 
     url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
@@ -46,27 +44,26 @@ def check_remote_file(checkers, url_upload, response='json'):
     return r
 
 def check_local_file(acdd_version, gds2_parameters, file_upload, response='json'):
-	'''POST a local file to the metadata compliance checker endpoint
-	at http://podaac-uat.jpl.nasa.gov/mcc/check
+	'''POST a local file to the metadata compliance checker \
+		endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check
 
-	:param acdd_version: Must be present and and set to either 1.1 or 1.3.
-	'acdd' tag must also be present and must be set to 'on'.
-	:type acdd_version: :mod:`string`
+	:param acdd_version: Must be present and and set to either 1.1 or 1.3. \
+		'acdd' tag must also be present and must be set to 'on'. \
+		:mod:`string`
 
-	:param gds2_parameters: Must be present and set to either 'L2P', 'L3', 'L4'.
-	:type gds2_parameters: :mod:`string`
+	:param gds2_parameters: Must be present and set to either 'L2P', 'L3', 'L4'. \
+		:mod:`string`
 
 	:param file_upload: A valid location of a netCDF file; maximum 5.00 GB.
-	:type file_upload: :mod:`string`
+		:mod:`string`
 
-	:param response: Specify 'html', 'json', or 'pdf' result output.
-	Default is 'json'.
-	:type response: :mod:`string`
+	:param response: Specify 'html', 'json', or 'pdf' result output. \
+		Default is 'json'. :mod:`string`
 
     :returns: one of 'html', 'json', or 'pdf'.
 
-    :raises ValueError: If no dataset can be found for the supplied url_upload
-    or if the requested dataset is a multi-file dataset.
+    :raises ValueError: If no dataset can be found for the supplied url_upload \
+    	or if the requested dataset is a multi-file dataset.
 
 	'''
 

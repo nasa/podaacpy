@@ -125,7 +125,7 @@ Working with Metadata Compliance Webservices (mcc)
 --------------------------------------------------
 
 Importing mcc
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
 This is very simple... ::
   
   import mcc
