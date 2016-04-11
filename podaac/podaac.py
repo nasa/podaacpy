@@ -37,6 +37,11 @@ def load_dataset_md(datasetId, shortName, format='iso'):
 	'''
 
 	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset'
+	url += '?checkers={}&url-upload={}&response={}'
+	url = url.format(checkers, url_upload, response)
+
+	r = requests.get(url)
+	return r
 
 def load_granule_md(datasetId, shortName, granuleName, format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
@@ -379,33 +384,85 @@ def extract_granule(datasetId, shortName, granuleName, bbox, format):
 	url = 'http://podaac.jpl.nasa.gov/ws/extract/granule'
 
 def list_available_granule_search_datasetIds():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset id's.
+
+	:returns: a comma-seperated list of granule dataset id's
+
+	'''
 	datasetIds = ['']
 	return datasetIds
 
 def list_available_granule_search_datasetShortNames():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset short names.
+
+	:returns: a comma-seperated list of granule dataset short names.
+
+	'''
 	datasetShortNames = ['']
 	return datasetShortNames
 
 def list_available_granule_search_level2_datasetIds():
+	'''Convenience function which returns an up-to-date \
+		list of available level2 granule dataset id's.
+
+	:returns: a comma-seperated list of granule dataset id's
+
+	'''
 	datasetIds = ['']
 	return datasetIds
 
 def list_available_granule_search_level2_datasetShortNames():
+	'''Convenience function which returns an up-to-date \
+		list of available level2 granule dataset short names.
+
+	:returns: a comma-seperated list of granule dataset short names.
+
+	'''
 	datasetShortNames = ['']
 	return datasetShortNames
 
 def list_available_image_granule_datasetIds():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset id's which can be \
+		used in the imagery service.
+
+	:returns: a comma-seperated list of granule dataset id's
+
+	'''
 	datasetIds = ['']
 	return datasetIds
 
 def list_available_image_granule_datasetShortNames():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset short names which can be \
+		used in the imagery service.
+
+	:returns: a comma-seperated list of granule dataset short names.
+
+	'''
 	datasetShortNames = ['']
 	return datasetShortNames
 
 def list_available_extract_granule_datasetIds():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset id's which can be \
+		used in the granule extraction service.
+
+	:returns: a comma-seperated list of granule dataset id's.
+
+	'''
 	datasetIds = ['']
 	return datasetIds
 
 def list_available_extract_granule_datasetShortNames():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset short names which can be \
+		used in the granule extraction service.
+
+	:returns: a comma-seperated list of granule dataset short names.
+
+	'''
 	datasetShortNames = ['']
 	return datasetShortNames

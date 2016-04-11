@@ -28,8 +28,10 @@ podaacpy is a python utility library for interacting with `NASA JPL's PO.DAAC <h
 What is PO.DAAC?
 ================
 The Physical Oceanography Distributed Active Archive Center (PO.DAAC) is an element of the Earth Observing System Data and Information System (`EOSDIS <https://earthdata.nasa.gov/>`_). The EOSDIS provides science data to a wide community of users for NASA's Science Mission Directorate.
-What does podaacpy offer?
 
+=========================
+What does podaacpy offer?
+=========================
 The library provides a Python toolkit for interacting with all of PO.DAACs API's, namely
 
 * `PO.DAAC Web Services <https://podaac.jpl.nasa.gov/ws/>`_: services include
