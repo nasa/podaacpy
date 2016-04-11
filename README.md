@@ -1,5 +1,7 @@
 # podaacpy
-<img src="http://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png" align="right" width="300" />
+|docs|
+
+<img src="https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png" align="right" width="300" />
 A python utility library for interacting with NASA JPL's [PO.DAAC](http://podaac.jpl.nasa.gov)
 
 ## What is PO.DAAC?
@@ -51,3 +53,8 @@ classify your issue.
 ## License
 podaacpy is licensed permissively under the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0).
 A copy of that license is distributed with this software.
+
+.. |docs| image:: https://readthedocs.org/projects/docs/badge/?version=latest
+    :alt: Documentation Status
+    :scale: 100%
+    :target: https://docs.readthedocs.org/en/latest/?badge=latest
