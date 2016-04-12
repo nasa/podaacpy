@@ -43,8 +43,6 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 	metadata = requests.get(url)
 	return metadata
 
-load_dataset_md()
-
 
 def load_granule_md(datasetId, shortName, granuleName, format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
