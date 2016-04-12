@@ -37,6 +37,14 @@ git clone https://github.com/lewismc/podaacpy.git && cd podaacpy
 python setup.py install
 ```
 
+## Tests
+podaacpy uses the popular [nose](http://nose.readthedocs.org/en/latest/) testing suite for unit tests. 
+You can run the podaacpy tests simply by running
+```
+nosetests
+```
+Additonally, click on the build sticker at the top of this readme to be directed to the most recent build on [travis-ci](https://travis-ci.org/lewismc/podaacpy).
+
 ## Documentation
 You can view the documentation online at 
 
