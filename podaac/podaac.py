@@ -15,7 +15,7 @@
 
 import requests
 
-def load_dataset_md(datasetId, shortName, format='iso'):
+def load_dataset_md(datasetId='', shortName='', format='iso'):
 	'''Dataset metadata service retrieves the metadata of a \
 		dataset on PO.DAACs dataset catalog using the following \
 		parameters: datasetId, shortName, and format.
@@ -36,12 +36,15 @@ def load_dataset_md(datasetId, shortName, format='iso'):
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset'
+	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset/?datasetId='+datasetId+'&shortName='+shortName+'&format='+format
 	url += '?checkers={}&url-upload={}&response={}'
 	url = url.format(checkers, url_upload, response)
 
-	r = requests.get(url)
-	return r
+	metadata = requests.get(url)
+	return metadata
+
+load_dataset_md()
+
 
 def load_granule_md(datasetId, shortName, granuleName, format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
