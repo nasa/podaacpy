@@ -1,6 +1,8 @@
 # podaacpy
 
 <img src="https://readthedocs.org/projects/podaacpy/badge/?version=latest" />
+<img src="https://travis-ci.org/lewismc/podaacpy.svg?branch=master" />
+
 
 <img src="https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png" align="right" width="300" />
 A python utility library for interacting with NASA JPL's [PO.DAAC](http://podaac.jpl.nasa.gov)
