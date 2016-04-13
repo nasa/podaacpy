@@ -44,7 +44,7 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 	return metadata
 
 
-def load_granule_md(datasetId, shortName, granuleName, format='iso'):
+def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
 		on PO.DAACs catalog in ISO-19115.
 	
@@ -67,9 +67,11 @@ def load_granule_md(datasetId, shortName, granuleName, format='iso'):
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule'
+	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&format='+format
+	granule_md = requests.get(url)
+	return granule_md
 
-def load_last24hours_datacasting_granule_md(datasetId, shortName, format, itemsPerPage=7):
+def load_last24hours_datacasting_granule_md(datasetId, shortName, format='datacasting', itemsPerPage=7):
 	'''Granule metadata service retrieves metadata for a list \
 		of granules archived within the last 24 hours in Datacasting 
 		format.
@@ -94,7 +96,9 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format, itemsP
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule'
+	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='shortName'&itemsPerPage='+itemsPerPage+'&format='+format
+	granule_md = requests.get(url)
+	return granule_md
 
 def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName, instrument, satellite, fileFormat, status, processLevel, sortBy, bbox, itemsPerPage=7, pretty=True, format='atom', full=False):
 	'''Dataset Search service searches PO.DAAC's dataset catalog, over \
