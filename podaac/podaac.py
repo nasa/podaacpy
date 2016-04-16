@@ -37,9 +37,6 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 	'''
 
 	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset/?datasetId='+datasetId+'&shortName='+shortName+'&format='+format
-	url += '?checkers={}&url-upload={}&response={}'
-	url = url.format(checkers, url_upload, response)
-
 	metadata = requests.get(url)
 	return metadata
 
@@ -96,7 +93,7 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='shortName'&itemsPerPage='+itemsPerPage+'&format='+format
+	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+itemsPerPage+'&format='+format
 	granule_md = requests.get(url)
 	return granule_md
 
@@ -253,13 +250,13 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 		are 'atom' and 'html'.
 
 	'''
-	(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
+	#(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
 
 	url = 'http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
 	granules = requests.get(url)
 	return granules
 
-def load_image_granule(datasetId, shortName, granuleName, request, bbox, height, width, style, srs, service='WMS', version='1.3.0', format='image/png', layers=None):
+def load_image_granule(datasetId='', shortName='', granuleName='', request='', bbox='', height='', width='', style='', srs='', service='WMS', version='1.3.0', format='image/png', layers=None):
 	'''The PODAAC Image service renders granules in the \
 		PO.DAACs catalog to images such as jpeg and/or png. \
 		This image service also utilizes OGC WMS protocol. \
@@ -347,7 +344,9 @@ def load_image_granule(datasetId, shortName, granuleName, request, bbox, height,
 
 	'''
 
-	url='http://podaac.jpl.nasa.gov/ws/image/granule'
+	url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style'+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
+	image = requests.get(url)
+
 
 def extract_granule(datasetId, shortName, granuleName, bbox, format):
 	'''Extract service subsets a granule in PO.DAAC catalog \
