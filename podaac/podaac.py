@@ -346,9 +346,10 @@ def load_image_granule(datasetId='', shortName='', granuleName='', request='', b
 
 	url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style'+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
 	image = requests.get(url)
+	return image
 
 
-def extract_granule(datasetId, shortName, granuleName, bbox, format):
+def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=''):
 	'''Extract service subsets a granule in PO.DAAC catalog \
 	and produces either netcdf3 or hdf4 files. If the granule \
 	does not have any data in the given selected bounding box, \
@@ -390,7 +391,12 @@ def extract_granule(datasetId, shortName, granuleName, bbox, format):
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/extract/granule'
+	url = 'http://podaac.jpl.nasa.gov/ws/extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
+	granule = requests.get(url)
+	return granule
+
+result = extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='45,0,180,90', format='netcdf')
+print result.status_code
 
 def list_available_granule_search_datasetIds():
 	'''Convenience function which returns an up-to-date \
