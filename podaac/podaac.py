@@ -35,11 +35,17 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 	are 'iso' and 'gcmd'.
 
 	'''
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset/?datasetId='+datasetId+'&shortName='+shortName+'&format='+format
+		metadata = requests.get(url)
+		if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503: 
+			metadata.raise_for_status()
+		
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset/?datasetId='+datasetId+'&shortName='+shortName+'&format='+format
-	metadata = requests.get(url)
+	except requests.exceptions.ReturnException as e:
+		print e 
+
 	return metadata
-
 
 def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
@@ -64,8 +70,15 @@ def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&format='+format
-	granule_md = requests.get(url)
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&format='+format
+		granule_md = requests.get(url)
+		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503: 
+			granule_md.raise_for_status()
+
+	except requests.exceptions.ReturnException as e:
+		print e
+
 	return granule_md
 
 def load_last24hours_datacasting_granule_md(datasetId, shortName, format='datacasting', itemsPerPage=7):
@@ -93,8 +106,16 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+itemsPerPage+'&format='+format
-	granule_md = requests.get(url)
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+itemsPerPage+'&format='+format
+		granule_md = requests.get(url)
+		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503: 
+			granule_md.raise_for_status()
+		
+
+	except requests.exceptions.HTTPError as e:
+		print e
+
 	return granule_md
 
 def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetId='', shortName='', instrument='', satellite='', fileFormat='', status='', processLevel='', sortBy='', bbox='', itemsPerPage=7, pretty=True, format='atom', full=False):
@@ -179,9 +200,16 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 		format is set to atom. Possible values: atom, html
 
 	'''
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+false
+		datasets = requests.get(url)
+		if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503: 
+			datasets.raise_for_status()
+		
 
-	url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+false
-	datasets = requests.get(url)
+	except requests.exceptions.HTTPError as e:
+		print e 
+
 	return datasets
 
 def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
@@ -250,11 +278,18 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 		are 'atom' and 'html'.
 
 	'''
-	#(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
+	
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
+		granules = requests.get(url)
+		if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503: 
+			granules.raise_for_status()
 
-	url = 'http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
-	granules = requests.get(url)
+	except requests.exceptions.HTTPError as e:
+		print e 
+
 	return granules
+
 
 def load_image_granule(datasetId='', shortName='', granuleName='', request='', bbox='', height='', width='', style='', srs='', service='WMS', version='1.3.0', format='image/png', layers=None):
 	'''The PODAAC Image service renders granules in the \
@@ -344,10 +379,16 @@ def load_image_granule(datasetId='', shortName='', granuleName='', request='', b
 
 	'''
 
-	url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style'+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
-	image = requests.get(url)
-	return image
+	try:
+		url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
+		image = requests.get(url)
+		if image.status_code == 404 or image.status_code == 400 or image.status_code == 503: 
+			image.raise_for_status()
 
+	except requests.exceptions.HTTPError as e:
+		print e 
+
+	return image
 
 def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=''):
 	'''Extract service subsets a granule in PO.DAAC catalog \
@@ -390,13 +431,17 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 	:returns: a netcdf file or hdf file
 
 	'''
+	try:	
+		url = 'http://podaac.jpl.nasa.gov/ws/extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
+		granule = requests.get(url)
+		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503: 
+			granule.raise_for_status()
+	
+	except requests.exceptions.HTTPError as e:
+		print e 
 
-	url = 'http://podaac.jpl.nasa.gov/ws/extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
-	granule = requests.get(url)
 	return granule
-
-result = extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='45,0,180,90', format='netcdf')
-print result.status_code
+	
 
 def list_available_granule_search_datasetIds():
 	'''Convenience function which returns an up-to-date \
