@@ -38,10 +38,9 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 	try:
 		url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset/?datasetId='+datasetId+'&shortName='+shortName+'&format='+format
 		metadata = requests.get(url)
-		if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503: 
+		if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503 or metadata.status_code == 408: 
 			metadata.raise_for_status()
 		
-
 	except requests.exceptions.ReturnException as e:
 		print e 
 
@@ -73,7 +72,7 @@ def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 	try:
 		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&format='+format
 		granule_md = requests.get(url)
-		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503: 
+		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408: 
 			granule_md.raise_for_status()
 
 	except requests.exceptions.ReturnException as e:
@@ -109,7 +108,7 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 	try:
 		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+itemsPerPage+'&format='+format
 		granule_md = requests.get(url)
-		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503: 
+		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408: 
 			granule_md.raise_for_status()
 		
 
@@ -203,7 +202,7 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 	try:
 		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+false
 		datasets = requests.get(url)
-		if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503: 
+		if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408: 
 			datasets.raise_for_status()
 		
 
@@ -282,7 +281,7 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 	try:
 		url = 'http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
 		granules = requests.get(url)
-		if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503: 
+		if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408: 
 			granules.raise_for_status()
 
 	except requests.exceptions.HTTPError as e:
@@ -382,7 +381,7 @@ def load_image_granule(datasetId='', shortName='', granuleName='', request='', b
 	try:
 		url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
 		image = requests.get(url)
-		if image.status_code == 404 or image.status_code == 400 or image.status_code == 503: 
+		if image.status_code == 404 or image.status_code == 400 or image.status_code == 503 or image.status_code == 408: 
 			image.raise_for_status()
 
 	except requests.exceptions.HTTPError as e:
@@ -434,7 +433,7 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 	try:	
 		url = 'http://podaac.jpl.nasa.gov/ws/extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
 		granule = requests.get(url)
-		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503: 
+		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503 or granule.status_code == 408: 
 			granule.raise_for_status()
 	
 	except requests.exceptions.HTTPError as e:
