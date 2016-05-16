@@ -14,6 +14,8 @@
 # limitations under the License.
 
 import requests
+from bs4 import BeautifulSoup as bs
+
 
 def load_dataset_md(datasetId='', shortName='', format='iso'):
 	'''Dataset metadata service retrieves the metadata of a \
@@ -436,11 +438,13 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503 or granule.status_code == 408: 
 			granule.raise_for_status()
 	
+		file = open(granuleName, 'w+')
+		file.write(granule.text.encode("utf-8"))
+
 	except requests.exceptions.HTTPError as e:
 		print e 
 
 	return granule
-	
 
 def list_available_granule_search_datasetIds():
 	'''Convenience function which returns an up-to-date \
@@ -449,7 +453,18 @@ def list_available_granule_search_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset1"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_granule_search_datasetShortNames():
@@ -459,7 +474,18 @@ def list_available_granule_search_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset1"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
 
 def list_available_granule_search_level2_datasetIds():
@@ -469,7 +495,18 @@ def list_available_granule_search_level2_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_granule_search_level2_datasetShortNames():
@@ -479,7 +516,18 @@ def list_available_granule_search_level2_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
 
 def list_available_image_granule_datasetIds():
@@ -490,7 +538,18 @@ def list_available_image_granule_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_image_granule_datasetShortNames():
@@ -501,7 +560,18 @@ def list_available_image_granule_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
 
 def list_available_extract_granule_datasetIds():
@@ -512,7 +582,18 @@ def list_available_extract_granule_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's.
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/extract/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+	
+	table = soup.find("table", {"id": "tblDataset"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_extract_granule_datasetShortNames():
@@ -523,5 +604,16 @@ def list_available_extract_granule_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/extract/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+	
+	table = soup.find("table", {"id": "tblDataset"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
