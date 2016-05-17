@@ -446,6 +446,9 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 
 	return granule
 
+x = extract_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', '45,0,180,90', 'netcdf')
+print x
+
 def list_available_granule_search_datasetIds():
 	'''Convenience function which returns an up-to-date \
 		list of available granule dataset id's.
@@ -454,16 +457,10 @@ def list_available_granule_search_datasetIds():
 
 	'''
 	datasetIds = []
-	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
-	soup = bs(html.text, 'html.parser')
+	json = requests.get("http://podaac.jpl.nasa.gov/dmasSolr/solr/dataset/select/?q=*:*&fl=Dataset-PersistentId,Dataset-ShortName-Full&rows=2147483647&fq=DatasetPolicy-AccessType-Full:(OPEN+OR+PREVIEW+OR+SIMULATED+OR+REMOTE)+AND+DatasetPolicy-ViewOnline:Y&wt=json").json()
 
-	table = soup.find("table", {"id": "tblDataset1"})
-	rows = table.find_all('tr')
-	rows.remove(rows[0])
-
-	for row in rows:
-		x = row.find_all('td')
-		datasetIds.append(x[0].text.encode('utf-8'))
+	for data in json["response"]["docs"]:
+		datasetIds.append(data["Dataset-PersistentId"])
 
 	return datasetIds
 
@@ -475,16 +472,10 @@ def list_available_granule_search_datasetShortNames():
 
 	'''
 	datasetShortNames = []
-	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
-	soup = bs(html.text, 'html.parser')
+	json = requests.get("http://podaac.jpl.nasa.gov/dmasSolr/solr/dataset/select/?q=*:*&fl=Dataset-PersistentId,Dataset-ShortName-Full&rows=2147483647&fq=DatasetPolicy-AccessType-Full:(OPEN+OR+PREVIEW+OR+SIMULATED+OR+REMOTE)+AND+DatasetPolicy-ViewOnline:Y&wt=json").json()
 
-	table = soup.find("table", {"id": "tblDataset1"})
-	rows = table.find_all('tr')
-	rows.remove(rows[0])
-
-	for row in rows:
-		x = row.find_all('td')
-		datasetShortNames.append(x[1].text.encode('utf-8'))
+	for data in json["response"]["docs"]:
+		datasetShortNames.append(data["Dataset-ShortName-Full"])
 
 	return datasetShortNames
 
