@@ -72,7 +72,8 @@ def check_local_file(acdd_version, gds2_parameters, file_upload, response='json'
 
 	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
 	url += '?ACDD=on&ACDD-version={}&CF=on&GDS2=on&GDS2-parameters={}&file-upload={}&response{}'
-	url = url.format(acdd_version, gds2_parameters, file_upload, response)
+	#url = url.format(acdd_version, gds2_parameters, file_upload, response)
 	files={file_upload: open(file_upload, 'rb')}
 	r = requests.post(url, files=files)
 	return r
+

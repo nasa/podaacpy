@@ -438,7 +438,7 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503 or granule.status_code == 408: 
 			granule.raise_for_status()
 	
-		file = open(granuleName, 'w+')
+		file = open(granuleName, 'wb+')
 		file.write(granule.text.encode("utf-8"))
 
 	except requests.exceptions.HTTPError as e:
@@ -446,8 +446,7 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 
 	return granule
 
-x = extract_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', '45,0,180,90', 'netcdf')
-print x
+
 
 def list_available_granule_search_datasetIds():
 	'''Convenience function which returns an up-to-date \
@@ -462,7 +461,22 @@ def list_available_granule_search_datasetIds():
 	for data in json["response"]["docs"]:
 		datasetIds.append(data["Dataset-PersistentId"])
 
-	return datasetIds
+	datasetIds_level2 = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds_level2.append(x[0].text.encode('utf-8'))
+
+	datasetIds_level1 = []
+	datasetIds_level1 = set(datasetIds) - set(datasetIds_level2)
+
+	return datasetIds_level1
 
 def list_available_granule_search_datasetShortNames():
 	'''Convenience function which returns an up-to-date \
@@ -477,7 +491,21 @@ def list_available_granule_search_datasetShortNames():
 	for data in json["response"]["docs"]:
 		datasetShortNames.append(data["Dataset-ShortName-Full"])
 
-	return datasetShortNames
+	datasetShortNames_level2 = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames_level2.append(x[1].text.encode('utf-8'))
+
+	datasetShortNames_level1 = set(datasetShortNames) - set(datasetShortNames_level2)
+
+	return datasetShortNames_level1
 
 def list_available_granule_search_level2_datasetIds():
 	'''Convenience function which returns an up-to-date \
