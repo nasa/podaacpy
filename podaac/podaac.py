@@ -563,7 +563,7 @@ def list_available_image_granule_datasetIds():
 	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
 	soup = bs(html.text, 'html.parser')
 
-	table = soup.find("table", {"id": "tblDataset2"})
+	table = soup.find("table", {"id": "tblDataset"})
 	rows = table.find_all('tr')
 	rows.remove(rows[0])
 
@@ -585,7 +585,7 @@ def list_available_image_granule_datasetShortNames():
 	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
 	soup = bs(html.text, 'html.parser')
 
-	table = soup.find("table", {"id": "tblDataset2"})
+	table = soup.find("table", {"id": "tblDataset"})
 	rows = table.find_all('tr')
 	rows.remove(rows[0])
 
