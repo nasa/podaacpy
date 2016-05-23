@@ -14,8 +14,10 @@
 # limitations under the License.
 
 import requests
+from bs4 import BeautifulSoup as bs
 
-def load_dataset_md(datasetId, shortName, format='iso'):
+
+def load_dataset_md(datasetId='', shortName='', format='iso'):
 	'''Dataset metadata service retrieves the metadata of a \
 		dataset on PO.DAACs dataset catalog using the following \
 		parameters: datasetId, shortName, and format.
@@ -35,15 +37,18 @@ def load_dataset_md(datasetId, shortName, format='iso'):
 	are 'iso' and 'gcmd'.
 
 	'''
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset/?datasetId='+datasetId+'&shortName='+shortName+'&format='+format
+		metadata = requests.get(url)
+		if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503 or metadata.status_code == 408: 
+			metadata.raise_for_status()
+		
+	except requests.exceptions.ReturnException as e:
+		print e 
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/dataset'
-	url += '?checkers={}&url-upload={}&response={}'
-	url = url.format(checkers, url_upload, response)
+	return metadata.text
 
-	r = requests.get(url)
-	return r
-
-def load_granule_md(datasetId, shortName, granuleName, format='iso'):
+def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
 		on PO.DAACs catalog in ISO-19115.
 	
@@ -66,9 +71,18 @@ def load_granule_md(datasetId, shortName, granuleName, format='iso'):
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule'
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&format='+format
+		granule_md = requests.get(url)
+		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408: 
+			granule_md.raise_for_status()
 
-def load_last24hours_datacasting_granule_md(datasetId, shortName, format, itemsPerPage=7):
+	except requests.exceptions.ReturnException as e:
+		print e
+
+	return granule_md.text
+
+def load_last24hours_datacasting_granule_md(datasetId, shortName, format='datacasting', itemsPerPage=7):
 	'''Granule metadata service retrieves metadata for a list \
 		of granules archived within the last 24 hours in Datacasting 
 		format.
@@ -93,9 +107,19 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format, itemsP
 
 	'''
 
-	url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule'
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+itemsPerPage+'&format='+format
+		granule_md = requests.get(url)
+		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408: 
+			granule_md.raise_for_status()
+		
 
-def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName, instrument, satellite, fileFormat, status, processLevel, sortBy, bbox, itemsPerPage=7, pretty=True, format='atom', full=False):
+	except requests.exceptions.HTTPError as e:
+		print e
+
+	return granule_md.text
+
+def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetId='', shortName='', instrument='', satellite='', fileFormat='', status='', processLevel='', sortBy='', bbox='', itemsPerPage=7, pretty=True, format='atom', full=False):
 	'''Dataset Search service searches PO.DAAC's dataset catalog, over \
 		Level 2, Level 3, and Level 4 datasets, using the following parameters: \
 		datasetId, shortName, startTime, endTime, bbox, and others.
@@ -177,8 +201,17 @@ def search_dataset(keyword, startTime, endTime, startIndex, datasetId, shortName
 		format is set to atom. Possible values: atom, html
 
 	'''
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+full
+		datasets = requests.get(url)
+		if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408: 
+			datasets.raise_for_status()
+		
 
-	url = 'http://podaac.jpl.nasa.gov/ws/search/dataset'
+	except requests.exceptions.HTTPError as e:
+		print e 
+
+	return datasets.text
 
 def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
 	'''Search Granule does granule searching on PO.DAAC level 2 swath \
@@ -246,10 +279,20 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 		are 'atom' and 'html'.
 
 	'''
+	
+	try:
+		url = 'http://podaac.jpl.nasa.gov/ws/search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
+		granules = requests.get(url)
+		if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408: 
+			granules.raise_for_status()
 
-	url = 'http://podaac.jpl.nasa.gov/ws/search/granule'
+	except requests.exceptions.HTTPError as e:
+		print e 
 
-def load_image_granule(datasetId, shortName, granuleName, request, bbox, height, width, style, srs, service='WMS', version='1.3.0', format='image/png', layers=None):
+	return granules.text
+
+
+def load_image_granule(datasetId='', shortName='', granuleName='', bbox='', height='', width='', style='', srs='', request='GetMap', service='WMS', version='1.3.0', format='image/png', layers=''):
 	'''The PODAAC Image service renders granules in the \
 		PO.DAACs catalog to images such as jpeg and/or png. \
 		This image service also utilizes OGC WMS protocol. \
@@ -337,9 +380,20 @@ def load_image_granule(datasetId, shortName, granuleName, request, bbox, height,
 
 	'''
 
-	url='http://podaac.jpl.nasa.gov/ws/image/granule'
+	try:
+		url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
+		image = requests.get(url)
+		if image.status_code == 404 or image.status_code == 400 or image.status_code == 503 or image.status_code == 408: 
+			image.raise_for_status()
 
-def extract_granule(datasetId, shortName, granuleName, bbox, format):
+	except requests.exceptions.HTTPError as e:
+		print e 
+
+	with open(datasetId+'_image.jpg', 'wb+') as f:
+		for chunk in image:
+			f.write(chunk)
+
+def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=''):
 	'''Extract service subsets a granule in PO.DAAC catalog \
 	and produces either netcdf3 or hdf4 files. If the granule \
 	does not have any data in the given selected bounding box, \
@@ -380,8 +434,21 @@ def extract_granule(datasetId, shortName, granuleName, bbox, format):
 	:returns: a netcdf file or hdf file
 
 	'''
+	try:	
+		url = 'http://podaac.jpl.nasa.gov/ws/extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
+		granule = requests.get(url)
+		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503 or granule.status_code == 408: 
+			granule.raise_for_status()
+	
+		file = open(granuleName, 'wb+')
+		file.write(granule.text.encode("utf-8"))
 
-	url = 'http://podaac.jpl.nasa.gov/ws/extract/granule'
+	except requests.exceptions.HTTPError as e:
+		print e 
+
+	return granule
+
+
 
 def list_available_granule_search_datasetIds():
 	'''Convenience function which returns an up-to-date \
@@ -390,8 +457,28 @@ def list_available_granule_search_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's
 
 	'''
-	datasetIds = ['']
-	return datasetIds
+	datasetIds = []
+	json = requests.get("http://podaac.jpl.nasa.gov/dmasSolr/solr/dataset/select/?q=*:*&fl=Dataset-PersistentId,Dataset-ShortName-Full&rows=2147483647&fq=DatasetPolicy-AccessType-Full:(OPEN+OR+PREVIEW+OR+SIMULATED+OR+REMOTE)+AND+DatasetPolicy-ViewOnline:Y&wt=json").json()
+
+	for data in json["response"]["docs"]:
+		datasetIds.append(data["Dataset-PersistentId"])
+
+	datasetIds_level2 = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds_level2.append(x[0].text.encode('utf-8'))
+
+	datasetIds_level1 = []
+	datasetIds_level1 = set(datasetIds) - set(datasetIds_level2)
+
+	return datasetIds_level1
 
 def list_available_granule_search_datasetShortNames():
 	'''Convenience function which returns an up-to-date \
@@ -400,8 +487,27 @@ def list_available_granule_search_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
-	return datasetShortNames
+	datasetShortNames = []
+	json = requests.get("http://podaac.jpl.nasa.gov/dmasSolr/solr/dataset/select/?q=*:*&fl=Dataset-PersistentId,Dataset-ShortName-Full&rows=2147483647&fq=DatasetPolicy-AccessType-Full:(OPEN+OR+PREVIEW+OR+SIMULATED+OR+REMOTE)+AND+DatasetPolicy-ViewOnline:Y&wt=json").json()
+
+	for data in json["response"]["docs"]:
+		datasetShortNames.append(data["Dataset-ShortName-Full"])
+
+	datasetShortNames_level2 = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames_level2.append(x[1].text.encode('utf-8'))
+
+	datasetShortNames_level1 = set(datasetShortNames) - set(datasetShortNames_level2)
+
+	return datasetShortNames_level1
 
 def list_available_granule_search_level2_datasetIds():
 	'''Convenience function which returns an up-to-date \
@@ -410,7 +516,18 @@ def list_available_granule_search_level2_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_granule_search_level2_datasetShortNames():
@@ -420,7 +537,18 @@ def list_available_granule_search_level2_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
 
 def list_available_image_granule_datasetIds():
@@ -431,7 +559,18 @@ def list_available_image_granule_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_image_granule_datasetShortNames():
@@ -442,7 +581,18 @@ def list_available_image_granule_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+
+	table = soup.find("table", {"id": "tblDataset2"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
 
 def list_available_extract_granule_datasetIds():
@@ -453,7 +603,18 @@ def list_available_extract_granule_datasetIds():
 	:returns: a comma-seperated list of granule dataset id's.
 
 	'''
-	datasetIds = ['']
+	datasetIds = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/extract/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+	
+	table = soup.find("table", {"id": "tblDataset"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetIds.append(x[0].text.encode('utf-8'))
+
 	return datasetIds
 
 def list_available_extract_granule_datasetShortNames():
@@ -464,5 +625,16 @@ def list_available_extract_granule_datasetShortNames():
 	:returns: a comma-seperated list of granule dataset short names.
 
 	'''
-	datasetShortNames = ['']
+	datasetShortNames = []
+	html = requests.get('http://podaac.jpl.nasa.gov/ws/extract/granule/index.html')
+	soup = bs(html.text, 'html.parser')
+	
+	table = soup.find("table", {"id": "tblDataset"})
+	rows = table.find_all('tr')
+	rows.remove(rows[0])
+
+	for row in rows:
+		x = row.find_all('td')
+		datasetShortNames.append(x[1].text.encode('utf-8'))
+
 	return datasetShortNames
