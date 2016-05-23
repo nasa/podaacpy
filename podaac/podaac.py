@@ -46,7 +46,7 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 	except requests.exceptions.ReturnException as e:
 		print e 
 
-	return metadata
+	return metadata.text
 
 def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 	'''Granule metadata service retrieves the metadata of a granule \
@@ -80,7 +80,7 @@ def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 	except requests.exceptions.ReturnException as e:
 		print e
 
-	return granule_md
+	return granule_md.text
 
 def load_last24hours_datacasting_granule_md(datasetId, shortName, format='datacasting', itemsPerPage=7):
 	'''Granule metadata service retrieves metadata for a list \
@@ -117,7 +117,7 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 	except requests.exceptions.HTTPError as e:
 		print e
 
-	return granule_md
+	return granule_md.text
 
 def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetId='', shortName='', instrument='', satellite='', fileFormat='', status='', processLevel='', sortBy='', bbox='', itemsPerPage=7, pretty=True, format='atom', full=False):
 	'''Dataset Search service searches PO.DAAC's dataset catalog, over \
@@ -202,7 +202,7 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 
 	'''
 	try:
-		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+false
+		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+full
 		datasets = requests.get(url)
 		if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408: 
 			datasets.raise_for_status()
@@ -211,7 +211,7 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 	except requests.exceptions.HTTPError as e:
 		print e 
 
-	return datasets
+	return datasets.text
 
 def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
 	'''Search Granule does granule searching on PO.DAAC level 2 swath \
@@ -289,10 +289,10 @@ def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, s
 	except requests.exceptions.HTTPError as e:
 		print e 
 
-	return granules
+	return granules.text
 
 
-def load_image_granule(datasetId='', shortName='', granuleName='', request='', bbox='', height='', width='', style='', srs='', service='WMS', version='1.3.0', format='image/png', layers=None):
+def load_image_granule(datasetId='', shortName='', granuleName='', bbox='', height='', width='', style='', srs='', request='GetMap', service='WMS', version='1.3.0', format='image/png', layers=''):
 	'''The PODAAC Image service renders granules in the \
 		PO.DAACs catalog to images such as jpeg and/or png. \
 		This image service also utilizes OGC WMS protocol. \
@@ -389,7 +389,9 @@ def load_image_granule(datasetId='', shortName='', granuleName='', request='', b
 	except requests.exceptions.HTTPError as e:
 		print e 
 
-	return image
+	with open(datasetId+'_image.jpg', 'wb+') as f:
+		for chunk in image:
+			f.write(chunk)
 
 def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=''):
 	'''Extract service subsets a granule in PO.DAAC catalog \
