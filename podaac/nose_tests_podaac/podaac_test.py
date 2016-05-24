@@ -22,21 +22,7 @@ from .. import podaac
 	dataset_md.encode('ascii', 'ignore')
 
 	assert test_dataset_md == dataset_md
-
-
-def test_load_granule_md():
-	x = open('granule_md_example.xml', 'rb').read()
-	test_granule_md = x.decode('utf-8')
-	y = podaac.load_granule_md('PODAAC-GHMG2-2PO01', 'OSDPD-L2P-MSG02', '20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc')
-	y.decode('utf-8')
-
-	with open('x.xml','wrb+') as f:
-		for chunk in y:
-			f.write(chunk)
-
-	granule_md = f.read().decode('utf-8')
-
-	assert test_granule_md == granule_md'''
+'''
 
 
 
