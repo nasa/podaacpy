@@ -14,7 +14,7 @@
 # limitations under the License.
 
 from .. import podaac
-
+import os
 
 '''def test_load_dataset_md():
 	test_dataset_md = open('dataset_md_example.xml', 'rb').read()
@@ -26,8 +26,9 @@ from .. import podaac
 
 
 
-def test_load_image_granule(): 
-	test_data = open('image_granule_example.png', 'r').read()
+def test_load_image_granule():
+	path = fn = os.path.join(os.path.dirname(__file__), 'image_granule_example.png')
+	test_data = open(path, 'r').read()
 	podaac.load_image_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', '45,0,180,90','300', '200', 'EPSG:4326')
 	data = open('PODAAC-ASOP2-25X01_image.jpg','r').read()
 	
