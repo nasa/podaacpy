@@ -105,7 +105,7 @@ Retrieve granule images
 ^^^^^^^^^^^^^^^^^^^^^^^
 `Image Granule <http://podaac.jpl.nasa.gov/ws/image/granule/index.html>`_ - renders granules in the PO.DAAC's catalog to images such as jpeg and/or png. In the following code snippet we display a GetMap request ::
 
-   result = podaac.load_image_granule(shortName='ASCATB-L2-25km', granuleName='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS', transparent='True')
+   result = podaac.load_image_granule(shortName='ASCATB-L2-25km', granuleName='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS')
 
 The above request returns us a nice image shown below
 
