@@ -38,12 +38,16 @@ def check_remote_file(checkers, url_upload, response='json'):
 
 	'''
 
-	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
-	url += '?checkers={}&url-upload={}&response={}'
-	url = url.format(checkers, url_upload, response)
+	try:
+		url = 'http://podaac-uat.jpl.nasa.gov/mcc/check?checkers='+checkers+'&url-upload='+file_upload+'&response='+response
+		result = requests.get(url)
+		if result.status_code == 404 or result.status_code == 400 or result.status_code == 503 or result.status_code == 408: 
+			result.raise_for_status()
 
-	r = requests.get(url)
-	return r
+	except requests.exceptions.ReturnException as e:
+		print e 
+
+	return result.text
 
 def check_local_file(acdd_version, gds2_parameters, file_upload, response='json'):
 	'''POST a local file to the metadata compliance checker \
@@ -70,10 +74,18 @@ def check_local_file(acdd_version, gds2_parameters, file_upload, response='json'
 
 	'''
 
-	url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
-	url += '?ACDD=on&ACDD-version={}&CF=on&GDS2=on&GDS2-parameters={}&file-upload={}&response{}'
-	#url = url.format(acdd_version, gds2_parameters, file_upload, response)
-	files={file_upload: open(file_upload, 'rb')}
-	r = requests.post(url, files=files)
-	return r
+	try:
+		url = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
+		files={'file-upload': open(file_upload, 'rb+')}
+		data ={'CF':'on', 'ACDD': 'on', 'ACDD-version': acdd_version, 'GDS2' : 'on', 'GDS2-parameters' : gds2_parameters,'response' : 'json'}
+		
+		result = requests.post(url, files=files)#, data=data)
+		
+		if result.status_code == 404 or result.status_code == 400 or result.status_code == 503 or result.status_code == 408: 
+			result.raise_for_status()
+
+	except requests.exceptions.ReturnException as e:
+		print e 
+
+	return result.text
 
