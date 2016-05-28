@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import requests 
+import requests
 
 def check_remote_file(checkers, url_upload, response='json'):
 	'''GET a remote file e.g. from an OPeNDAP URL and compliance \
@@ -39,7 +39,7 @@ def check_remote_file(checkers, url_upload, response='json'):
 	'''
 
 	try:
-		url = 'http://podaac-uat.jpl.nasa.gov/mcc/check?checkers='+checkers+'&url-upload='+file_upload+'&response='+response
+		url = 'http://podaac-uat.jpl.nasa.gov/mcc/check?checkers='+checkers+'&url-upload='+url_upload+'&response='+response
 		result = requests.get(url)
 		if result.status_code == 404 or result.status_code == 400 or result.status_code == 503 or result.status_code == 408: 
 			result.raise_for_status()
@@ -79,7 +79,7 @@ def check_local_file(acdd_version, gds2_parameters, file_upload, response='json'
 		files={'file-upload': open(file_upload, 'rb+')}
 		data ={'CF':'on', 'ACDD': 'on', 'ACDD-version': acdd_version, 'GDS2' : 'on', 'GDS2-parameters' : gds2_parameters,'response' : 'json'}
 		
-		result = requests.post(url, files=files)#, data=data)
+		result = requests.post(url, files=files, data=data)
 		
 		if result.status_code == 404 or result.status_code == 400 or result.status_code == 503 or result.status_code == 408: 
 			result.raise_for_status()
