@@ -24,12 +24,8 @@ def test_check_remote_file():
 	data_json = json.loads(data)
 
 	assert data != None
-
 	assert data_json["model"] == "NETCDF4"
-
 	assert data_json["fn"] == url_upload
-
-
 
 
 def test_check_local_file(): 
@@ -39,8 +35,5 @@ def test_check_local_file():
 	data_json = json.loads(data)
 
 	assert data != None 
-
 	assert data_json["model"] == "NETCDF3_CLASSIC"
-
 	assert data_json["fn"] == file_upload
-
