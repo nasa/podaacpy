@@ -19,28 +19,28 @@ import os
 import json 
 
 def test_check_remote_file():
-	data = mcc.check_remote_file('CF', 'https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc')
+	url_upload = "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc"
+	data = mcc.check_remote_file('CF', url_upload)
+	data_json = json.loads(data)
 
 	assert data != None
 
-	data_json = json.loads(data)
-
 	assert data_json["model"] == "NETCDF4"
 
-	assert data_json["fn"] == "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc"
+	assert data_json["fn"] == url_upload
 
 
 
 
 def test_check_local_file(): 
-	path = os.path.join(os.path.dirname(__file__), 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc')
+	file_upload = "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
+	path = os.path.join(os.path.dirname(__file__), file_upload)
 	data = mcc.check_local_file(1.1, 'L2P', path)
+	data_json = json.loads(data)
 
 	assert data != None 
 
-	data_json = json.loads(data)
-
 	assert data_json["model"] == "NETCDF3_CLASSIC"
 
-	assert data_json["fn"] == "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
+	assert data_json["fn"] == file_upload
 
