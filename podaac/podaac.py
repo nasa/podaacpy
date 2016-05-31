@@ -108,7 +108,7 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 	'''
 
 	try:
-		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+itemsPerPage+'&format='+format
+		url = 'http://podaac.jpl.nasa.gov/ws/metadata/granule?datasetId='+datasetId+'&shortName='+shortName+'&itemsPerPage='+str(itemsPerPage)+'&format='+format
 		granule_md = requests.get(url)
 		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408: 
 			granule_md.raise_for_status()
@@ -476,7 +476,7 @@ def list_available_granule_search_datasetIds():
 		datasetIds_level2.append(x[0].text.encode('utf-8'))
 
 	datasetIds_level1 = []
-	datasetIds_level1 = set(datasetIds) - set(datasetIds_level2)
+	datasetIds_level1 = list(set(datasetIds) - set(datasetIds_level2))
 
 	return datasetIds_level1
 
@@ -505,7 +505,7 @@ def list_available_granule_search_datasetShortNames():
 		x = row.find_all('td')
 		datasetShortNames_level2.append(x[1].text.encode('utf-8'))
 
-	datasetShortNames_level1 = set(datasetShortNames) - set(datasetShortNames_level2)
+	datasetShortNames_level1 = list(set(datasetShortNames) - set(datasetShortNames_level2))
 
 	return datasetShortNames_level1
 
@@ -563,7 +563,7 @@ def list_available_image_granule_datasetIds():
 	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
 	soup = bs(html.text, 'html.parser')
 
-	table = soup.find("table", {"id": "tblDataset2"})
+	table = soup.find("table", {"id": "tblDataset"})
 	rows = table.find_all('tr')
 	rows.remove(rows[0])
 
@@ -585,7 +585,7 @@ def list_available_image_granule_datasetShortNames():
 	html = requests.get('http://podaac.jpl.nasa.gov/ws/image/granule/index.html')
 	soup = bs(html.text, 'html.parser')
 
-	table = soup.find("table", {"id": "tblDataset2"})
+	table = soup.find("table", {"id": "tblDataset"})
 	rows = table.find_all('tr')
 	rows.remove(rows[0])
 
