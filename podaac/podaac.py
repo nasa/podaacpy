@@ -84,7 +84,7 @@ def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 
 def load_last24hours_datacasting_granule_md(datasetId, shortName, format='datacasting', itemsPerPage=7):
 	'''Granule metadata service retrieves metadata for a list \
-		of granules archived within the last 24 hours in Datacasting 
+		of granules archived within the last 24 hours in Datacasting \
 		format.
 	
 	:param datasetId: dataset persistent ID. datasetId or shortName \
