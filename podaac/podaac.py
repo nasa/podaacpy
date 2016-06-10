@@ -13,8 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import requests
+import requests, urllib
 from bs4 import BeautifulSoup as bs
+import os
 
 
 def load_dataset_md(datasetId='', shortName='', format='iso'):
@@ -434,17 +435,13 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 	:returns: a netcdf file or hdf file
 
 	'''
-	try:	
+	try:
 		url = 'http://podaac.jpl.nasa.gov/ws/extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
-		granule = requests.get(url)
-		if granule.status_code == 404 or granule.status_code == 400 or granule.status_code == 503 or granule.status_code == 408: 
-			granule.raise_for_status()
+		path = os.path.join(os.path.dirname(__file__), granuleName)
+		granule = urllib.urlretrieve(url,path)	
 	
-		file = open(granuleName, 'wb+')
-		file.write(granule.text.encode("utf-8"))
-
-	except requests.exceptions.HTTPError as e:
-		print e 
+	except urllib.error.HTTPError,err:
+		print err 
 
 	return granule
 
