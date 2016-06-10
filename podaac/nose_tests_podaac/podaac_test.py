@@ -64,10 +64,17 @@ def test_load_image_granule():
 	assert data != None 
 	assert data == test_data
 
-'''test cases for search datasets and search granule are yet to be written
+'''test cases for search datasets and search granule are yet to be written'''
 
-   test case for the function extract_granule() will be written once the
-   issue#5 @ https://github.com/lewismc/podaacpy/issues/5 '''
+#test case for the function extract_granule()
+def test_extract_granule():
+	granuleName = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
+	data = podaac.extract_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', granuleName, '45,0,180,90', 'netcdf')
+	test_data = data[0].split('/')
+	length =  len(test_data)
+
+	assert data != None
+	assert test_data[length-1] == granuleName
 
 #test case for the function list_available_granule_search_datasetIds()
 def test_list_available_granule_search_datasetIds():
