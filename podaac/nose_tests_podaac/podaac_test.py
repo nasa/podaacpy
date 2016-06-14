@@ -64,6 +64,9 @@ def test_load_image_granule():
 	assert data != None 
 	assert data == test_data
 
+	path = os.path.join(os.path.dirname(__file__), 'PODAAC-ASOP2-25X01_image.jpg')
+	os.remove(path)
+
 '''test cases for search datasets and search granule are yet to be written'''
 
 #test case for the function extract_granule()
@@ -75,6 +78,9 @@ def test_extract_granule():
 
 	assert data != None
 	assert test_data[length-1] == granuleName
+
+	path = os.path.join(os.path.dirname(__file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
+	os.remove(path)
 
 #test case for the function list_available_granule_search_datasetIds()
 def test_list_available_granule_search_datasetIds():
