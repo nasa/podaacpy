@@ -24,5 +24,8 @@ install:
   - python setup.py install
   - pip install requests
   - pip install bs4
+  - pip install coveralls
 script:
-  - nosetests
+  - nosetests  --with-coverage --cover-package=podaac
+after_success:
+  coveralls
