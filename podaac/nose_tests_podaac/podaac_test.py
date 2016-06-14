@@ -56,13 +56,18 @@ def test_load_last24hours_datacasting_granule_md():
 
 #test case for the function load_image_granule()  
 def test_load_image_granule(): 
-	path = os.path.join(os.path.dirname(__file__), 'image_granule_example.png')
- 	test_data = open(path, 'r').read()
-	podaac.load_image_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', '45,0,180,90','300', '200', 'EPSG:4326')
-	data = open('PODAAC-ASOP2-25X01_image.jpg','r').read()
-	
+	datasetId = 'PODAAC-ASOP2-25X01'
+	data = podaac.load_image_granule(datasetId, 'ASCATA-L2-25km', 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', '45,0,180,90','300', '200', 'EPSG:4326')
+	test_data = data[0].split('/')
+	length = len(test_data)
+	header = data[1].getheader('Content-Type')
+
 	assert data != None 
-	assert data == test_data
+	assert header == 'image/png'
+	assert test_data[length-1] == datasetId+'.jpg'
+
+	path = os.path.join(os.path.dirname(__file__), '../'+datasetId+'.jpg')
+	os.remove(path)
 
 '''test cases for search datasets and search granule are yet to be written'''
 
@@ -72,9 +77,14 @@ def test_extract_granule():
 	data = podaac.extract_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', granuleName, '45,0,180,90', 'netcdf')
 	test_data = data[0].split('/')
 	length =  len(test_data)
+	test_filetype = data[1].getheader('Content-Type')
 
 	assert data != None
+	assert test_filetype == 'application/x-netcdf'
 	assert test_data[length-1] == granuleName
+	
+	path = os.path.join(os.path.dirname(__file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
+	os.remove(path)
 
 #test case for the function list_available_granule_search_datasetIds()
 def test_list_available_granule_search_datasetIds():
