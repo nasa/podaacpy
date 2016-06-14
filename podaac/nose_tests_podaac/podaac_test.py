@@ -64,7 +64,7 @@ def test_load_image_granule():
 	assert data != None 
 	assert data == test_data
 
-	path = os.path.join(os.path.dirname(__file__), '../PODAAC-ASOP2-25X01_image.jpg')
+	path = os.path.join(os.path.dirname(__file__), 'PODAAC-ASOP2-25X01_image.jpg')
 	os.remove(path)
 
 '''test cases for search datasets and search granule are yet to be written'''
