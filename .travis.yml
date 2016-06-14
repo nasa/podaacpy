@@ -26,6 +26,6 @@ install:
   - pip install bs4
   - pip install coveralls
 script:
-  - nosetests  --with-coverage --cover-package=podaac
+  - nosetests  --with-coverage --cover-package=podaac --nocapture
 after_script:
   - coveralls
