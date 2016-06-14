@@ -28,4 +28,4 @@ install:
 script:
   - nosetests  --with-coverage --cover-package=podaac
 after_success:
-  coveralls
+  - coveralls
