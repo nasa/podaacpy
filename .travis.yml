@@ -27,5 +27,5 @@ install:
   - pip install coveralls
 script:
   - nosetests  --with-coverage --cover-package=podaac
-after_success:
+after_script:
   - coveralls
