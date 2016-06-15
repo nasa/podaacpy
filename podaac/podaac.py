@@ -383,16 +383,13 @@ def load_image_granule(datasetId='', shortName='', granuleName='', bbox='', heig
 
 	try:
 		url='http://podaac.jpl.nasa.gov/ws/image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
-		image = requests.get(url)
-		if image.status_code == 404 or image.status_code == 400 or image.status_code == 503 or image.status_code == 408: 
-			image.raise_for_status()
+		path = os.path.join(os.path.dirname(__file__), datasetId+'.jpg')
+		image = urllib.urlretrieve(url,path)
 
-	except requests.exceptions.HTTPError as e:
-		print e 
+	except urllib.error.HTTPError,err:
+		print err  
 
-	with open(datasetId+'_image.jpg', 'wb+') as f:
-		for chunk in image:
-			f.write(chunk)
+	return image
 
 def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=''):
 	'''Extract service subsets a granule in PO.DAAC catalog \
