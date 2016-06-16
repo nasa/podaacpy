@@ -16,6 +16,7 @@
 import requests, urllib
 from bs4 import BeautifulSoup as bs
 import os
+import xml.etree.ElementTree as ET
 
 
 def load_dataset_md(datasetId='', shortName='', format='iso'):
@@ -442,67 +443,6 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 
 	return granule
 
-
-
-def list_available_granule_search_datasetIds():
-	'''Convenience function which returns an up-to-date \
-		list of available granule dataset id's.
-
-	:returns: a comma-seperated list of granule dataset id's
-
-	'''
-	datasetIds = []
-	json = requests.get("http://podaac.jpl.nasa.gov/dmasSolr/solr/dataset/select/?q=*:*&fl=Dataset-PersistentId,Dataset-ShortName-Full&rows=2147483647&fq=DatasetPolicy-AccessType-Full:(OPEN+OR+PREVIEW+OR+SIMULATED+OR+REMOTE)+AND+DatasetPolicy-ViewOnline:Y&wt=json").json()
-
-	for data in json["response"]["docs"]:
-		datasetIds.append(data["Dataset-PersistentId"])
-
-	datasetIds_level2 = []
-	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
-	soup = bs(html.text, 'html.parser')
-
-	table = soup.find("table", {"id": "tblDataset2"})
-	rows = table.find_all('tr')
-	rows.remove(rows[0])
-
-	for row in rows:
-		x = row.find_all('td')
-		datasetIds_level2.append(x[0].text.encode('utf-8'))
-
-	datasetIds_level1 = []
-	datasetIds_level1 = list(set(datasetIds) - set(datasetIds_level2))
-
-	return datasetIds_level1
-
-def list_available_granule_search_datasetShortNames():
-	'''Convenience function which returns an up-to-date \
-		list of available granule dataset short names.
-
-	:returns: a comma-seperated list of granule dataset short names.
-
-	'''
-	datasetShortNames = []
-	json = requests.get("http://podaac.jpl.nasa.gov/dmasSolr/solr/dataset/select/?q=*:*&fl=Dataset-PersistentId,Dataset-ShortName-Full&rows=2147483647&fq=DatasetPolicy-AccessType-Full:(OPEN+OR+PREVIEW+OR+SIMULATED+OR+REMOTE)+AND+DatasetPolicy-ViewOnline:Y&wt=json").json()
-
-	for data in json["response"]["docs"]:
-		datasetShortNames.append(data["Dataset-ShortName-Full"])
-
-	datasetShortNames_level2 = []
-	html = requests.get('http://podaac.jpl.nasa.gov/ws/search/granule/index.html')
-	soup = bs(html.text, 'html.parser')
-
-	table = soup.find("table", {"id": "tblDataset2"})
-	rows = table.find_all('tr')
-	rows.remove(rows[0])
-
-	for row in rows:
-		x = row.find_all('td')
-		datasetShortNames_level2.append(x[1].text.encode('utf-8'))
-
-	datasetShortNames_level1 = list(set(datasetShortNames) - set(datasetShortNames_level2))
-
-	return datasetShortNames_level1
-
 def list_available_granule_search_level2_datasetIds():
 	'''Convenience function which returns an up-to-date \
 		list of available level2 granule dataset id's.
@@ -544,6 +484,65 @@ def list_available_granule_search_level2_datasetShortNames():
 		datasetShortNames.append(x[1].text.encode('utf-8'))
 
 	return datasetShortNames
+
+
+def list_available_granule_search_datasetIds():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset id's.
+
+	:returns: a comma-seperated list of granule dataset id's
+
+	'''
+	data_part1 = requests.get('http://podaac.jpl.nasa.gov/ws/search/dataset/?format=atom&itemsPerPage=400').text
+	data_part2 = requests.get('http://podaac.jpl.nasa.gov/ws/search/dataset?startIndex=400&itemsPerPage=400&format=atom').text 
+	root1 = ET.fromstring(data_part1.encode('utf-8'))
+	root2 = ET.fromstring(data_part2.encode('utf-8'))
+
+	datasetIds = []
+	for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
+		Id = entry.find('{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
+		Id = Id.split('\t')[3][:-1]
+		datasetIds.append(Id)
+
+	for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
+		Id = entry.find('{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
+		Id = Id.split('\t')[3][:-1]
+		datasetIds.append(Id)
+
+	datasetIds_level1 = []
+	datasetIds_level2 = list_available_granule_search_level2_datasetIds()
+	datasetIds_level1 = list(set(datasetIds) - set(datasetIds_level2))
+
+	return datasetIds_level1
+
+def list_available_granule_search_datasetShortNames():
+	'''Convenience function which returns an up-to-date \
+		list of available granule dataset short names.
+
+	:returns: a comma-seperated list of granule dataset short names.
+
+	'''
+	data_part1 = requests.get('http://podaac.jpl.nasa.gov/ws/search/dataset/?format=atom&itemsPerPage=400').text
+	data_part2 = requests.get('http://podaac.jpl.nasa.gov/ws/search/dataset?startIndex=400&itemsPerPage=400&format=atom').text 
+	root1 = ET.fromstring(data_part1.encode('utf-8'))
+	root2 = ET.fromstring(data_part2.encode('utf-8'))
+
+	datasetShortNames = []
+	for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
+		Name = entry.find('{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
+		Name = Name.split('\t')[3][:-1]
+		datasetShortNames.append(Name)
+		
+	for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
+		Name = entry.find('{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
+		Name = Name.split('\t')[3][:-1]
+		datasetShortNames.append(Name)
+
+	datasetShortNames_level2 = list_available_granule_search_level2_datasetShortNames()
+	datasetShortNames_level1 = list(set(datasetShortNames) - set(datasetShortNames_level2))
+
+	return datasetShortNames_level1
+
 
 def list_available_image_granule_datasetIds():
 	'''Convenience function which returns an up-to-date \
