@@ -121,7 +121,7 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 
 	return granule_md.text
 
-def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetId='', shortName='', instrument='', satellite='', fileFormat='', status='', processLevel='', sortBy='', bbox='', itemsPerPage=7, pretty=True, format='atom', full=False):
+def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetId='', shortName='', instrument='', satellite='', fileFormat='', status='', processLevel='', sortBy='', bbox='', itemsPerPage='7', pretty='True', format='atom', full='False'):
 	'''Dataset Search service searches PO.DAAC's dataset catalog, over \
 		Level 2, Level 3, and Level 4 datasets, using the following parameters: \
 		datasetId, shortName, startTime, endTime, bbox, and others.
@@ -204,7 +204,7 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 
 	'''
 	try:
-		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+SortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+full
+		url = 'http://podaac.jpl.nasa.gov/ws/search/dataset/?keyword='+keyword+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&datasetId='+datasetId+'&shortName='+shortName+'&instrument='+instrument+'&satellite='+satellite+'&fileFormat='+fileFormat+'&status='+status+'&processLevel='+processLevel+'&sortBy='+sortBy+'&bbox='+bbox+'&itemsPerPage='+itemsPerPage+'&pretty='+pretty+'&format='+format+'&full='+full
 		datasets = requests.get(url)
 		if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408: 
 			datasets.raise_for_status()
@@ -215,7 +215,7 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 
 	return datasets.text
 
-def search_granule(datasetId, shortName, startTime, endTime, bbox, startIndex, sortBy, itemsPerPage=7, format='atom', pretty=True):
+def search_granule(datasetId='', shortName='', startTime='', endTime='', bbox='', startIndex='', sortBy='timeAsc', itemsPerPage='7', format='atom', pretty='True'):
 	'''Search Granule does granule searching on PO.DAAC level 2 swath \
 		datasets (individual orbits of a satellite), and level 3 & 4 \
 		gridded datasets (time averaged to span the globe). Coverage \
@@ -515,6 +515,9 @@ def list_available_granule_search_datasetIds():
 
 	return datasetIds_level1
 
+data = list_available_granule_search_datasetIds();
+print len(data)
+
 def list_available_granule_search_datasetShortNames():
 	'''Convenience function which returns an up-to-date \
 		list of available granule dataset short names.
@@ -538,11 +541,11 @@ def list_available_granule_search_datasetShortNames():
 		Name = Name.split('\t')[3][:-1]
 		datasetShortNames.append(Name)
 
+	#datasetShortNames_level1 = []
 	datasetShortNames_level2 = list_available_granule_search_level2_datasetShortNames()
 	datasetShortNames_level1 = list(set(datasetShortNames) - set(datasetShortNames_level2))
 
 	return datasetShortNames_level1
-
 
 def list_available_image_granule_datasetIds():
 	'''Convenience function which returns an up-to-date \
