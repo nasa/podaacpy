@@ -51,13 +51,49 @@ def test_load_last24hours_datacasting_granule_md():
 	root = ET.fromstring(granule_md.encode('utf-8'))
 	datasetId_ = root[0][3].text
 
-	assert granule_md!=None 
+	assert granule_md != None 
 	assert datasetId_ == datasetId
+
+#test case for the function search_dataset()
+def test_search_dataset():
+	format = 'atom'
+	itemsPerPage = '400'
+	datasets = podaac.search_dataset(format=format, itemsPerPage=itemsPerPage)
+	root = ET.fromstring(datasets.encode('utf-8'))
+	service_name = "PO.DAAC Dataset Search Service"
+	test_service_name = root[3][0].text.split('\t')[3][:-1]
+
+	assert datasets != None
+	assert test_service_name == service_name
+
+
+#test case for the function search_granule()
+def test_search_granule():
+	testDatasetId = 'PODAAC-ASOP2-25X01'
+	startTime = '2013-01-01T01:30:00Z'
+	endTime = '2014-01-01T00:00:00Z'
+	bbox = '-45,-45,45,45'
+	startIndex = '1'
+	format = 'atom'
+	granules = podaac.search_granule(datasetId=testDatasetId, startTime=startTime, endTime=endTime, bbox=bbox, startIndex=startIndex, format=format)
+	root = ET.fromstring(granules.encode('utf-8'))
+	datasetId = root.find('{http://www.w3.org/2005/Atom}entry').find('{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
+	print datasetId
+
+	assert granules != None 
+	assert testDatasetId == datasetId
+
 
 #test case for the function load_image_granule()  
 def test_load_image_granule(): 
 	datasetId = 'PODAAC-ASOP2-25X01'
-	data = podaac.load_image_granule(datasetId, 'ASCATA-L2-25km', 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', '45,0,180,90','300', '200', 'EPSG:4326')
+	shortName = 'ASCATA-L2-25km'
+	granuleName = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
+	bbox = '45,0,180,90'
+	srs = 'EPSG:4326'
+	height = '300'
+	width = '200'
+	data = podaac.load_image_granule(datasetId, shortName, granuleName, bbox, height, width, srs)
 	test_data = data[0].split('/')
 	length = len(test_data)
 
@@ -67,12 +103,14 @@ def test_load_image_granule():
 	path = os.path.join(os.path.dirname(__file__), '../'+datasetId+'.jpg')
 	os.remove(path)
 
-'''test cases for search datasets and search granule are yet to be written'''
-
 #test case for the function extract_granule()
 def test_extract_granule():
+	datasetId = 'PODAAC-ASOP2-25X01'
+	shortName = 'ASCATA-L2-25km'
 	granuleName = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
-	data = podaac.extract_granule('PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', granuleName, '45,0,180,90', 'netcdf')
+	bbox = '45,0,180,90'
+	format = 'netcdf'
+	data = podaac.extract_granule(datasetId, shortName, granuleName, bbox, format)
 	test_data = data[0].split('/')
 	length =  len(test_data)
 
