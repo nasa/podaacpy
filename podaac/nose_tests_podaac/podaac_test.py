@@ -14,8 +14,9 @@
 # limitations under the License.
 
 from .. import podaac 
-import os 
+import os, requests
 import xml.etree.ElementTree as ET
+from nose.tools import assert_raises 
 
 
 #test case for the function load_dataset_md()
@@ -28,6 +29,7 @@ def test_load_dataset_md():
 
 	assert dataset_md != None 
 	assert str(shortName['id']) == datasetShortName
+	assert_raises(requests.exceptions.HTTPError, podaac.load_dataset_md, 'PODAAC-GHMG2-2PO01', 'OSDPD-L2P-MSG02', 'is')
 
 #test case for the fucntion load_granule_md() 
 def test_load_granule_md():
@@ -40,6 +42,7 @@ def test_load_granule_md():
 
 	assert granule_md != None 
 	assert str(shortName['id']) == datasetShortName
+	assert_raises(requests.exceptions.HTTPError, podaac.load_granule_md, format='is')
 
 #test case for the function load_last24hours_datacasting_granule_md()
 def test_load_last24hours_datacasting_granule_md():
@@ -53,6 +56,7 @@ def test_load_last24hours_datacasting_granule_md():
 
 	assert granule_md != None 
 	assert datasetId_ == datasetId
+	assert_raises(requests.exceptions.HTTPError, podaac.load_last24hours_datacasting_granule_md, 'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
 
 #test case for the function search_dataset()
 def test_search_dataset():
@@ -65,7 +69,7 @@ def test_search_dataset():
 
 	assert datasets != None
 	assert test_service_name == service_name
-
+	assert_raises(requests.exceptions.HTTPError, podaac.search_dataset, format='iso')
 
 #test case for the function search_granule()
 def test_search_granule():
@@ -82,7 +86,7 @@ def test_search_granule():
 
 	assert granules != None 
 	assert testDatasetId == datasetId
-
+	assert_raises(requests.exceptions.HTTPError, podaac.search_granule, format='html')
 
 #test case for the function load_image_granule()  
 def test_load_image_granule(): 
@@ -99,8 +103,11 @@ def test_load_image_granule():
 
 	assert data != None 
 	assert test_data[length-1] == datasetId+'.jpg'
+	assert_raises(Exception, podaac.load_image_granule,datasetId="HBJHKASD")
 
 	path = os.path.join(os.path.dirname(__file__), '../'+datasetId+'.jpg')
+	os.remove(path)
+	path = os.path.join(os.path.dirname(__file__), '../'+"HBJHKASD"+'.jpg')
 	os.remove(path)
 
 #test case for the function extract_granule()
@@ -116,7 +123,8 @@ def test_extract_granule():
 
 	assert data != None
 	assert test_data[length-1] == granuleName
-	
+	assert_raises(Exception, podaac.extract_granule, datasetId='PODAAC-ASOP2-25X01')
+
 	path = os.path.join(os.path.dirname(__file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
 	os.remove(path)
 
