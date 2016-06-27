@@ -46,8 +46,9 @@ def load_dataset_md(datasetId='', shortName='', format='iso'):
 		if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503 or metadata.status_code == 408: 
 			metadata.raise_for_status()
 		
-	except requests.exceptions.ReturnException as e:
-		print e 
+	except requests.exceptions.HTTPError as error:
+		print error 
+		raise
 
 	return metadata.text
 
@@ -80,8 +81,9 @@ def load_granule_md(datasetId='', shortName='', granuleName='', format='iso'):
 		if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408: 
 			granule_md.raise_for_status()
 
-	except requests.exceptions.ReturnException as e:
-		print e
+	except requests.exceptions.HTTPError as error:
+		print error
+		raise
 
 	return granule_md.text
 
@@ -117,8 +119,9 @@ def load_last24hours_datacasting_granule_md(datasetId, shortName, format='dataca
 			granule_md.raise_for_status()
 		
 
-	except requests.exceptions.HTTPError as e:
-		print e
+	except requests.exceptions.HTTPError as error:
+		print error
+		raise
 
 	return granule_md.text
 
@@ -211,8 +214,9 @@ def search_dataset(keyword='', startTime='', endTime='', startIndex='', datasetI
 			datasets.raise_for_status()
 		
 
-	except requests.exceptions.HTTPError as e:
-		print e 
+	except requests.exceptions.HTTPError as error:
+		print error
+		raise
 
 	return datasets.text
 
@@ -289,8 +293,9 @@ def search_granule(datasetId='', shortName='', startTime='', endTime='', bbox=''
 		if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408: 
 			granules.raise_for_status()
 
-	except requests.exceptions.HTTPError as e:
-		print e 
+	except requests.exceptions.HTTPError as error:
+		print error
+		raise 
 
 	return granules.text
 
@@ -387,9 +392,11 @@ def load_image_granule(datasetId='', shortName='', granuleName='', bbox='', heig
 		url = URL+'image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
 		path = os.path.join(os.path.dirname(__file__), datasetId+'.jpg')
 		image = urllib.urlretrieve(url,path)
-
-	except urllib.error.HTTPError,err:
-		print err  
+		if image[1].getheader('Content-Type') == 'text/plain':
+			raise Exception("Service type image not availalble for this dataset : "+datasetId)
+	
+	except Exception:
+		raise
 
 	return image
 
@@ -437,10 +444,12 @@ def extract_granule(datasetId='', shortName='', granuleName='', bbox='', format=
 	try:
 		url = URL+'extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
 		path = os.path.join(os.path.dirname(__file__), granuleName)
-		granule = urllib.urlretrieve(url,path)	
+		granule = urllib.urlretrieve(url,path)
+		if granule[1].getheader('Content-Type') == 'text/plain':
+			raise Exception("Unexpected Error Occured")	
 	
-	except urllib.error.HTTPError,err:
-		print err 
+	except Exception:
+		raise
 
 	return granule
 
@@ -515,9 +524,6 @@ def list_available_granule_search_datasetIds():
 	datasetIds_level1 = list(set(datasetIds) - set(datasetIds_level2))
 
 	return datasetIds_level1
-
-data = list_available_granule_search_datasetIds();
-print len(data)
 
 def list_available_granule_search_datasetShortNames():
 	'''Convenience function which returns an up-to-date \
