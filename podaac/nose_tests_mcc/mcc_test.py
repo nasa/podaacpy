@@ -14,10 +14,12 @@
 # limitations under the License.
 
 
-from .. import mcc
+from ..mcc import MCC
 import os, requests
 import json 
 from nose.tools import assert_raises
+
+mcc = MCC()
 
 def test_check_remote_file():
 	url_upload = "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc"
