@@ -13,11 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .. import podaac 
+from ..podaac import Podaac 
+from ..podaac_utils import PodaacUtils
 import os, requests
 import xml.etree.ElementTree as ET
 from nose.tools import assert_raises 
 
+podaac = Podaac()
+podaac_utils = PodaacUtils()
 
 #test case for the function load_dataset_md()
 def test_load_dataset_md():
@@ -130,7 +133,7 @@ def test_extract_granule():
 
 #test case for the function list_available_granule_search_datasetIds()
 def test_list_available_granule_search_datasetIds():
-	data = podaac.list_available_granule_search_datasetIds()
+	data = podaac_utils.list_available_granule_search_datasetIds()
 
 	assert data != None
 	assert type(data) is list
@@ -138,7 +141,7 @@ def test_list_available_granule_search_datasetIds():
 
 #test case for the function list_available_granule_search_datasetShortNames()
 def test_list_available_granule_search_datasetShortNames():
-	data = podaac.list_available_granule_search_datasetShortNames()
+	data = podaac_utils.list_available_granule_search_datasetShortNames()
 
 	assert data != None
 	assert type(data) is list
@@ -146,7 +149,7 @@ def test_list_available_granule_search_datasetShortNames():
 
 #test case for the function list_available_granule_search_level2_datasetIds()
 def test_list_available_granule_search_level2_datasetIds():
-	data = podaac.list_available_granule_search_level2_datasetIds()
+	data = podaac_utils.list_available_granule_search_level2_datasetIds()
 
 	assert data != None
 	assert type(data) is list
@@ -154,7 +157,7 @@ def test_list_available_granule_search_level2_datasetIds():
 
 #test case for the function list_available_granule_search_level2_datasetShortNames()
 def test_list_available_granule_search_level2_datasetShortNames():
-	data = podaac.list_available_granule_search_level2_datasetShortNames()
+	data = podaac_utils.list_available_granule_search_level2_datasetShortNames()
 
 	assert data != None
 	assert type(data) is list
@@ -162,7 +165,7 @@ def test_list_available_granule_search_level2_datasetShortNames():
 
 #test case for the function list_available_image_granule_datasetIds()
 def test_list_available_image_granule_datasetIds():
-	data = podaac.list_available_image_granule_datasetIds()
+	data = podaac_utils.list_available_image_granule_datasetIds()
 
 	assert data != None
 	assert type(data) is list
@@ -170,7 +173,7 @@ def test_list_available_image_granule_datasetIds():
 
 #test case for the function list_available_image_granule_datasetShortNames()
 def test_list_available_image_granule_datasetShortNames():
-	data = podaac.list_available_image_granule_datasetShortNames()
+	data = podaac_utils.list_available_image_granule_datasetShortNames()
 
 	assert data != None
 	assert type(data) is list
@@ -178,7 +181,7 @@ def test_list_available_image_granule_datasetShortNames():
 
 #test case for the function list_available_extract_granule_datasetIds()
 def test_list_available_extract_granule_datasetIds(): 
-	data = podaac.list_available_extract_granule_datasetIds()
+	data = podaac_utils.list_available_extract_granule_datasetIds()
 
 	assert data != None
 	assert type(data) is list
@@ -186,7 +189,7 @@ def test_list_available_extract_granule_datasetIds():
 
 #test case for the function list_available_extract_granule_datasetShortNames()
 def test_list_available_extract_granule_datasetShortNames():
-	data = podaac.list_available_extract_granule_datasetShortNames()
+	data = podaac_utils.list_available_extract_granule_datasetShortNames()
 
 	assert data != None
 	assert type(data) is list
