@@ -3,7 +3,7 @@
 <img src="https://readthedocs.org/projects/podaacpy/badge/?version=latest" />
 <img src="https://travis-ci.org/lewismc/podaacpy.svg?branch=master" />
 <a href='https://coveralls.io/github/lewismc/podaacpy?branch=master'><img src='https://coveralls.io/repos/github/lewismc/podaacpy/badge.svg?branch=master' alt='Coverage Status' /></a> 
-
+<a href="https://requires.io/github/lewismc/podaacpy/requirements/?branch=master"><img src="https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master" alt="Requirements Status" /></a>
 
 <img src="https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png" align="right" width="300" />
 A python utility library for interacting with NASA JPL's [PO.DAAC](http://podaac.jpl.nasa.gov)
