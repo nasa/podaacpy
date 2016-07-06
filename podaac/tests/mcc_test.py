@@ -28,8 +28,8 @@ def test_check_remote_file():
 
 	assert data != None
 	assert data_json["model"] == "NETCDF4"
-	assert data_json["fn"] == url_upload
-	assert_raises(requests.exceptions.HTTPError, check_remote_file, checkers='CF', url_upload='abc.xyz.com')
+	assert data_json["fn"] == "2dim-grid.nc"
+	assert_raises(requests.exceptions.HTTPError, mcc.check_remote_file, checkers='CF', url_upload='abc.xyz.com')
 
 
 def test_check_local_file(): 
