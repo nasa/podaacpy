@@ -51,6 +51,7 @@ class MCC:
 
 		except requests.exceptions.HTTPError as error:
 			print error
+			raise
 
 		return result.text
 
@@ -91,6 +92,7 @@ class MCC:
 
 		except requests.exceptions.HTTPError as error:
 			print error
+			raise
 
 		except Exception:
 			raise
