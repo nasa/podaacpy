@@ -16,6 +16,8 @@
 # under the License.
 
 strictness : medium
+pylint:
+  run: false
 python-targets:
    -2
 test-warnings: no
