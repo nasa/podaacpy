@@ -37,7 +37,7 @@ _classifiers  = [
 ]
 _description  = 'PO.DAAC Python API'
 _downloadURL  = 'http://pypi.python.org/pypi/podaacpy/'
-_requirements = []
+_requirements = ["requests", "bs4","coveralls"]
 _keywords     = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
 _license      = 'Apache License, Version 2.0'
 _long_description    = 'A python utility library for interacting with NASA JPLs PO.DAAC'

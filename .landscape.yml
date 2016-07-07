@@ -17,11 +17,11 @@
 
 strictness : medium
 python-targets:
-	-2
+   -2
 test-warnings: no
 pep8:
-	full:true 
+   full:true 
 ignore-paths:
-	-docs/
+   - docs/
 requirements:
-	-setup.py
+   -setup.py
