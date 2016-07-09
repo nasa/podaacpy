@@ -16,12 +16,14 @@
 # under the License.
 
 strictness : medium
+pylint:
+  run: false
 python-targets:
-	-2
+   -2
 test-warnings: no
 pep8:
-	full:true 
+   full:true 
 ignore-paths:
-	-docs/
+   - docs/
 requirements:
-	-setup.py
+   -setup.py
