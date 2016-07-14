@@ -105,7 +105,7 @@ def test_load_image_granule():
 	length = len(test_data)
 
 	assert data != None 
-	assert test_data[length-1] == datasetId+'.jpg'
+	assert test_data[length-1] == datasetId+'.png'
 	assert_raises(Exception, podaac.load_image_granule,datasetId="HBJHKASD")
 
 	path = os.path.join(os.path.dirname(__file__), '../'+datasetId+'.png')
