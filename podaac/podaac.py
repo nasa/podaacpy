@@ -92,7 +92,7 @@ class Podaac:
 
 		return granule_md.text
 
-	def load_last24hours_datacasting_granule_md(self, datasetId, shortName, format='datacasting', itemsPerPage=7):
+	def load_last24hours_datacasting_granule_md(self, datasetId='', shortName='', format='datacasting', itemsPerPage=7):
 		'''Granule metadata service retrieves metadata for a list \
 			of granules archived within the last 24 hours in Datacasting \
 			format.
