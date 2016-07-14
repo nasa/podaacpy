@@ -395,7 +395,7 @@ class Podaac:
 
 		try:
 			url = self.URL+'image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
-			path = os.path.join(os.path.dirname(__file__), datasetId+'.jpg')
+			path = os.path.join(os.path.dirname(__file__), datasetId+'.png')
 			image = urllib.urlretrieve(url,path)
 			if image[1].getheader('Content-Type') == 'text/plain':
 				raise Exception("Service type image not availalble for this dataset : "+datasetId)
