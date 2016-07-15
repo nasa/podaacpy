@@ -105,12 +105,12 @@ def test_load_image_granule():
 	length = len(test_data)
 
 	assert data != None 
-	assert test_data[length-1] == datasetId+'.jpg'
+	assert test_data[length-1] == datasetId+'.png'
 	assert_raises(Exception, podaac.load_image_granule,datasetId="HBJHKASD")
 
-	path = os.path.join(os.path.dirname(__file__), '../'+datasetId+'.jpg')
+	path = os.path.join(os.path.dirname(__file__), '../'+datasetId+'.png')
 	os.remove(path)
-	path = os.path.join(os.path.dirname(__file__), '../'+"HBJHKASD"+'.jpg')
+	path = os.path.join(os.path.dirname(__file__), '../'+"HBJHKASD"+'.png')
 	os.remove(path)
 
 #test case for the function extract_granule()
