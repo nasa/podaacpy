@@ -1,5 +1,6 @@
 # podaacpy
 
+<img src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg" />
 <img src="https://readthedocs.org/projects/podaacpy/badge/?version=latest" />
 <img src="https://travis-ci.org/lewismc/podaacpy.svg?branch=master" />
 <a href='https://coveralls.io/github/lewismc/podaacpy?branch=master'>
