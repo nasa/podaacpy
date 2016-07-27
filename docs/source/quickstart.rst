@@ -120,9 +120,9 @@ Retrieve granule images
 ^^^^^^^^^^^^^^^^^^^^^^^
 `Image Granule <http://podaac.jpl.nasa.gov/ws/image/granule/index.html>`_ - renders granules in the PO.DAAC's catalog to images such as jpeg and/or png. In the following code snippet we display a GetMap request ::
 
-   result = p.load_image_granule(shortName='ASCATB-L2-25km', granuleName='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS')
+   result = p.load_image_granule(shortName='ASCATB-L2-25km', granuleName='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS',path='path/to/the/destination/directory')
 
-The above request returns us a nice image shown below
+The above request downloads us a nice image shown below
 
 .. image:: granule.png
 
@@ -132,9 +132,9 @@ Exract a granule
 ^^^^^^^^^^^^^^^^
 `Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, shortName of **QSCAT_LEVEL_2B_V2**, granuleName **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and have it saved as **netcdf** ::
 
-   result = p.extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf')
+   result = p.extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf',path='path/to/the/destination/directory')
 
-The above request returns the relevant .netcdf file. For more information on this function, see :doc:`webservices`
+The above request downloads the relevant .netcdf file. For more information on this function, see :doc:`webservices`
 
 .. _mcc:
 

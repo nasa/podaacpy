@@ -389,6 +389,10 @@ class Podaac:
 			default projection. Example: EPSG:4326
 		:type srs: :mod:`string`
 
+		:param path: Destination directory into which the image\
+			needs to be downloaded.
+		:type format: :mod:`string`
+
 		:returns: a png image file.
 
 		'''
@@ -444,6 +448,10 @@ class Podaac:
 
 		:param format: Required. Saved file format. Possible \
 			values: netcdf, hdf
+		:type format: :mod:`string`
+
+		:param path: Destination directory into which the granule\
+			needs to be downloaded.
 		:type format: :mod:`string`
 
 		:returns: a netcdf file or hdf file
