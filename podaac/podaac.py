@@ -305,7 +305,7 @@ class Podaac:
 		return granules.text
 
 
-	def load_image_granule(self, datasetId='', shortName='', granuleName='', bbox='', height='', width='', style='', srs='', request='GetMap', service='WMS', version='1.3.0', format='image/png', layers=''):
+	def load_image_granule(self, datasetId='', shortName='', granuleName='', bbox='', height='', width='', style='', srs='', request='GetMap', service='WMS', version='1.3.0', format='image/png', layers='', path=''):
 		'''The PODAAC Image service renders granules in the \
 			PO.DAACs catalog to images such as jpeg and/or png. \
 			This image service also utilizes OGC WMS protocol. \
@@ -389,13 +389,20 @@ class Podaac:
 			default projection. Example: EPSG:4326
 		:type srs: :mod:`string`
 
+		:param path: Destination directory into which the image\
+			needs to be downloaded.
+		:type format: :mod:`string`
+
 		:returns: a png image file.
 
 		'''
 
 		try:
 			url = self.URL+'image/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&request='+request+'&bbox='+bbox+'&height='+height+'&width='+width+'&style='+style+'&srs='+srs+'&service='+service+'&version='+version+'&format='+format+'&layers='+layers
-			path = os.path.join(os.path.dirname(__file__), datasetId+'.png')
+			if path=='':
+				path = os.path.join(os.path.dirname(__file__), datasetId+'.png')
+			else:
+				path = path+'/'+datasetId+'.png'
 			image = urllib.urlretrieve(url,path)
 			if image[1].getheader('Content-Type') == 'text/plain':
 				raise Exception("Service type image not availalble for this dataset : "+datasetId)
@@ -405,7 +412,7 @@ class Podaac:
 
 		return image
 
-	def extract_granule(self, datasetId='', shortName='', granuleName='', bbox='', format=''):
+	def extract_granule(self, datasetId='', shortName='', granuleName='', bbox='', format='',path=''):
 		'''Extract service subsets a granule in PO.DAAC catalog \
 		and produces either netcdf3 or hdf4 files. If the granule \
 		does not have any data in the given selected bounding box, \
@@ -443,12 +450,19 @@ class Podaac:
 			values: netcdf, hdf
 		:type format: :mod:`string`
 
+		:param path: Destination directory into which the granule\
+			needs to be downloaded.
+		:type format: :mod:`string`
+
 		:returns: a netcdf file or hdf file
 
 		'''
 		try:
 			url = self.URL+'extract/granule/?datasetId='+datasetId+'&shortName='+shortName+'&granuleName='+granuleName+'&bbox='+bbox+'&format='+format
-			path = os.path.join(os.path.dirname(__file__), granuleName)
+			if path=='':
+				path = os.path.join(os.path.dirname(__file__), granuleName)
+			else:
+				path = path+'/'+granuleName
 			granule = urllib.urlretrieve(url,path)
 			if granule[1].getheader('Content-Type') == 'text/plain':
 				raise Exception("Unexpected Error Occured")	
