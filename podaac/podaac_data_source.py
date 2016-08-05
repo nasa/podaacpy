@@ -471,3 +471,40 @@ class Podaac:
 			raise
 
 		return granule
+
+
+	def extract_l4_granule(self,datasetId='', shortName='', path=''):
+		'''This is an additional fucntion that we have provided apart \
+		from the availalble webservices. The extract_l4_granule helps \
+		retrieve the level 4 datasets from openDap server directly, \
+		accompanied by the search granule for retrieving granule name \
+		related to the specific datasetId and shortName
+
+		:param datasetId: dataset persistent ID. datasetId or \
+			shortName is required for a granule search. Example: \
+			PODAAC-ASOP2-25X01
+		:type datasetId: :mod:`string`
+
+		:param shortName: the shorter name for a dataset. \
+			Either shortName or datasetId is required for a \
+			granule search. Example: ASCATA-L2-25km
+		:type shortName: :mod:`string`
+
+		:param path: Destination directory into which the granule\
+			needs to be downloaded.
+		:type format: :mod:`string`
+		'''
+
+		startIndex='1'
+		search_data = self.search_granule(datasetId=datasetId, shortName=shortName, startIndex=startIndex)
+		root = ET.fromstring(search_data.encode('utf-8'))
+		url = root[12][6].attrib['href']
+		data = root[12][0].text
+		granuleName = data.split('\t')[3][:-1]
+		if path=='':
+				path = os.path.join(os.path.dirname(__file__), granuleName)
+		else:
+				path = path+'/'+granuleName
+		urllib.urlretrieve(url,path)
+		return granuleName
+
