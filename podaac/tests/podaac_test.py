@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ..podaac import Podaac 
+from ..podaac_data_source import Podaac 
 from ..podaac_utils import PodaacUtils
 import os, requests
 import xml.etree.ElementTree as ET
@@ -133,6 +133,23 @@ class test_podaac(unittest.TestCase):
 		assert_raises(Exception, self.podaac.extract_granule, datasetId='PODAAC-ASOP2-25X01')
 
 		path = os.path.join(os.path.dirname(__file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
+		os.remove(path)
+	
+	#test case for the function extract_l4_granule()
+	def test_extract_l4_granule(self):
+		datasetId = 'PODAAC-GHCMC-4FM02'
+		shortName = 'CMC0.2deg-CMC-L4-GLOB-v2.0'
+		test_format = '.nc'
+		path = os.path.dirname(os.path.abspath(__file__))
+		granuleName = self.podaac.extract_l4_granule(datasetId, shortName, path)
+		length = len(granuleName)
+		format = granuleName[length-3:length]
+		
+		assert granuleName != None
+		assert format == test_format
+		assert_raises(Exception,self.podaac.extract_l4_granule, datasetId='ABCDEF')
+
+		path = os.path.join(os.path.dirname(__file__), granuleName)
 		os.remove(path)
 
 	#test case for the function list_available_granule_search_datasetIds()

@@ -293,7 +293,10 @@ class Podaac:
 		'''
 		
 		try:
-			url = self.URL+'search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
+			if(bbox==''):
+				url = self.URL+'search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
+			else:
+				url = self.URL+'search/granule/?datasetId='+datasetId+'&shortName='+shortName+'&startTime='+startTime+'&endTime='+endTime+'&bbox='+bbox+'&startIndex='+startIndex+'&sortBy='+sortBy+'&itemsPerPage='+itemsPerPage+'&format='+format+'&pretty='+pretty
 			granules = requests.get(url)
 			if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408: 
 				granules.raise_for_status()
@@ -494,17 +497,23 @@ class Podaac:
 			needs to be downloaded.
 		:type format: :mod:`string`
 		'''
+		try:
+			startIndex='1'
+			search_data = self.search_granule(datasetId=datasetId, shortName=shortName, startIndex=startIndex)
+			root = ET.fromstring(search_data.encode('utf-8'))
+			url = root[12][6].attrib['href']
+			url = url[:-5]
+			granuleName = root[12][0].text
+			granuleName = granuleName.split('\t')[3][:-1]
+			if path=='':
+					path = os.path.join(os.path.dirname(__file__), granuleName)
+			else:
+					path = path+'/'+granuleName
+			granule = urllib.urlretrieve(url,path)
+			if granule[1].getheader('Content-Type') == 'text/plain':
+				raise Exception("Unexpected Error Occured")
 
-		startIndex='1'
-		search_data = self.search_granule(datasetId=datasetId, shortName=shortName, startIndex=startIndex)
-		root = ET.fromstring(search_data.encode('utf-8'))
-		url = root[12][6].attrib['href']
-		data = root[12][0].text
-		granuleName = data.split('\t')[3][:-1]
-		if path=='':
-				path = os.path.join(os.path.dirname(__file__), granuleName)
-		else:
-				path = path+'/'+granuleName
-		urllib.urlretrieve(url,path)
+		except Exception:
+			raise
+		
 		return granuleName
-
