@@ -242,7 +242,7 @@ class Podaac:
                 return granules where actual data does not intersect the selected \
                 bounding box but its footprint intersects the selected bounding \
                 box. The following parameters are supported: datasetId, \
-                shortName, startTime, endTime, bbox, and others. 
+                shortName, startTime, endTime, bbox, and others.
 
         :param datasetId: dataset persistent ID. datasetId or shortName \
                 is required for a granule search. Example: PODAAC-ASOP2-25X01
@@ -332,7 +332,7 @@ class Podaac:
                 contain no data or gaps. If the selected bounding box \
                 resides on no data or gaps, HTTP 500 will be thrown. \
                 There are three request methods in this service. They \
-                are GetCapabilities, GetLegendGraphic, and GetMap. 
+                are GetCapabilities, GetLegendGraphic, and GetMap.
 
         :param datasetId: dataset persistent ID. datasetId or \
                 shortName is required for a granule search. Example: \
@@ -440,7 +440,7 @@ class Podaac:
         uses coverage footprint polygons generated for each \
         granule, and this footprint can contain no data or gaps. \
         If the selected bounding box resides on no data or gaps, \
-        HTTP 500 will be thrown. 
+        HTTP 500 will be thrown.
 
         :param datasetId: dataset persistent ID. datasetId or \
                 shortName is required for a granule search. Example: \
