@@ -15,33 +15,36 @@
 
 
 from ..mcc import MCC
-import os, requests
-import json 
+import os
+import requests
+import json
 from nose.tools import assert_raises
 import unittest
 
+
 class testMCC(unittest.TestCase):
-	def setUp(self):
-		self.mcc = MCC()
 
-	def test_check_remote_file(self):
-		url_upload = "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc"
-		data = self.mcc.check_remote_file('CF', url_upload)
-		data_json = json.loads(data)
+    def setUp(self):
+        self.mcc = MCC()
 
-		assert data != None
-		assert data_json["model"] == "NETCDF4"
-		assert data_json["fn"] == "2dim-grid.nc"
-		assert_raises(requests.exceptions.HTTPError, self.mcc.check_remote_file, checkers='CF', url_upload='abc.xyz.com')
+    def test_check_remote_file(self):
+        url_upload = "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc"
+        data = self.mcc.check_remote_file('CF', url_upload)
+        data_json = json.loads(data)
 
+        assert data != None
+        assert data_json["model"] == "NETCDF4"
+        assert data_json["fn"] == "2dim-grid.nc"
+        assert_raises(requests.exceptions.HTTPError, self.mcc.check_remote_file,
+                      checkers='CF', url_upload='abc.xyz.com')
 
-	def test_check_local_file(self): 
-		file_upload = "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
-		path = os.path.join(os.path.dirname(__file__), file_upload)
-		data = self.mcc.check_local_file(1.1, 'L2P', path)
-		data_json = json.loads(data)
+    def test_check_local_file(self):
+        file_upload = "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
+        path = os.path.join(os.path.dirname(__file__), file_upload)
+        data = self.mcc.check_local_file(1.1, 'L2P', path)
+        data_json = json.loads(data)
 
-		assert data != None 
-		assert data_json["model"] == "NETCDF3_CLASSIC"
-		assert data_json["fn"] == file_upload
-		assert_raises(Exception, self.mcc.check_local_file, 1.1,'L2P', " ")
+        assert data != None
+        assert data_json["model"] == "NETCDF3_CLASSIC"
+        assert data_json["fn"] == file_upload
+        assert_raises(Exception, self.mcc.check_local_file, 1.1, 'L2P', " ")
