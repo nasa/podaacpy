@@ -130,9 +130,17 @@ For more information on this function, see :doc:`webservices`
 
 Exract a granule
 ^^^^^^^^^^^^^^^^
-`Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, shortName of **QSCAT_LEVEL_2B_V2**, granuleName **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and have it saved as **netcdf** ::
+`Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, shortName of **QSCAT_LEVEL_2B_V2**, granuleName **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and provide a path to the directory you want to have it saved as **netcdf** ::
 
-   result = p.extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf',path='path/to/the/destination/directory')
+   result = p.extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf', path='path/to/the/destination/directory')
+
+The above request downloads the relevant .netcdf file. For more information on this function, see :doc:`webservices`
+
+Extract level4 granule
+^^^^^^^^^^^^^^^^^^^^^^
+Right now the `Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>` supports only level 2 granules. Extract l4 granule is an add-on over extract granule to extract level 4 gridded datasets from the PODAAC data source. In the following code snippet we extract a level4 granule with Dataset ID = **PODAAC-CCF30-01XXX**, shortName of **CCMP_MEASURES_ATLAS_L4_OW_L3_0_WIND_VECTORS_FLK** and provide a path to the directory you want to have it saved as **netcdf** ::
+
+   result = p.extract_l4_granule(datasetId='PODAAC-CCF30-01XXX', shortName='CCMP_MEASURES_ATLAS_L4_OW_L3_0_WIND_VECTORS_FLK', path='path/to/the/destination/directory')
 
 The above request downloads the relevant .netcdf file. For more information on this function, see :doc:`webservices`
 
