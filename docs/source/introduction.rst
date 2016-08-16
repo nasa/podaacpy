@@ -35,6 +35,7 @@ What does podaacpy offer?
 The library provides a Python toolkit for interacting with all of PO.DAACs API's, namely
 
 * `PO.DAAC Web Services <https://podaac.jpl.nasa.gov/ws/>`_: services include
+
  * `Dataset Metadata <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`_ - retrieves the metadata of a dataset
  * `Granule Metadata <http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html>`_ - retrieves the metadata of a granule
  * `Search Dataset <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`_ - searches PO.DAAC's dataset catalog, over Level 2, Level 3, and Level 4 datasets
