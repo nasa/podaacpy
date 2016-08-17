@@ -14,9 +14,7 @@
 # limitations under the License.
 
 import requests
-import urllib
 from bs4 import BeautifulSoup as bs
-import os
 import xml.etree.ElementTree as ET
 
 
