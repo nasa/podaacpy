@@ -19,11 +19,11 @@ strictness : medium
 pylint:
   run: false
 python-targets:
-   -2
+   - 2
 test-warnings: no
 pep8:
    full: true 
 ignore-paths:
    - docs/
 requirements:
-   -setup.py
+   - setup.py
