@@ -22,7 +22,7 @@ python-targets:
    -2
 test-warnings: no
 pep8:
-   full:true 
+   full: true 
 ignore-paths:
    - docs/
 requirements:
