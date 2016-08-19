@@ -1,25 +1,15 @@
 # podaacpy
-<a href="http://www.apache.org/licenses/LICENSE-2.0">
-  <img src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg" />
-</a>
-[![PyPI](https://img.shields.io/pypi/v/podaacpy.svg?maxAge=2592000?style=plastic)](https://pypi.python.org/pypi/podaacpy)
-<a href="http://podaacpy.readthedocs.org/en/latest/">
-  <img src="https://readthedocs.org/projects/podaacpy/badge/?version=latest" alt='Latest Documentation' />
-</a>
-<a href="https://travis-ci.org/lewismc/podaacpy">
-  <img src="https://travis-ci.org/lewismc/podaacpy.svg?branch=master" />
-</a>
-<a href='https://coveralls.io/github/lewismc/podaacpy?branch=master'>
-  <img src='https://coveralls.io/repos/github/lewismc/podaacpy/badge.svg?branch=master' alt='Coverage Status' />
-</a> 
-<a href="https://requires.io/github/lewismc/podaacpy/requirements/?branch=master">
-  <img src="https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master" alt="Requirements Status" />
-</a>
-<a href="https://landscape.io/github/lewismc/podaacpy/master">
-  <img alt="Code Health" src="https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat"/>
-</a>
 
-<img src="https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png" align="right" width="300" />
+[![license](https://img.shields.io/github/license/lewismc/podaacpy.svg?maxAge=2592000)](http://www.apache.org/licenses/LICENSE-2.0)
+[![PyPI](https://img.shields.io/pypi/v/podaacpy.svg?maxAge=2592000?style=plastic)](https://pypi.python.org/pypi/podaacpy)
+[![documentation](https://readthedocs.org/projects/podaacpy/badge/?version=latest)](http://podaacpy.readthedocs.org/en/latest/)
+[![Travis](https://img.shields.io/travis/lewismc/podaacpy.svg?maxAge=2592000?style=plastic)](https://travis-ci.org/lewismc/podaacpy)
+[![Coveralls](https://img.shields.io/coveralls/lewismc/podaacpy.svg?maxAge=2592000?style=plastic)](https://coveralls.io/github/lewismc/podaacpy?branch=master)
+[![Requirements Status](https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master)](https://requires.io/github/lewismc/podaacpy/requirements/?branch=master)
+[![Code Health](https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat-square)](https://landscape.io/github/lewismc/podaacpy/master)
+
+![](https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png | width=100 | align=right)
+
 A python utility library for interacting with NASA JPL's [PO.DAAC](http://podaac.jpl.nasa.gov)
 
 ## What is PO.DAAC?
