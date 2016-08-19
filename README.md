@@ -8,7 +8,7 @@
 [![Requirements Status](https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master)](https://requires.io/github/lewismc/podaacpy/requirements/?branch=master)
 [![Code Health](https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat-square)](https://landscape.io/github/lewismc/podaacpy/master)
 
-![Code Health](https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png |width=100 | align=right)
+[![NASA JPL PO.DAAC](https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png |width=100 | align=right)](http://podaac.jpl.nasa.gov)
 
 
 A python utility library for interacting with NASA JPL's [PO.DAAC](http://podaac.jpl.nasa.gov)
