@@ -54,19 +54,19 @@ First lets define the relevant import ::
 
 The convenience functions are; ::
 
-   result = u.list_available_granule_search_level2_datasetIds()
+   result = u.list_available_granule_search_level2_dataset_ids()
 
    result = u.list_available_granule_search_level2_datasetShortNames()
 
-   result = u.list_available_granule_search_datasetIds()
+   result = u.list_available_granule_search_dataset_ids()
 
    result = u.list_available_granule_search_datasetShortNames()
 
-   result = u.list_available_image_granule_datasetIds()
+   result = u.list_available_image_granule_dataset_ids()
 
    result = u.list_available_image_granule_datasetShortNames()
 
-   result = u.list_available_extract_granule_datasetIds():
+   result = u.list_available_extract_granule_dataset_ids():
   
    result = u.list_available_extract_granule_datasetShortNames():
 
@@ -77,23 +77,23 @@ Retrieving Dataset Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 `Dataset Metadata <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`_ - retrieves the metadata of a dataset. In the following code snippet lets retrieve dataset metadata for GHRSST Level 2P Atlantic Regional Skin Sea Surface Temperature from the Spinning Enhanced Visible and InfraRed Imager (SEVIRI) on the Meteosat Second Generation (MSG-2) satellite e.g. dataset id **PODAAC-GHMG2-2PO01** ::
 
-  result = p.load_dataset_md(datasetId='PODAAC-GHMG2-2PO01')
+  result = p.load_dataset_md(dataset_id='PODAAC-GHMG2-2PO01')
 
 The variable **result** now contains an XML response which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
 
 Retrieving Granule Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-`Granule Metadata <http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html>`_ - retrieves the metadata of a granule. In the following code snippet we retrieve granule metadata for the above dataset e.g. granuleName **20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc** ::
+`Granule Metadata <http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html>`_ - retrieves the metadata of a granule. In the following code snippet we retrieve granule metadata for the above dataset e.g. granule_name **20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc** ::
 
-  result = p.load_granule_md(datasetId='PODAAC-GHMG2-2PO01', granuleName='20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc')
+  result = p.load_granule_md(dataset_id='PODAAC-GHMG2-2PO01', granule_name='20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc')
 
 The variable **result** now contains an XML response which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
 
 Additionally, we can search metadata for list of granules archived within the last 24 hours in `Datacasting <http://datacasting.jpl.nasa.gov/xml_specification/>`_ format. ::
 
-  result = p.load_last24hours_datacasting_granule_md(datasetId='PODAAC-GHMG2-2PO01')
+  result = p.load_last24hours_datacasting_granule_md(dataset_id='PODAAC-GHMG2-2PO01')
 
 The variable **result** now contains an XML response containing a list of data granules which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
@@ -111,7 +111,7 @@ Searching for Granules
 ^^^^^^^^^^^^^^^^^^^^^^^
 `Search Granule <http://podaac.jpl.nasa.gov/ws/search/granule/index.html>`_ - does granule searching on PO.DAAC level 2 swath datasets (individual orbits of a satellite), and level 3 & 4 gridded datasets (time averaged to span the globe). In the following code snippet we will search for granules within a specific dataset e.g. **PODAAC-ASOP2-25X01** ::
 
-   result = p.search_granule(datasetId='PODAAC-ASOP2-25X01',shortName='ASCATA-L2-25km',bbox='0,0,180,90',startTime='2013-01-01T01:30:00Z',endTime='2014-01-01T00:00:00Z',startIndex='1'))
+   result = p.search_granule(dataset_id='PODAAC-ASOP2-25X01',short_name='ASCATA-L2-25km',bbox='0,0,180,90',start_time='2013-01-01T01:30:00Z',end_time='2014-01-01T00:00:00Z',start_index='1'))
 
 The variable **result** now contains an XML response containing a list of granules for the given dataset which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
@@ -120,7 +120,7 @@ Retrieve granule images
 ^^^^^^^^^^^^^^^^^^^^^^^
 `Image Granule <http://podaac.jpl.nasa.gov/ws/image/granule/index.html>`_ - renders granules in the PO.DAAC's catalog to images such as jpeg and/or png. In the following code snippet we display a GetMap request ::
 
-   result = p.load_image_granule(shortName='ASCATB-L2-25km', granuleName='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS',path='path/to/the/destination/directory')
+   result = p.load_image_granule(short_name='ASCATB-L2-25km', granule_name='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS',path='path/to/the/destination/directory')
 
 The above request downloads us a nice image shown below
 
@@ -130,17 +130,17 @@ For more information on this function, see :doc:`webservices`
 
 Exract a granule
 ^^^^^^^^^^^^^^^^
-`Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, shortName of **QSCAT_LEVEL_2B_V2**, granuleName **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and provide a path to the directory you want to have it saved as **netcdf** ::
+`Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, short_name of **QSCAT_LEVEL_2B_V2**, granule_name **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and provide a path to the directory you want to have it saved as **netcdf** ::
 
-   result = p.extract_granule(shortName='ASCATA-L2-25km', granuleName='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf', path='path/to/the/destination/directory')
+   result = p.extract_granule(short_name='ASCATA-L2-25km', granule_name='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf', path='path/to/the/destination/directory')
 
 The above request downloads the relevant .netcdf file. For more information on this function, see :doc:`webservices`
 
 Extract level4 granule
 ^^^^^^^^^^^^^^^^^^^^^^
-Right now the `Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>` supports only level 2 granules. Extract l4 granule is an add-on over extract granule to extract level 4 gridded datasets from the PODAAC data source. In the following code snippet we extract a level4 granule with Dataset ID = **PODAAC-CCF30-01XXX**, shortName of **CCMP_MEASURES_ATLAS_L4_OW_L3_0_WIND_VECTORS_FLK** and provide a path to the directory you want to have it saved as **netcdf** ::
+Right now the `Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>` supports only level 2 granules. Extract l4 granule is an add-on over extract granule to extract level 4 gridded datasets from the PODAAC data source. In the following code snippet we extract a level4 granule with Dataset ID = **PODAAC-CCF30-01XXX**, short_name of **CCMP_MEASURES_ATLAS_L4_OW_L3_0_WIND_VECTORS_FLK** and provide a path to the directory you want to have it saved as **netcdf** ::
 
-   result = p.extract_l4_granule(datasetId='PODAAC-CCF30-01XXX', shortName='CCMP_MEASURES_ATLAS_L4_OW_L3_0_WIND_VECTORS_FLK', path='path/to/the/destination/directory')
+   result = p.extract_l4_granule(dataset_id='PODAAC-CCF30-01XXX', short_name='CCMP_MEASURES_ATLAS_L4_OW_L3_0_WIND_VECTORS_FLK', path='path/to/the/destination/directory')
 
 The above request downloads the relevant .netcdf file. For more information on this function, see :doc:`webservices`
 

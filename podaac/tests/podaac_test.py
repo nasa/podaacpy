@@ -31,54 +31,54 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function load_dataset_md()
     def test_load_dataset_md(self):
-        datasetId = 'PODAAC-GHMG2-2PO01'
-        datasetShortName = 'OSDPD-L2P-MSG02'
-        dataset_md = self.podaac.load_dataset_md(datasetId, datasetShortName)
+        dataset_id = 'PODAAC-GHMG2-2PO01'
+        dataset_short_name = 'OSDPD-L2P-MSG02'
+        dataset_md = self.podaac.load_dataset_md(dataset_id, dataset_short_name)
         root = ET.fromstring(dataset_md.encode('utf-8'))
-        shortName = root[1][0].attrib
+        short_name = root[1][0].attrib
 
         assert dataset_md != None
-        assert str(shortName['id']) == datasetShortName
+        assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_dataset_md,
                       'PODAAC-GHMG2-2PO01', 'OSDPD-L2P-MSG02', 'is')
 
     # test case for the fucntion load_granule_md()
     def test_load_granule_md(self):
-        datasetId = 'PODAAC-GHMG2-2PO01'
-        datasetShortName = 'OSDPD-L2P-MSG02'
-        granuleName = '20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc'
+        dataset_id = 'PODAAC-GHMG2-2PO01'
+        dataset_short_name = 'OSDPD-L2P-MSG02'
+        granule_name = '20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc'
         granule_md = self.podaac.load_granule_md(
-            datasetId, datasetShortName, granuleName)
+            dataset_id, dataset_short_name, granule_name)
         root = ET.fromstring(granule_md.encode('utf-8'))
-        shortName = root[1][0].attrib
+        short_name = root[1][0].attrib
 
         assert granule_md != None
-        assert str(shortName['id']) == datasetShortName
+        assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.load_granule_md, format='is')
 
     # test case for the function load_last24hours_datacasting_granule_md()
     def test_load_last24hours_datacasting_granule_md(self):
-        datasetId = 'PODAAC-ASOP2-25X01'
-        datasetShortName = 'ASCATA-L2-25km'
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        dataset_short_name = 'ASCATA-L2-25km'
         format = 'datacasting'
-        itemsPerPage = 10
+        items_per_page = 10
         granule_md = self.podaac.load_last24hours_datacasting_granule_md(
-            datasetId, datasetShortName, format, itemsPerPage)
+            dataset_id, dataset_short_name, format, items_per_page)
         root = ET.fromstring(granule_md.encode('utf-8'))
-        datasetId_ = root[0][3].text
+        dataset_id_ = root[0][3].text
 
         assert granule_md != None
-        assert datasetId_ == datasetId
+        assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
 
     # test case for the function search_dataset()
     def test_search_dataset(self):
         format = 'atom'
-        itemsPerPage = '400'
+        items_per_page = '400'
         datasets = self.podaac.search_dataset(
-            format=format, itemsPerPage=itemsPerPage)
+            format=format, items_per_page=items_per_page)
         root = ET.fromstring(datasets.encode('utf-8'))
         service_name = "PO.DAAC Dataset Search Service"
         test_service_name = root[3][0].text.split('\t')[3][:-1]
@@ -90,45 +90,45 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function search_granule()
     def test_search_granule(self):
-        testDatasetId = 'PODAAC-ASOP2-25X01'
-        startTime = '2013-01-01T01:30:00Z'
-        endTime = '2014-01-01T00:00:00Z'
+        test_dataset_id = 'PODAAC-ASOP2-25X01'
+        start_time = '2013-01-01T01:30:00Z'
+        end_time = '2014-01-01T00:00:00Z'
         bbox = '-45,-45,45,45'
-        startIndex = '1'
+        start_index = '1'
         format = 'atom'
         granules = self.podaac.search_granule(
-            datasetId=testDatasetId, startTime=startTime, endTime=endTime, bbox=bbox, startIndex=startIndex, format=format)
+            dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, format=format)
         root = ET.fromstring(granules.encode('utf-8'))
-        datasetId = root.find('{http://www.w3.org/2005/Atom}entry').find(
+        dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
             '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
-        print datasetId
+        print dataset_id
 
         assert granules != None
-        assert testDatasetId == datasetId
+        assert test_dataset_id == dataset_id
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.search_granule, format='html')
 
     # test case for the function load_image_granule()
     def test_load_image_granule(self):
-        datasetId = 'PODAAC-ASOP2-25X01'
-        shortName = 'ASCATA-L2-25km'
-        granuleName = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        short_name = 'ASCATA-L2-25km'
+        granule_name = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
         bbox = '45,0,180,90'
         srs = 'EPSG:4326'
         height = '300'
         width = '200'
         data = self.podaac.load_image_granule(
-            datasetId, shortName, granuleName, bbox, height, width, srs)
+            dataset_id, short_name, granule_name, bbox, height, width, srs)
         test_data = data[0].split('/')
         length = len(test_data)
 
         assert data != None
-        assert test_data[length - 1] == datasetId + '.png'
+        assert test_data[length - 1] == dataset_id + '.png'
         assert_raises(Exception, self.podaac.load_image_granule,
-                      datasetId="HBJHKASD")
+                      dataset_id="HBJHKASD")
 
         path = os.path.join(os.path.dirname(__file__),
-                            '../' + datasetId + '.png')
+                            '../' + dataset_id + '.png')
         os.remove(path)
         path = os.path.join(os.path.dirname(__file__),
                             '../' + "HBJHKASD" + '.png')
@@ -136,20 +136,20 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function extract_granule()
     def test_extract_granule(self):
-        datasetId = 'PODAAC-ASOP2-25X01'
-        shortName = 'ASCATA-L2-25km'
-        granuleName = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        short_name = 'ASCATA-L2-25km'
+        granule_name = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
         bbox = '45,0,180,90'
         format = 'netcdf'
         data = self.podaac.extract_granule(
-            datasetId, shortName, granuleName, bbox, format)
+            dataset_id, short_name, granule_name, bbox, format)
         test_data = data[0].split('/')
         length = len(test_data)
 
         assert data != None
-        assert test_data[length - 1] == granuleName
+        assert test_data[length - 1] == granule_name
         assert_raises(Exception, self.podaac.extract_granule,
-                      datasetId='PODAAC-ASOP2-25X01')
+                      dataset_id='PODAAC-ASOP2-25X01')
 
         path = os.path.join(os.path.dirname(
             __file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
@@ -157,87 +157,87 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function extract_l4_granule()
     def test_extract_l4_granule(self):
-        datasetId = 'PODAAC-GHCMC-4FM02'
-        shortName = 'CMC0.2deg-CMC-L4-GLOB-v2.0'
+        dataset_id = 'PODAAC-GHCMC-4FM02'
+        short_name = 'CMC0.2deg-CMC-L4-GLOB-v2.0'
         test_format = '.nc'
         path = os.path.dirname(os.path.abspath(__file__))
-        granuleName = self.podaac.extract_l4_granule(
-            datasetId, shortName, path)
-        length = len(granuleName)
-        format = granuleName[length - 3:length]
+        granule_name = self.podaac.extract_l4_granule(
+            dataset_id, short_name, path)
+        length = len(granule_name)
+        format = granule_name[length - 3:length]
 
-        assert granuleName != None
+        assert granule_name != None
         assert format == test_format
         assert_raises(Exception, self.podaac.extract_l4_granule,
-                      datasetId='ABCDEF')
+                      dataset_id='ABCDEF')
 
-        path = os.path.join(os.path.dirname(__file__), granuleName)
+        path = os.path.join(os.path.dirname(__file__), granule_name)
         os.remove(path)
 
-    # test case for the function list_available_granule_search_datasetIds()
-    def test_list_available_granule_search_datasetIds(self):
-        data = self.podaac_utils.list_available_granule_search_datasetIds()
+    # test case for the function list_available_granule_search_dataset_ids()
+    def test_list_available_granule_search_dataset_ids(self):
+        data = self.podaac_utils.list_available_granule_search_dataset_ids()
 
         assert data != None
         assert type(data) is list
         assert len(data) != 0
 
     # test case for the function
-    # list_available_granule_search_datasetShortNames()
-    def test_list_available_granule_search_datasetShortNames(self):
-        data = self.podaac_utils.list_available_granule_search_datasetShortNames()
+    # list_available_granule_search_dataset_short_names()
+    def test_list_available_granule_search_dataset_short_names(self):
+        data = self.podaac_utils.list_available_granule_search_dataset_short_names()
 
         assert data != None
         assert type(data) is list
         assert len(data) != 0
 
     # test case for the function
-    # list_available_granule_search_level2_datasetIds()
-    def test_list_available_granule_search_level2_datasetIds(self):
-        data = self.podaac_utils.list_available_granule_search_level2_datasetIds()
+    # list_available_granule_search_level2_dataset_ids()
+    def test_list_available_granule_search_level2_dataset_ids(self):
+        data = self.podaac_utils.list_available_granule_search_level2_dataset_ids()
 
         assert data != None
         assert type(data) is list
         assert len(data) != 0
 
     # test case for the function
-    # list_available_granule_search_level2_datasetShortNames()
-    def test_list_available_granule_search_level2_datasetShortNames(self):
-        data = self.podaac_utils.list_available_granule_search_level2_datasetShortNames()
+    # list_available_granule_search_level2_dataset_short_names()
+    def test_list_available_granule_search_level2_dataset_short_names(self):
+        data = self.podaac_utils.list_available_granule_search_level2_dataset_short_names()
 
         assert data != None
         assert type(data) is list
         assert len(data) != 0
 
-    # test case for the function list_available_image_granule_datasetIds()
-    def test_list_available_image_granule_datasetIds(self):
-        data = self.podaac_utils.list_available_image_granule_datasetIds()
-
-        assert data != None
-        assert type(data) is list
-        assert len(data) != 0
-
-    # test case for the function
-    # list_available_image_granule_datasetShortNames()
-    def test_list_available_image_granule_datasetShortNames(self):
-        data = self.podaac_utils.list_available_image_granule_datasetShortNames()
-
-        assert data != None
-        assert type(data) is list
-        assert len(data) != 0
-
-    # test case for the function list_available_extract_granule_datasetIds()
-    def test_list_available_extract_granule_datasetIds(self):
-        data = self.podaac_utils.list_available_extract_granule_datasetIds()
+    # test case for the function list_available_image_granule_dataset_ids()
+    def test_list_available_image_granule_dataset_ids(self):
+        data = self.podaac_utils.list_available_image_granule_dataset_ids()
 
         assert data != None
         assert type(data) is list
         assert len(data) != 0
 
     # test case for the function
-    # list_available_extract_granule_datasetShortNames()
-    def test_list_available_extract_granule_datasetShortNames(self):
-        data = self.podaac_utils.list_available_extract_granule_datasetShortNames()
+    # list_available_image_granule_dataset_short_names()
+    def test_list_available_image_granule_dataset_short_names(self):
+        data = self.podaac_utils.list_available_image_granule_dataset_short_names()
+
+        assert data != None
+        assert type(data) is list
+        assert len(data) != 0
+
+    # test case for the function list_available_extract_granule_dataset_ids()
+    def test_list_available_extract_granule_dataset_ids(self):
+        data = self.podaac_utils.list_available_extract_granule_dataset_ids()
+
+        assert data != None
+        assert type(data) is list
+        assert len(data) != 0
+
+    # test case for the function
+    # list_available_extract_granule_dataset_short_names()
+    def test_list_available_extract_granule_dataset_short_names(self):
+        data = self.podaac_utils.list_available_extract_granule_dataset_short_names()
 
         assert data != None
         assert type(data) is list
