@@ -54,7 +54,7 @@ class Podaac:
                 metadata.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
-            print error
+            print(error)
             raise
 
         return metadata.text
@@ -90,7 +90,7 @@ class Podaac:
                 granule_md.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
-            print error
+            print(error)
             raise
 
         return granule_md.text
@@ -129,7 +129,7 @@ class Podaac:
                 granule_md.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
-            print error
+            print(error)
             raise
 
         return granule_md.text
@@ -226,7 +226,7 @@ class Podaac:
                 datasets.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
-            print error
+            print(error)
             raise
 
         return datasets.text
@@ -312,7 +312,7 @@ class Podaac:
                 granules.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
-            print error
+            print(error)
             raise
 
         return granules.text

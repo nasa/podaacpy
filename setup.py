@@ -21,7 +21,7 @@ from setuptools import find_packages, setup
 # Package data
 # ------------
 _author       = 'Lewis John McGibbney'
-_authorEmail  = 'lewismc@apache.org'
+_author_email  = 'lewismc@apache.org'
 _classifiers  = [
     'Environment :: Console',
     'Intended Audience :: Developers',
@@ -36,47 +36,45 @@ _classifiers  = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 _description  = 'PO.DAAC Python API'
-_downloadURL  = 'http://pypi.python.org/pypi/podaacpy/'
+_download_url  = 'http://pypi.python.org/pypi/podaacpy/'
 _requirements = ["requests", "beautifulsoup4","coveralls"]
 _keywords     = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
 _license      = 'Apache License, Version 2.0'
 _long_description    = 'A python utility library for interacting with NASA JPLs PO.DAAC'
 _name         = 'podaacpy'
 _namespaces   = []
-_testSuite    = 'podaac.tests'
+_test_suite    = 'podaac.tests'
 _url          = 'https://github.com/lewismc/podaacpy'
-_version      = '1.0.0'
-_zipSafe      = True
+_version      = '1.1.0'
+_zip_safe      = True
 
 # Setup Metadata
 # --------------
 
-def _read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+try:
+    import pypandoc
+    _long_description = pypandoc.convert('README.md', 'rst')
+except(IOError, ImportError):
+    _long_description = open('README.md').read()
 
-_header = '*' * len(_name) + '\n' + _name + '\n' + '*' * len(_name)
-_longDescription = '\n\n'.join([
-    _header,
-    _read('README.md')
-])
-open('doc.txt', 'w').write(_longDescription)
+open('doc.txt', 'w').write(_long_description)
 
 setup(
     author=_author,
-    author_email=_authorEmail,
+    author_email=_author_email,
     classifiers=_classifiers,
     description=_description,
-    download_url=_downloadURL,
+    download_url=_download_url,
     include_package_data=True,
     install_requires=_requirements,
     keywords=_keywords,
     license=_license,
-    long_description=_longDescription,
+    long_description=_long_description,
     name=_name,
     namespace_packages=_namespaces,
     packages=find_packages(),
-    test_suite=_testSuite,
+    test_suite=_test_suite,
     url=_url,
     version=_version,
-    zip_safe=_zipSafe,
+    zip_safe=_zip_safe,
 )

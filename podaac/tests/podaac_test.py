@@ -101,7 +101,7 @@ class test_podaac(unittest.TestCase):
         root = ET.fromstring(granules.encode('utf-8'))
         dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
             '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
-        print dataset_id
+        print(dataset_id)
 
         assert granules != None
         assert test_dataset_id == dataset_id
