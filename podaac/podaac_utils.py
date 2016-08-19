@@ -14,7 +14,7 @@
 # limitations under the License.
 
 import requests
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 
 
@@ -32,7 +32,7 @@ class PodaacUtils:
         '''
         dataset_ids = []
         html = requests.get(self.URL + 'search/granule/index.html')
-        soup = bs(html.text, 'html.parser')
+        soup = BeautifulSoup(html.text, 'html.parser')
 
         table = soup.find("table", {"id": "tblDataset2"})
         rows = table.find_all('tr')
@@ -53,7 +53,7 @@ class PodaacUtils:
         '''
         dataset_short_names = []
         html = requests.get(self.URL + 'search/granule/index.html')
-        soup = bs(html.text, 'html.parser')
+        soup = BeautifulSoup(html.text, 'html.parser')
 
         table = soup.find("table", {"id": "tblDataset2"})
         rows = table.find_all('tr')
@@ -81,16 +81,16 @@ class PodaacUtils:
 
         dataset_ids = []
         for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
-            Id = entry.find(
+            dataset_id = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
-            Id = Id.split('\t')[3][:-1]
-            dataset_ids.append(Id)
+            dataset_id = dataset_id.split('\t')[3][:-1]
+            dataset_ids.append(dataset_id)
 
         for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
-            Id = entry.find(
+            dataset_id = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
-            Id = Id.split('\t')[3][:-1]
-            dataset_ids.append(Id)
+            dataset_id = dataset_id.split('\t')[3][:-1]
+            dataset_ids.append(dataset_id)
 
         dataset_ids_level1 = []
         dataset_ids_level2 = self.list_available_granule_search_level2_dataset_ids()
@@ -114,16 +114,16 @@ class PodaacUtils:
 
         dataset_short_names = []
         for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
-            Name = entry.find(
+            name = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
-            Name = Name.split('\t')[3][:-1]
-            dataset_short_names.append(Name)
+            name = name.split('\t')[3][:-1]
+            dataset_short_names.append(name)
 
         for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
-            Name = entry.find(
+            name = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
-            Name = Name.split('\t')[3][:-1]
-            dataset_short_names.append(Name)
+            name = name.split('\t')[3][:-1]
+            dataset_short_names.append(name)
 
         #dataset_short_names_level1 = []
         dataset_short_names_level2 = self.list_available_granule_search_level2_dataset_short_names()
@@ -142,7 +142,7 @@ class PodaacUtils:
         '''
         dataset_ids = []
         html = requests.get(self.URL + 'image/granule/index.html')
-        soup = bs(html.text, 'html.parser')
+        soup = BeautifulSoup(html.text, 'html.parser')
 
         table = soup.find("table", {"id": "tblDataset"})
         rows = table.find_all('tr')
@@ -164,7 +164,7 @@ class PodaacUtils:
         '''
         dataset_short_names = []
         html = requests.get(self.URL + 'image/granule/index.html')
-        soup = bs(html.text, 'html.parser')
+        soup = BeautifulSoup(html.text, 'html.parser')
 
         table = soup.find("table", {"id": "tblDataset"})
         rows = table.find_all('tr')
@@ -186,7 +186,7 @@ class PodaacUtils:
         '''
         dataset_ids = []
         html = requests.get(self.URL + 'extract/granule/index.html')
-        soup = bs(html.text, 'html.parser')
+        soup = BeautifulSoup(html.text, 'html.parser')
 
         table = soup.find("table", {"id": "tblDataset"})
         rows = table.find_all('tr')
@@ -208,7 +208,7 @@ class PodaacUtils:
         '''
         dataset_short_names = []
         html = requests.get(self.URL + 'extract/granule/index.html')
-        soup = bs(html.text, 'html.parser')
+        soup = BeautifulSoup(html.text, 'html.parser')
 
         table = soup.find("table", {"id": "tblDataset"})
         rows = table.find_all('tr')
