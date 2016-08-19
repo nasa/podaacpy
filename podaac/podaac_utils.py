@@ -23,14 +23,14 @@ class PodaacUtils:
     def __init__(self):
         self.URL = 'http://podaac.jpl.nasa.gov/ws/'
 
-    def list_available_granule_search_level2_datasetIds(self):
+    def list_available_granule_search_level2_dataset_ids(self):
         '''Convenience function which returns an up-to-date \
                 list of available level2 granule dataset id's.
 
         :returns: a comma-seperated list of granule dataset id's
 
         '''
-        datasetIds = []
+        dataset_ids = []
         html = requests.get(self.URL + 'search/granule/index.html')
         soup = bs(html.text, 'html.parser')
 
@@ -40,18 +40,18 @@ class PodaacUtils:
 
         for row in rows:
             x = row.find_all('td')
-            datasetIds.append(x[0].text.encode('utf-8'))
+            dataset_ids.append(x[0].text.encode('utf-8'))
 
-        return datasetIds
+        return dataset_ids
 
-    def list_available_granule_search_level2_datasetShortNames(self):
+    def list_available_granule_search_level2_dataset_short_names(self):
         '''Convenience function which returns an up-to-date \
                 list of available level2 granule dataset short names.
 
         :returns: a comma-seperated list of granule dataset short names.
 
         '''
-        datasetShortNames = []
+        dataset_short_names = []
         html = requests.get(self.URL + 'search/granule/index.html')
         soup = bs(html.text, 'html.parser')
 
@@ -61,11 +61,11 @@ class PodaacUtils:
 
         for row in rows:
             x = row.find_all('td')
-            datasetShortNames.append(x[1].text.encode('utf-8'))
+            dataset_short_names.append(x[1].text.encode('utf-8'))
 
-        return datasetShortNames
+        return dataset_short_names
 
-    def list_available_granule_search_datasetIds(self):
+    def list_available_granule_search_dataset_ids(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset id's.
 
@@ -79,26 +79,26 @@ class PodaacUtils:
         root1 = ET.fromstring(data_part1.encode('utf-8'))
         root2 = ET.fromstring(data_part2.encode('utf-8'))
 
-        datasetIds = []
+        dataset_ids = []
         for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
             Id = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
             Id = Id.split('\t')[3][:-1]
-            datasetIds.append(Id)
+            dataset_ids.append(Id)
 
         for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
             Id = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
             Id = Id.split('\t')[3][:-1]
-            datasetIds.append(Id)
+            dataset_ids.append(Id)
 
-        datasetIds_level1 = []
-        datasetIds_level2 = self.list_available_granule_search_level2_datasetIds()
-        datasetIds_level1 = list(set(datasetIds) - set(datasetIds_level2))
+        dataset_ids_level1 = []
+        dataset_ids_level2 = self.list_available_granule_search_level2_dataset_ids()
+        dataset_ids_level1 = list(set(dataset_ids) - set(dataset_ids_level2))
 
-        return datasetIds_level1
+        return dataset_ids_level1
 
-    def list_available_granule_search_datasetShortNames(self):
+    def list_available_granule_search_dataset_short_names(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset short names.
 
@@ -112,27 +112,27 @@ class PodaacUtils:
         root1 = ET.fromstring(data_part1.encode('utf-8'))
         root2 = ET.fromstring(data_part2.encode('utf-8'))
 
-        datasetShortNames = []
+        dataset_short_names = []
         for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
             Name = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
             Name = Name.split('\t')[3][:-1]
-            datasetShortNames.append(Name)
+            dataset_short_names.append(Name)
 
         for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
             Name = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
             Name = Name.split('\t')[3][:-1]
-            datasetShortNames.append(Name)
+            dataset_short_names.append(Name)
 
-        #datasetShortNames_level1 = []
-        datasetShortNames_level2 = self.list_available_granule_search_level2_datasetShortNames()
-        datasetShortNames_level1 = list(
-            set(datasetShortNames) - set(datasetShortNames_level2))
+        #dataset_short_names_level1 = []
+        dataset_short_names_level2 = self.list_available_granule_search_level2_dataset_short_names()
+        dataset_short_names_level1 = list(
+            set(dataset_short_names) - set(dataset_short_names_level2))
 
-        return datasetShortNames_level1
+        return dataset_short_names_level1
 
-    def list_available_image_granule_datasetIds(self):
+    def list_available_image_granule_dataset_ids(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset id's which can be \
                 used in the imagery service.
@@ -140,7 +140,7 @@ class PodaacUtils:
         :returns: a comma-seperated list of granule dataset id's
 
         '''
-        datasetIds = []
+        dataset_ids = []
         html = requests.get(self.URL + 'image/granule/index.html')
         soup = bs(html.text, 'html.parser')
 
@@ -150,11 +150,11 @@ class PodaacUtils:
 
         for row in rows:
             x = row.find_all('td')
-            datasetIds.append(x[0].text.encode('utf-8'))
+            dataset_ids.append(x[0].text.encode('utf-8'))
 
-        return datasetIds
+        return dataset_ids
 
-    def list_available_image_granule_datasetShortNames(self):
+    def list_available_image_granule_dataset_short_names(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset short names which can be \
                 used in the imagery service.
@@ -162,7 +162,7 @@ class PodaacUtils:
         :returns: a comma-seperated list of granule dataset short names.
 
         '''
-        datasetShortNames = []
+        dataset_short_names = []
         html = requests.get(self.URL + 'image/granule/index.html')
         soup = bs(html.text, 'html.parser')
 
@@ -172,11 +172,11 @@ class PodaacUtils:
 
         for row in rows:
             x = row.find_all('td')
-            datasetShortNames.append(x[1].text.encode('utf-8'))
+            dataset_short_names.append(x[1].text.encode('utf-8'))
 
-        return datasetShortNames
+        return dataset_short_names
 
-    def list_available_extract_granule_datasetIds(self):
+    def list_available_extract_granule_dataset_ids(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset id's which can be \
                 used in the granule extraction service.
@@ -184,7 +184,7 @@ class PodaacUtils:
         :returns: a comma-seperated list of granule dataset id's.
 
         '''
-        datasetIds = []
+        dataset_ids = []
         html = requests.get(self.URL + 'extract/granule/index.html')
         soup = bs(html.text, 'html.parser')
 
@@ -194,11 +194,11 @@ class PodaacUtils:
 
         for row in rows:
             x = row.find_all('td')
-            datasetIds.append(x[0].text.encode('utf-8'))
+            dataset_ids.append(x[0].text.encode('utf-8'))
 
-        return datasetIds
+        return dataset_ids
 
-    def list_available_extract_granule_datasetShortNames(self):
+    def list_available_extract_granule_dataset_short_names(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset short names which can be \
                 used in the granule extraction service.
@@ -206,7 +206,7 @@ class PodaacUtils:
         :returns: a comma-seperated list of granule dataset short names.
 
         '''
-        datasetShortNames = []
+        dataset_short_names = []
         html = requests.get(self.URL + 'extract/granule/index.html')
         soup = bs(html.text, 'html.parser')
 
@@ -216,6 +216,6 @@ class PodaacUtils:
 
         for row in rows:
             x = row.find_all('td')
-            datasetShortNames.append(x[1].text.encode('utf-8'))
+            dataset_short_names.append(x[1].text.encode('utf-8'))
 
-        return datasetShortNames
+        return dataset_short_names
