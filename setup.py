@@ -45,7 +45,7 @@ _name         = 'podaacpy'
 _namespaces   = []
 _test_suite    = 'podaac.tests'
 _url          = 'https://github.com/lewismc/podaacpy'
-_version      = '1.1.0'
+_version      = '1.0.1'
 _zip_safe      = True
 
 # Setup Metadata
@@ -53,7 +53,11 @@ _zip_safe      = True
 
 try:
     import pypandoc
-    _long_description = pypandoc.convert('README.md', 'rst')
+    _long_description = pypandoc.convert(
+        source='README.md',
+        format='markdown_github',
+        to='rst',
+        outputfile='README.rst')
 except(IOError, ImportError):
     _long_description = open('README.md').read()
 
