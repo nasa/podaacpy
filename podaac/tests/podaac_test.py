@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from ..podaac_data_source import Podaac
+from ..podaac import Podaac
 from ..podaac_utils import PodaacUtils
 import os
 import requests
