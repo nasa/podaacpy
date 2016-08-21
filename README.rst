@@ -1,13 +1,7 @@
 podaacpy
 ========
 
-| |license|
-| |PyPI|
-| |documentation|
-| |Travis|
-| |Coveralls|
-| |Requirements Status|
-| |Code Health|
+| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health|
 
 |image7|
 
