@@ -27,5 +27,23 @@ install:
   - pip install coveralls
 script:
   - nosetests  --with-coverage --cover-package=podaac --nocapture
-after_script:
+after_success: # Generate coverage reports only on success
   - coveralls
+deploy: # Runs on every commit to master branch
+  # test pypi
+  provider: pypi
+  server: https://testpypi.python.org/pypi
+  user:
+  password:
+    secure:
+  on:
+    branch: master
+    tags: false
+deploy: # Runs only on tagged commits to master branch
+  provider: pypi
+  user: # Pypi username
+  password:
+    secure: # Your encrypted password
+  on:
+    tags: true # Deploy only on tagged commits
+    branch: master
