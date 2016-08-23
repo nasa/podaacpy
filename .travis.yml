@@ -27,12 +27,5 @@ install:
   - pip install coveralls
 script:
   - nosetests  --with-coverage --cover-package=podaac --nocapture
-after_success: # Generate coverage reports only on success
+after_script:
   - coveralls
-deploy:
-  provider: pypi
-  user: # Pypi username
-  password:
-    secure: # Your encrypted password
-  on:
-    tags: true # Deploy only on tagged commits
