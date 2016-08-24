@@ -17,9 +17,9 @@ from setuptools import find_packages, setup
 
 # Package data
 # ------------
-_author       = 'Lewis John McGibbney'
-_author_email  = 'lewismc@apache.org'
-_classifiers  = [
+_author = 'Lewis John McGibbney'
+_author_email = 'lewismc@apache.org'
+_classifiers = [
     'Environment :: Console',
     'Intended Audience :: Developers',
     'Intended Audience :: Information Technology',
@@ -32,33 +32,33 @@ _classifiers  = [
     'Topic :: Internet :: WWW/HTTP',
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
-_description  = 'PO.DAAC Python API'
-_download_url  = 'http://pypi.python.org/pypi/podaacpy/'
-_requirements = ["requests", "beautifulsoup4","coveralls"]
-_keywords     = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
-_license      = 'Apache License, Version 2.0'
-_long_description    = 'A python utility library for interacting with NASA JPLs PO.DAAC'
-_name         = 'podaacpy'
-_namespaces   = []
-_test_suite    = 'podaac.tests'
-_url          = 'https://github.com/lewismc/podaacpy'
-_version      = '1.0.1'
-_zip_safe      = True
+_description = 'PO.DAAC Python API'
+_download_url = 'http://pypi.python.org/pypi/podaacpy/'
+_requirements = ["requests", "beautifulsoup4", "coveralls"]
+_keywords = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
+_license = 'Apache License, Version 2.0'
+_long_description = 'A python utility library for interacting with NASA JPLs PO.DAAC'
+_name = 'podaacpy'
+_namespaces = []
+_test_suite = 'podaac.tests'
+_url = 'https://github.com/lewismc/podaacpy'
+_version = '1.0.1'
+_zip_safe = True
 
 # Setup Metadata
 # --------------
 
-try:
-    import pypandoc
-    _long_description = pypandoc.convert(
-        source='README.md',
-        format='markdown_github',
-        to='rst',
-        outputfile='README.rst')
-except(IOError, ImportError):
-    _long_description = open('README.md').read()
 
-open('doc.txt', 'w').write(_long_description)
+def _read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+_header = '*' * len(_name) + '\n' + _name + '\n' + '*' * len(_name)
+_longDescription = '\n\n'.join([
+    _header,
+    _read('README.rst')
+])
+open('doc.txt', 'w').write(_longDescription)
+
 
 setup(
     author=_author,

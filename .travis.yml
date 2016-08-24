@@ -10,15 +10,25 @@ install:
 - pip install bs4
 - pip install coveralls
 script:
-- nosetests  --with-coverage --cover-package=podaac --nocapture
-after_script:
-- coveralls
-deploy:
+  - nosetests  --with-coverage --cover-package=podaac
+after_success: # Generate coverage reports only on success
+  - coveralls
+deploy: # Runs on every commit to master branch
+  # test pypi
+  provider: pypi
+  server: https://testpypi.python.org/pypi
+  user: lewismc
+  password:
+    secure: Q4BwpJPlAR4WSeAmS4Q20dy35RHdfdzA6nQHC+5f76zDfKiebhFc7JZ6dl5Rsqpq0yJtmhoaLlj7qBbFtk1JjEkJhj7/M7jinYdaY0v3JMDuZPx/ReLmCtWtOcre9qb0x/XoGDO4hJfklvqesmIk9Ai9YVJq46BlRRLwM2M5ys08EGobr/3++B2lyMsexjhBMWzWzYGFFq26iHdEHKGskxjNkNCkTcZWnfCsMAPoG0ZxyCwhO0TGT8W7kloqN40q/+/l6DwrrAmYWvckrFy0ItHbtCVDNK1jxlijr1IrbXpMtpzyaCCsHc+21AbsJyMG9oyuMJw/e6YfzIoA3gAnUv99iFTAk5LQh6DIYeGRjggSjX9H4oelEc1c9LC3mfI0LqahIUDZQPiWGWBlHqRSUzrT9zhwiBs/5fBsQPLWSz8TvlqwSixYTwN9xm+D9Bczwftr8h4R3ucxuBbntGtmvMGBEHE14IrJcrleUBkZ1aWNEXkE/sos0bardMukM1FRlBIFTk9NCsAVBKOUvcZvdGQlVu1lVJ+nxeSROTMIFvRRs3n2L8Tpr4/uMslVW2zq66+gNES9f0B+kW+V77RVeii+B8sB9HFS1i56rV85rVURI15QPlx9L+5wbFTofnJNzdNCRr7WIlT133oMzn3cjRCS9mztSen+ywyPI7ZDmHI=
+  on:
+    branch: master
+    tags: false
+deploy: # Runs only on tagged commits to master branch
   provider: pypi
   user: lewismc
   password:
     secure: Q4BwpJPlAR4WSeAmS4Q20dy35RHdfdzA6nQHC+5f76zDfKiebhFc7JZ6dl5Rsqpq0yJtmhoaLlj7qBbFtk1JjEkJhj7/M7jinYdaY0v3JMDuZPx/ReLmCtWtOcre9qb0x/XoGDO4hJfklvqesmIk9Ai9YVJq46BlRRLwM2M5ys08EGobr/3++B2lyMsexjhBMWzWzYGFFq26iHdEHKGskxjNkNCkTcZWnfCsMAPoG0ZxyCwhO0TGT8W7kloqN40q/+/l6DwrrAmYWvckrFy0ItHbtCVDNK1jxlijr1IrbXpMtpzyaCCsHc+21AbsJyMG9oyuMJw/e6YfzIoA3gAnUv99iFTAk5LQh6DIYeGRjggSjX9H4oelEc1c9LC3mfI0LqahIUDZQPiWGWBlHqRSUzrT9zhwiBs/5fBsQPLWSz8TvlqwSixYTwN9xm+D9Bczwftr8h4R3ucxuBbntGtmvMGBEHE14IrJcrleUBkZ1aWNEXkE/sos0bardMukM1FRlBIFTk9NCsAVBKOUvcZvdGQlVu1lVJ+nxeSROTMIFvRRs3n2L8Tpr4/uMslVW2zq66+gNES9f0B+kW+V77RVeii+B8sB9HFS1i56rV85rVURI15QPlx9L+5wbFTofnJNzdNCRr7WIlT133oMzn3cjRCS9mztSen+ywyPI7ZDmHI=
   on:
-    tags: true
+    tags: true # Deploy only on tagged commits
     distributions: sdist bdist_wheel
-    repo: lewismc/podaacpy
+    branch: master
