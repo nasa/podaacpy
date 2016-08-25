@@ -42,7 +42,7 @@ _name = 'podaacpy'
 _namespaces = []
 _test_suite = 'podaac.tests'
 _url = 'https://github.com/lewismc/podaacpy'
-_version = '1.0.1'
+_version = '1.0.2'
 _zip_safe = True
 
 # Setup Metadata
