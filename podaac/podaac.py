@@ -510,7 +510,7 @@ class Podaac:
 
         return granule
 
-    def extract_l4_granule(self, dataset_id='', short_name='', path=''):
+    def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional fucntion that we have provided apart \
         from the availalble webservices. The extract_l4_granule helps \
         retrieve the level 4 datasets from openDap server directly, \
@@ -534,7 +534,7 @@ class Podaac:
         try:
             start_index = '1'
             search_data = self.search_granule(
-                dataset_id=dataset_id, short_name=short_name, start_index=start_index)
+                dataset_id=dataset_id, start_index=start_index)
             root = ET.fromstring(search_data.encode('utf-8'))
             url = root[12][6].attrib['href']
             url = url[:-5]

@@ -28,7 +28,7 @@ class test_podaac(unittest.TestCase):
         self.podaac = Podaac()
         self.podaac_utils = PodaacUtils()
 
-    '''# test case for the function load_dataset_md()
+    # test case for the function load_dataset_md()
     def test_load_dataset_md(self):
         dataset_id = 'PODAAC-GHMG2-2PO01'
         dataset_short_name = 'OSDPD-L2P-MSG02'
@@ -95,7 +95,7 @@ class test_podaac(unittest.TestCase):
         assert test_service_name == service_name
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.search_dataset, format='iso')
-    '''
+
     # test case for the function search_granule()
     def test_search_granule(self):
         test_dataset_id = 'PODAAC-ASOP2-25X01'
@@ -116,7 +116,7 @@ class test_podaac(unittest.TestCase):
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.search_granule, format='html')
 
-    '''# test case for the function load_image_granule()
+    # test case for the function load_image_granule()
     def test_load_image_granule(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         short_name = 'ASCATA-L2-25km'
@@ -162,15 +162,14 @@ class test_podaac(unittest.TestCase):
         path = os.path.join(os.path.dirname(
             __file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
         os.remove(path)
-
+    
     # test case for the function extract_l4_granule()
     def test_extract_l4_granule(self):
         dataset_id = 'PODAAC-GHCMC-4FM02'
-        short_name = 'CMC0.2deg-CMC-L4-GLOB-v2.0'
         test_format = '.nc'
         path = os.path.dirname(os.path.abspath(__file__))
         granule_name = self.podaac.extract_l4_granule(
-            dataset_id, short_name, path)
+            dataset_id, path)
         length = len(granule_name)
         format = granule_name[length - 3:length]
 
@@ -232,4 +231,4 @@ class test_podaac(unittest.TestCase):
 
         assert data != None
         assert type(data) is list
-        assert len(data) != 0'''
+        assert len(data) != 0
