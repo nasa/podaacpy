@@ -217,23 +217,6 @@ class test_podaac(unittest.TestCase):
         assert type(data) is list
         assert len(data) != 0
 
-    # test case for the function list_available_image_granule_dataset_ids()
-    def test_list_available_image_granule_dataset_ids(self):
-        data = self.podaac_utils.list_available_image_granule_dataset_ids()
-
-        assert data != None
-        assert type(data) is list
-        assert len(data) != 0
-
-    # test case for the function
-    # list_available_image_granule_dataset_short_names()
-    def test_list_available_image_granule_dataset_short_names(self):
-        data = self.podaac_utils.list_available_image_granule_dataset_short_names()
-
-        assert data != None
-        assert type(data) is list
-        assert len(data) != 0
-
     # test case for the function list_available_extract_granule_dataset_ids()
     def test_list_available_extract_granule_dataset_ids(self):
         data = self.podaac_utils.list_available_extract_granule_dataset_ids()

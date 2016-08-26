@@ -131,50 +131,6 @@ class PodaacUtils:
 
         return dataset_short_names_level1
 
-    def list_available_image_granule_dataset_ids(self):
-        '''Convenience function which returns an up-to-date \
-                list of available granule dataset id's which can be \
-                used in the imagery service.
-
-        :returns: a comma-seperated list of granule dataset id's
-
-        '''
-        dataset_ids = []
-        html = requests.get(self.URL + 'image/granule/index.html')
-        soup = BeautifulSoup(html.text, 'html.parser')
-
-        table = soup.find("table", {"id": "tblDataset"})
-        rows = table.find_all('tr')
-        rows.remove(rows[0])
-
-        for row in rows:
-            x = row.find_all('td')
-            dataset_ids.append(x[0].text.encode('utf-8'))
-
-        return dataset_ids
-
-    def list_available_image_granule_dataset_short_names(self):
-        '''Convenience function which returns an up-to-date \
-                list of available granule dataset short names which can be \
-                used in the imagery service.
-
-        :returns: a comma-seperated list of granule dataset short names.
-
-        '''
-        dataset_short_names = []
-        html = requests.get(self.URL + 'image/granule/index.html')
-        soup = BeautifulSoup(html.text, 'html.parser')
-
-        table = soup.find("table", {"id": "tblDataset"})
-        rows = table.find_all('tr')
-        rows.remove(rows[0])
-
-        for row in rows:
-            x = row.find_all('td')
-            dataset_short_names.append(x[1].text.encode('utf-8'))
-
-        return dataset_short_names
-
     def list_available_extract_granule_dataset_ids(self):
         '''Convenience function which returns an up-to-date \
                 list of available granule dataset id's which can be \
