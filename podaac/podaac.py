@@ -254,7 +254,7 @@ class Podaac:
 
         return datasets.text
 
-    def search_granule(self, dataset_id='', short_name='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
+    def search_granule(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -269,10 +269,6 @@ class Podaac:
         :param dataset_id: dataset persistent ID. dataset_id or short_name \
                 is required for a granule search. Example: PODAAC-ASOP2-25X01
         :type dataset_id: :mod:`string`
-
-        :param short_name: dataset short_name. dataset_id or short_name is \
-                required for a granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
 
         :param start_time: start time in the format of YYYY-MM-DDTHH:mm:ssZ. \
                 'Z' is the time-offset, where 'Z' signifies UTC or an actual offset \
@@ -323,11 +319,11 @@ class Podaac:
 
         try:
             if(bbox == ''):
-                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&shortName=' + short_name + '&startTime=' + start_time + '&endTime=' + \
+                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&startTime=' + start_time + '&endTime=' + \
                     end_time + '&startIndex=' + start_index + '&sortBy=' + sort_by + \
                     '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
             else:
-                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&shortName=' + short_name + '&startTime=' + start_time + '&endTime=' + end_time + \
+                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&startTime=' + start_time + '&endTime=' + end_time + \
                     '&bbox=' + bbox + '&startIndex=' + start_index + '&sortBy=' + sort_by + \
                     '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
             granules = requests.get(url)
