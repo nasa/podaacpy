@@ -15,6 +15,7 @@
 import requests
 import urllib
 import os
+import json
 import xml.etree.ElementTree as ET
 
 URL = 'http://podaac.jpl.nasa.gov/ws/'
@@ -132,6 +133,29 @@ class Podaac:
             raise
 
         return granule_md.text
+
+    def load_dataset_variables(self, dataset_id):
+        '''Provides list of dataset variables.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :returns: a list of dataset variables for the dataset.
+
+        '''
+
+        try:
+            url = self.URL + 'dataset/variables/?datasetId=' + dataset_id
+            variables = requests.get(url)
+            if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
+                variables.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+        dataset_variables = json.loads(variables.text)['variables']
+        return dataset_variables
 
     def search_dataset(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \

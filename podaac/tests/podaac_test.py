@@ -32,7 +32,8 @@ class test_podaac(unittest.TestCase):
     def test_load_dataset_md(self):
         dataset_id = 'PODAAC-GHMG2-2PO01'
         dataset_short_name = 'OSDPD-L2P-MSG02'
-        dataset_md = self.podaac.load_dataset_md(dataset_id, dataset_short_name)
+        dataset_md = self.podaac.load_dataset_md(
+            dataset_id, dataset_short_name)
         root = ET.fromstring(dataset_md.encode('utf-8'))
         short_name = root[1][0].attrib
 
@@ -71,6 +72,14 @@ class test_podaac(unittest.TestCase):
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
+
+    # test case for the function load_dataset_variables
+    def test_load_dataset_variable(self):
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        dataset_variables = self.podaac.load_dataset_variables(dataset_id)
+
+        assert_raises(requests.exceptions.HTTPError,
+                      self.podaac.load_dataset_variables, dataset_id='PODAAC')
 
     # test case for the function search_dataset()
     def test_search_dataset(self):
