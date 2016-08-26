@@ -151,5 +151,7 @@ Copyright and Export Classification
    :target: https://requires.io/github/lewismc/podaacpy/requirements/?branch=master
 .. |Code Health| image:: https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat-square
    :target: https://landscape.io/github/lewismc/podaacpy/master
-.. |image7| image:: https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png
+.. |Pypi Downloads| image:: https://img.shields.io/pypi/dm/podaacpy.svg?maxAge=2592000?style=plastic
+   :target: https://pypi.python.org/pypi/podaacpy/
+.. |PO.DAAC Logo| image:: https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png
 
