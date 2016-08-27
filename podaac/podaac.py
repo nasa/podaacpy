@@ -26,7 +26,7 @@ class Podaac:
     def __init__(self):
         self.URL = 'http://podaac.jpl.nasa.gov/ws/'
 
-    def load_dataset_md(self, dataset_id='', short_name='', format='iso'):
+    def dataset_metadata(self, dataset_id='', short_name='', format='iso'):
         '''Dataset metadata service retrieves the metadata of a \
                 dataset on PO.DAACs dataset catalog using the following \
                 parameters: dataset_id, short_name, and format.
@@ -59,7 +59,7 @@ class Podaac:
 
         return metadata.text
 
-    def load_granule_md(self, dataset_id='', short_name='', granule_name='', format='iso'):
+    def granule_metadata(self, dataset_id='', short_name='', granule_name='', format='iso'):
         '''Granule metadata service retrieves the metadata of a granule \
                 on PO.DAACs catalog in ISO-19115.
 
@@ -134,7 +134,7 @@ class Podaac:
 
         return granule_md.text
 
-    def load_dataset_variables(self, dataset_id):
+    def dataset_variables(self, dataset_id):
         '''Provides list of dataset variables.
 
         :param dataset_id: dataset persistent ID. dataset_id or short_name \
@@ -157,7 +157,7 @@ class Podaac:
         dataset_variables = json.loads(variables.text)['variables']
         return dataset_variables
 
-    def search_dataset(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
+    def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
                 dataset_id, short_name, start_time, end_time, bbox, and others.
@@ -254,7 +254,7 @@ class Podaac:
 
         return datasets.text
 
-    def search_granule(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
+    def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -510,7 +510,6 @@ class Podaac:
 
         return granule
 
-    def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional fucntion that we have provided apart \
         from the availalble webservices. The extract_l4_granule helps \
         retrieve the level 4 datasets from openDap server directly, \
