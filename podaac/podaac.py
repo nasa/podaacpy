@@ -448,68 +448,7 @@ class Podaac:
 
         return image
 
-    def extract_granule(self, dataset_id='', short_name='', granule_name='', bbox='', format='', path=''):
-        '''Extract service subsets a granule in PO.DAAC catalog \
-        and produces either netcdf3 or hdf4 files. If the granule \
-        does not have any data in the given selected bounding box, \
-        HTTP 500 will be thrown since there is no data to be \
-        subsetted. Granule Search service can be used to find \
-        level 2 swath data. However, the level 2 spatial search \
-        uses coverage footprint polygons generated for each \
-        granule, and this footprint can contain no data or gaps. \
-        If the selected bounding box resides on no data or gaps, \
-        HTTP 500 will be thrown.
-
-        :param dataset_id: dataset persistent ID. dataset_id or \
-                short_name is required for a granule search. Example: \
-                PODAAC-ASOP2-25X01
-        :type dataset_id: :mod:`string`
-
-        :param short_name: the shorter name for a dataset. \
-                Either short_name or dataset_id is required for a \
-                granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
-
-        :param granule_name: name of the granule. Specifying \
-                granule_name insures only that granule is returned. Example: \
-                ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc
-        :type granule_name: :mod:`string`
-
-        :param bbox: bounding box for spatial search. format \
-                should look like "bbox=0.0,-45.0,180.0,40.0" which is \
-                in order of west, south, east, north. Longitude values \
-                needs to be in range of [-180, 180]. Latitude values \
-                needs to be in range of [-90, 90]. Example: 45,0,180,90
-        :type bbox: :mod:`string`
-
-        :param format: Required. Saved file format. Possible \
-                values: netcdf, hdf
-        :type format: :mod:`string`
-
-        :param path: Destination directory into which the granule\
-                needs to be downloaded.
-        :type format: :mod:`string`
-
-        :returns: a netcdf file or hdf file
-
-        '''
-        try:
-            url = self.URL + 'extract/granule/?datasetId=' + dataset_id + '&shortName=' + \
-                short_name + '&granuleName=' + granule_name + \
-                '&bbox=' + bbox + '&format=' + format
-            if path == '':
-                path = os.path.join(os.path.dirname(__file__), granule_name)
-            else:
-                path = path + '/' + granule_name
-            granule = urllib.urlretrieve(url, path)
-            if granule[1].getheader('Content-Type') == 'text/plain':
-                raise Exception("Unexpected Error Occured")
-
-        except Exception:
-            raise
-
-        return granule
-
+    def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional fucntion that we have provided apart \
         from the availalble webservices. The extract_l4_granule helps \
         retrieve the level 4 datasets from openDap server directly, \

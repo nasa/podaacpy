@@ -142,27 +142,6 @@ class test_podaac(unittest.TestCase):
                             '../' + "HBJHKASD" + '.png')
         os.remove(path)
 
-    # test case for the function extract_granule()
-    def test_extract_granule(self):
-        dataset_id = 'PODAAC-ASOP2-25X01'
-        short_name = 'ASCATA-L2-25km'
-        granule_name = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
-        bbox = '45,0,180,90'
-        format = 'netcdf'
-        data = self.podaac.extract_granule(
-            dataset_id, short_name, granule_name, bbox, format)
-        test_data = data[0].split('/')
-        length = len(test_data)
-
-        assert data != None
-        assert test_data[length - 1] == granule_name
-        assert_raises(Exception, self.podaac.extract_granule,
-                      dataset_id='PODAAC-ASOP2-25X01')
-
-        path = os.path.join(os.path.dirname(
-            __file__), '../ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc')
-        os.remove(path)
-    
     # test case for the function extract_l4_granule()
     def test_extract_l4_granule(self):
         dataset_id = 'PODAAC-GHCMC-4FM02'
