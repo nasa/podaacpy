@@ -19,6 +19,7 @@ import json
 import xml.etree.ElementTree as ET
 
 URL = 'http://podaac.jpl.nasa.gov/ws/'
+IMAGE_URL = 'http://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
 
 
 class Podaac:
@@ -336,7 +337,7 @@ class Podaac:
 
         return granules.text
 
-    def load_image_granule(self, dataset_id='', short_name='', granule_name='', bbox='', height='', width='', style='', srs='', request='GetMap', service='WMS', version='1.3.0', format='image/png', layers='', path=''):
+    def granule_preview(self, dataset_id='', format='image/png', path=''):
         '''The PODAAC Image service renders granules in the \
                 PO.DAACs catalog to images such as jpeg and/or png. \
                 This image service also utilizes OGC WMS protocol. \
@@ -429,10 +430,8 @@ class Podaac:
         '''
 
         try:
-            url = self.URL + 'image/granule/?datasetId=' + dataset_id + '&shortName=' + short_name + '&granuleName=' + granule_name + '&request=' + request + '&bbox=' + bbox + \
-                '&height=' + height + '&width=' + width + '&style=' + style + '&srs=' + srs + \
-                '&service=' + service + '&version=' + version + \
-                '&format=' + format + '&layers=' + layers
+            image_data = self.granule_search(dataset_id=dataset_id)
+            root = ET.fromstring(image_data.encode('utf-8'))
             if path == '':
                 path = os.path.join(os.path.dirname(
                     __file__), dataset_id + '.png')
@@ -447,6 +446,30 @@ class Podaac:
             raise
 
         return image
+
+    def granule_subset(self, input_file_path):
+        '''Subset Granule service allows users to Submit subset jobs. \
+        Use of this service should be preceded by a Granule Search in \
+        order to identify and generate a list of granules to be subsetted.
+
+        :param input_file_path: path to a json file which contains the \
+        the request that you want to send to PO.DAAC
+
+        :returns: a token on successful request reception. This can be \
+        further used to check the status of the request.
+
+        '''
+
+    def subset_status(self, token=''):
+        '''Subset Granule Status service allows users to check the status \
+        of submitted subset job.
+
+        :param token: string token that is returned by PO.DAAC whilst \
+        submitting a subset request.
+
+        :returns: the status of the subset request.
+
+        '''
 
     def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional fucntion that we have provided apart \
@@ -471,7 +494,7 @@ class Podaac:
         '''
         try:
             start_index = '1'
-            search_data = self.search_granule(
+            search_data = self.granule_search(
                 dataset_id=dataset_id, start_index=start_index)
             root = ET.fromstring(search_data.encode('utf-8'))
             url = root[12][6].attrib['href']
