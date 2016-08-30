@@ -142,6 +142,17 @@ class test_podaac(unittest.TestCase):
                             '../' + "HBJHKASD" + '.png')
         os.remove(path)
 
+    # test cases for the function subset_status
+    def test_subset_status(self):
+        test_status = "unknown"
+        token_1 = "a"
+        status_1 = self.podaac.subset_status(token=token_1)
+        token_2 = "012"
+        status_2 = self.podaac.subset_status(token=token_2)
+
+        assert test_status == status_1
+        assert test_status == status_2
+
     # test case for the function extract_l4_granule()
     def test_extract_l4_granule(self):
         dataset_id = 'PODAAC-GHCMC-4FM02'

@@ -14,6 +14,7 @@
 
 import requests
 import urllib
+import httplib
 import os
 import json
 import xml.etree.ElementTree as ET
@@ -459,6 +460,25 @@ class Podaac:
         further used to check the status of the request.
 
         '''
+        input_data = open('input.json', 'r+')
+        input_data = json.load(input_data)
+        inputString = json.dumps(input_data)
+
+        # submit subset request
+        params = urllib.urlencode({'query': inputString})
+        headers = {
+            "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
+        conn = httplib.HTTPConnection("podaac.jpl.nasa.gov")
+        conn.request("POST", "/ws/subset/granule?request=submit",
+                     params, headers)
+        response = conn.getresponse()
+
+        data = response.read()
+        result = json.loads(data)
+        token = result['token']
+        conn.close()
+
+        return token
 
     def subset_status(self, token=''):
         '''Subset Granule Status service allows users to check the status \
@@ -470,6 +490,12 @@ class Podaac:
         :returns: the status of the subset request.
 
         '''
+        url = self.URL + "subset/status?token=" + token
+        subset_data = requests.get(url).text
+        subset_data_json = json.loads(subset_data)
+        status = subset_data_json['status']
+
+        return status
 
     def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional fucntion that we have provided apart \
