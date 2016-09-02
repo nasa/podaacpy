@@ -533,7 +533,7 @@ class Podaac:
             else:
                 path = path + '/' + granule_name
             granule = urllib.request.urlretrieve(url, path)
-            if granule[1].getheader('Content-Type') == 'text/plain':
+            if granule[1]['Content-Type'] == 'text/plain':
                 raise Exception("Unexpected Error Occured")
 
         except Exception:
