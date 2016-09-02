@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import requests
-import urllib
+import urllib.request
 import urllib.parse
 import http.client
 import os
@@ -532,7 +532,7 @@ class Podaac:
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
                 path = path + '/' + granule_name
-            granule = urllib.urlretrieve(url, path)
+            granule = urllib.request.urlretrieve(url, path)
             if granule[1].getheader('Content-Type') == 'text/plain':
                 raise Exception("Unexpected Error Occured")
 
