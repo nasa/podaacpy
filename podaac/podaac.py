@@ -14,7 +14,8 @@
 
 import requests
 import urllib
-import httplib
+import urllib.parse
+import http.client
 import os
 import json
 import xml.etree.ElementTree as ET
@@ -465,15 +466,15 @@ class Podaac:
         inputString = json.dumps(input_data)
 
         # submit subset request
-        params = urllib.urlencode({'query': inputString})
+        params = urllib.parse.urlencode({'query': inputString})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
-        conn = httplib.HTTPConnection("podaac.jpl.nasa.gov")
+        conn = http.client.HTTPConnection("podaac.jpl.nasa.gov")
         conn.request("POST", "/ws/subset/granule?request=submit",
                      params, headers)
         response = conn.getresponse()
 
-        data = response.read()
+        data = response.read().decode('utf-8')
         result = json.loads(data)
         token = result['token']
         conn.close()
