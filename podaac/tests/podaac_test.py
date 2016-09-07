@@ -116,29 +116,17 @@ class test_podaac(unittest.TestCase):
                       self.podaac.granule_search, format='html')
 
     # test case for the function load_image_granule()
-    def test_load_image_granule(self):
+    def test_granule_preview(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
-        short_name = 'ASCATA-L2-25km'
-        granule_name = 'ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc'
-        bbox = '45,0,180,90'
-        srs = 'EPSG:4326'
-        height = '300'
-        width = '200'
-        data = self.podaac.load_image_granule(
-            dataset_id, short_name, granule_name, bbox, height, width, srs)
-        test_data = data[0].split('/')
-        length = len(test_data)
+        image_variable = 'wind_speed'
+        image_data = self.podaac.granule_preview(
+            dataset_id=dataset_id, image_variable=image_variable)
 
-        assert data != None
-        assert test_data[length - 1] == dataset_id + '.png'
-        assert_raises(Exception, self.podaac.load_image_granule,
-                      dataset_id="HBJHKASD")
+        assert image_data != None
+        assert image_data[1]['Content-Type'] == 'image/png'
 
         path = os.path.join(os.path.dirname(__file__),
                             '../' + dataset_id + '.png')
-        os.remove(path)
-        path = os.path.join(os.path.dirname(__file__),
-                            '../' + "HBJHKASD" + '.png')
         os.remove(path)
 
     # test cases for the function subset_status

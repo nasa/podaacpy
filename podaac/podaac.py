@@ -339,7 +339,7 @@ class Podaac:
 
         return granules.text
 
-    def granule_preview(self, dataset_id='', format='image/png', path=''):
+    def granule_preview(self, dataset_id='', image_variable='', path=''):
         '''The PODAAC Image service renders granules in the \
                 PO.DAACs catalog to images such as jpeg and/or png. \
                 This image service also utilizes OGC WMS protocol. \
@@ -432,17 +432,28 @@ class Podaac:
         '''
 
         try:
-            image_data = self.granule_search(dataset_id=dataset_id)
+            bbox = '180,-90,180,90'
+            image_data = self.granule_search(dataset_id=dataset_id, bbox=bbox)
             root = ET.fromstring(image_data.encode('utf-8'))
+
+            # fetching the [URL Template]
+            url_template = ''
+            for entry in root.iter('{http://www.w3.org/2005/Atom}entry'):
+                for element in entry:
+                    if element.tag == '{http://www.w3.org/2005/Atom}link':
+                        if element.attrib['title'] == "Preview Image":
+                            url_template = element.attrib['href']
+                            break
+
+            if url_template == '':
+                raise Exception("Preview Image not available for this dataset.")
+            url = url_template + '/' + image_variable
             if path == '':
                 path = os.path.join(os.path.dirname(
                     __file__), dataset_id + '.png')
             else:
                 path = path + '/' + dataset_id + '.png'
-            image = urllib.urlretrieve(url, path)
-            if image[1].getheader('Content-Type') == 'text/plain':
-                raise Exception(
-                    "Service type image not availalble for this dataset : " + dataset_id)
+            image = urllib.request.urlretrieve(url, path)
 
         except Exception:
             raise
