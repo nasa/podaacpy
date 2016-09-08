@@ -1,7 +1,7 @@
 podaacpy
 ========
 
-| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Pypi Downloads|
+| |license| |PyPI| |Python| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Pypi Downloads|
 
 |image7|
 
@@ -139,6 +139,8 @@ Copyright and Export Classification
 
 .. |license| image:: https://img.shields.io/github/license/lewismc/podaacpy.svg?maxAge=2592000
    :target: http://www.apache.org/licenses/LICENSE-2.0
+.. |Python| image:: https://img.shields.io/badge/python-3-blue.svg
+   :target: https://www.python.org/downloads/
 .. |PyPI| image:: https://img.shields.io/pypi/v/podaacpy.svg?maxAge=2592000?style=plastic
    :target: https://pypi.python.org/pypi/podaacpy
 .. |documentation| image:: https://readthedocs.org/projects/podaacpy/badge/?version=latest
