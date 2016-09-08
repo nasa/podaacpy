@@ -69,8 +69,8 @@ class Podaac:
 
         return metadata.text
 
-    def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', 
-                       instrument='', satellite='', file_format='', status='', process_level='', sort_by='', 
+    def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='',
+                       instrument='', satellite='', file_format='', status='', process_level='', sort_by='',
                        bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \

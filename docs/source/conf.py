@@ -33,7 +33,8 @@ import sphinx_rtd_theme
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
-# Assuming a fresh checkout of master branch, this will point us to the package(s)
+# Assuming a fresh checkout of master branch, this will point us to the
+# package(s)
 sys.path.insert(0, os.path.abspath('../../podaac'))
 
 # -- General configuration ------------------------------------------------
@@ -201,22 +202,22 @@ htmlhelp_basename = 'podaacpydoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    #'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    #'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    #'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'podaacpy.tex', u'podaacpy Documentation',
-   u'Lewis John McGibbney', 'manual'),
+    ('index', 'podaacpy.tex', u'podaacpy Documentation',
+     u'Lewis John McGibbney', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -259,9 +260,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'podaacpy', u'podaacpy Documentation',
-   u'Lewis John McGibbney', 'podaacpy', 'One line description of project.',
-   'Miscellaneous'),
+    ('index', 'podaacpy', u'podaacpy Documentation',
+     u'Lewis John McGibbney', 'podaacpy', 'One line description of project.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
