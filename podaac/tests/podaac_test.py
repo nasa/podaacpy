@@ -55,7 +55,7 @@ class test_podaac(unittest.TestCase):
         assert granule_md != None
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError,
-                      self.podaac.granule_metadata, format='is')
+                      self.podaac.granule_metadata, dataset_id='PODAAC',format='is')
 
     # test case for the function load_last24hours_datacasting_granule_md()
     def test_load_last24hours_datacasting_granule_md(self):

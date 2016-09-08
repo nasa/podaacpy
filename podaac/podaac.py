@@ -50,8 +50,15 @@ class Podaac:
 
         '''
         try:
-            url = self.URL + 'metadata/dataset/?datasetId=' + \
-                dataset_id + '&shortName=' + short_name + '&format=' + format
+            url = self.URL + 'metadata/dataset/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+
+            url = url + '&format=' + format
             metadata = requests.get(url)
             if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503 or metadata.status_code == 408:
                 metadata.raise_for_status()
@@ -86,8 +93,17 @@ class Podaac:
         '''
 
         try:
-            url = self.URL + 'metadata/granule?datasetId=' + dataset_id + '&shortName=' + \
-                short_name + '&granuleName=' + granule_name + '&format=' + format
+            url = self.URL + 'metadata/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+            if(granule_name != ''):
+                url = url + '&granuleName=' + granule_name
+
+            url = url + '&format=' + format
             granule_md = requests.get(url)
             if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
                 granule_md.raise_for_status()
@@ -124,8 +140,15 @@ class Podaac:
         '''
 
         try:
-            url = self.URL + 'metadata/granule?datasetId=' + dataset_id + '&shortName=' + \
-                short_name + '&itemsPerPage=' + \
+            url = self.URL + 'metadata/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+
+            url = url + '&itemsPerPage=' + \
                 str(items_per_page) + '&format=' + format
             granule_md = requests.get(url)
             if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
@@ -149,7 +172,12 @@ class Podaac:
         '''
 
         try:
-            url = self.URL + 'dataset/variables/?datasetId=' + dataset_id
+            url = self.URL + 'dataset/variables/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+
             variables = requests.get(url)
             if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
                 variables.raise_for_status()
@@ -243,10 +271,38 @@ class Podaac:
 
         '''
         try:
-            url = self.URL + 'search/dataset/?keyword=' + keyword + '&start_time=' + start_time + '&end_time=' + end_time + '&start_index=' + start_index + '&dataset_id=' + dataset_id + '&short_name=' + short_name + '&instrument=' + instrument + '&satellite=' + \
-                satellite + '&fileFormat=' + file_format + '&status=' + status + '&processLevel=' + process_level + '&sort_by=' + sort_by + \
-                '&bbox=' + bbox + '&itemsPerPage=' + items_per_page + \
-                '&pretty=' + pretty + '&format=' + format + '&full=' + full
+            url = self.URL + 'search/dataset/?'
+            if(dataset_id != ''):
+                url = url + 'keyword=' + keyword
+            if(start_time != ''):
+                url = url + '&startTime=' + start_time
+            if(end_time != ''):
+                url = url + '&endTime=' + end_time
+            if(bbox != ''):
+                url = url + '&bbox=' + bbox
+            if(start_index != ''):
+                url = url + '&startIndex=' + start_index
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+            if(instrument != ''):
+                url = url + '&instrument=' + instrument
+            if(satellite != ''):
+                url = url + '&satellite=' + satellite
+            if(file_format != ''):
+                url = url + '&fileFormat=' + file_format
+            if(status != ''):
+                url = url + '&status=' + status
+            if(process_level != ''):
+                url = url + '&processLevel=' + process_level
+            if(sort_by != ''):
+                url = url + '&sortBy=' + sort_by
+            if(bbox != ''):
+                url = url + '&bbox=' + bbox
+
+            url = url + '&itemsPerPage=' + items_per_page + '&pretty=' + \
+                pretty + '&format=' + format + '&full=' + full
             datasets = requests.get(url)
             if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408:
                 datasets.raise_for_status()
