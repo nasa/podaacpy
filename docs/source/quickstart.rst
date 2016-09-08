@@ -56,15 +56,11 @@ The convenience functions are; ::
 
    result = u.list_available_granule_search_level2_dataset_ids()
 
-   result = u.list_available_granule_search_level2_datasetShortNames()
+   result = u.list_available_granule_search_level2_dataset_short_names()
 
    result = u.list_available_granule_search_dataset_ids()
 
-   result = u.list_available_granule_search_datasetShortNames()
-
-   result = u.list_available_image_granule_dataset_ids()
-
-   result = u.list_available_image_granule_datasetShortNames()
+   result = u.list_available_granule_search_dataset_short_names()
 
    result = u.list_available_extract_granule_dataset_ids():
   
@@ -77,7 +73,7 @@ Retrieving Dataset Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 `Dataset Metadata <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`_ - retrieves the metadata of a dataset. In the following code snippet lets retrieve dataset metadata for GHRSST Level 2P Atlantic Regional Skin Sea Surface Temperature from the Spinning Enhanced Visible and InfraRed Imager (SEVIRI) on the Meteosat Second Generation (MSG-2) satellite e.g. dataset id **PODAAC-GHMG2-2PO01** ::
 
-  result = p.load_dataset_md(dataset_id='PODAAC-GHMG2-2PO01')
+  result = p.dataset_metadata(dataset_id='PODAAC-GHMG2-2PO01')
 
 The variable **result** now contains an XML response which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
@@ -86,7 +82,7 @@ Retrieving Granule Metadata
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 `Granule Metadata <http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html>`_ - retrieves the metadata of a granule. In the following code snippet we retrieve granule metadata for the above dataset e.g. granule_name **20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc** ::
 
-  result = p.load_granule_md(dataset_id='PODAAC-GHMG2-2PO01', granule_name='20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc')
+  result = p.granule_metadata(dataset_id='PODAAC-GHMG2-2PO01', granule_name='20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc')
 
 The variable **result** now contains an XML response which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
@@ -98,11 +94,20 @@ Additionally, we can search metadata for list of granules archived within the la
 The variable **result** now contains an XML response containing a list of data granules which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
 
+Retrieving Dataset Variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+`Dataset Variables <http://podaac.jpl.nasa.gov/ws/dataset/variables/index.html>`_ - provides a list of variable for the datset. In the following code snippet we retrieve the dataset variables for the dataset id **PODAAC-ASOP2-25X01** ::
+
+  result = p..dataset_variables(dataset_id='PODAAC-ASOP2-25X01')
+
+The variable **result** now contains a dictionary of variables of the respective dataset.
+For more information on this function, see :doc:`webservices`
+
 Searching for Datasets
 ^^^^^^^^^^^^^^^^^^^^^^
 `Search Dataset <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`_ - searches PO.DAAC's dataset catalog, over Level 2, Level 3, and Level 4 datasets. In the following code snippet we will search using a keyword e.g. **modis** ::
 
-   result = p.search_dataset(keyword='modis')
+   result = p.dataset_search(keyword='modis')
 
 The variable **result** now contains an XML response containing a list of datasets which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
@@ -111,16 +116,16 @@ Searching for Granules
 ^^^^^^^^^^^^^^^^^^^^^^^
 `Search Granule <http://podaac.jpl.nasa.gov/ws/search/granule/index.html>`_ - does granule searching on PO.DAAC level 2 swath datasets (individual orbits of a satellite), and level 3 & 4 gridded datasets (time averaged to span the globe). In the following code snippet we will search for granules within a specific dataset e.g. **PODAAC-ASOP2-25X01** ::
 
-   result = p.search_granule(dataset_id='PODAAC-ASOP2-25X01',short_name='ASCATA-L2-25km',bbox='0,0,180,90',start_time='2013-01-01T01:30:00Z',end_time='2014-01-01T00:00:00Z',start_index='1'))
+   result = p.granule_search(dataset_id='PODAAC-ASOP2-25X01', bbox='0,0,180,90',start_time='2013-01-01T01:30:00Z',end_time='2014-01-01T00:00:00Z',start_index='1'))
 
 The variable **result** now contains an XML response containing a list of granules for the given dataset which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
 
 Retrieve granule images
 ^^^^^^^^^^^^^^^^^^^^^^^
-`Image Granule <http://podaac.jpl.nasa.gov/ws/image/granule/index.html>`_ - renders granules in the PO.DAAC's catalog to images such as jpeg and/or png. In the following code snippet we display a GetMap request ::
+`Granule Preview <http://podaac.jpl.nasa.gov/ws/image/granule/index.html>`_ - renders granules in the PO.DAAC's catalog to images such as jpeg and/or png. In the following code snippet we display a request using the dataset id **PODAAC-ASOP2-25X01** and image variable of the dataset **wind_speed** ::
 
-   result = p.load_image_granule(short_name='ASCATB-L2-25km', granule_name='ascat_20121114_035403_metopb_00817_eps_o_250_2101_ovw.l2.nc', request='GetMap', layers='wind_speed_selection', styles='', version='1.3.0', format='image/png', srs='', bbox='-180,-66.43,180,79.91', height='300', width='600', service='WMS',path='path/to/the/destination/directory')
+   result = p.granule_preview(dataset_id='PODAAC-ASOP2-25X01', image_variable='wind_speed')
 
 The above request downloads us a nice image shown below
 
@@ -128,13 +133,36 @@ The above request downloads us a nice image shown below
 
 For more information on this function, see :doc:`webservices`
 
-Exract a granule
-^^^^^^^^^^^^^^^^
-`Extract Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`_ - subsets a granule in PO.DAAC catalog and produces either netcdf3 or hdf4 files. In the following code snippet we extract a granule with Dataset ID = **PODAAC-QSX25-L2B02**, short_name of **QSCAT_LEVEL_2B_V2**, granule_name **QS_S2B54295.20093261514**, offset the region contained within **-135.0 W, 30.0 N, -120.0 W, 40.0 N** and provide a path to the directory you want to have it saved as **netcdf** ::
+Subsetting Granules
+^^^^^^^^^^^^^^^^^^^
+`Granule Subset <http://podaac.jpl.nasa.gov/ws/subset/granule/index.html>`_ - the Granule Subset web service sets up a granule subsetting job using HTTP POST request. Upon a successful request, a token is returned which can be used to check the status of the subsetting job. In the following code snippet we will subset a granule using an input.json file which contains ::
 
-   result = p.extract_granule(short_name='ASCATA-L2-25km', granule_name='ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc', bbox='-180,-90,180,90', format='netcdf', path='path/to/the/destination/directory')
+   query={ 
+    "email":"abc@abcd.com",
+    "query": [
+        {
+            "compact":false,   
+            "datasetId":"PODAAC-ASOP2-25X01",
+            "bbox":"-180,-90,0,90",
+            "variables" : ["lat" , "lon","time","wind_speed" ],
+            "granuleIds": ["ascat_20140520_005700_metopa_39344_eps_o_250_2300_ovw.l2.nc","ascat_20140411_175700_metopa_38800_eps_o_250_2300_ovw.l2.nc"]
+        }
+     ]
+   }
 
-The above request downloads the relevant .netcdf file. For more information on this function, see :doc:`webservices`
+   result = p.granule_subset(input_file_path='/path/to/input.json')
+
+The variable **result** contains a token on successful request reception. This can be further used to check the status of the request.
+For more information on this function, see :doc:`webservices`
+
+Subset Status
+^^^^^^^^^^^^^
+`Subset Status <http://podaac.jpl.nasa.gov/ws/subset/status/index.html>`_ - the subset status checks the status on the existing job. In the following code snippet we check the status using the token received from PO.DAAC when we submitted a job for subsetting ::
+
+   result = p.granule_preview(dataset_id='PODAAC-ASOP2-25X01', image_variable='wind_speed')
+
+The variable **result** contains the status of the subset request.
+For more information on this function, see :doc:`webservices`
 
 Extract level4 granule
 ^^^^^^^^^^^^^^^^^^^^^^

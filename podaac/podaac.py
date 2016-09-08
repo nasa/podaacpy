@@ -430,7 +430,7 @@ class Podaac:
                 element.\
         :type image_variable: :mod:`string`
 
-        :param path: Destination directory into which the granule\
+        :param path: Destination directory into which the granule \
                 needs to be downloaded.
         :type format: :mod:`string`
 
@@ -476,6 +476,7 @@ class Podaac:
 
         :param input_file_path: path to a json file which contains the \
         the request that you want to send to PO.DAAC
+        :type input_file_path: :mod:`string`
 
         :returns: a token on successful request reception. This can be \
         further used to check the status of the request.
@@ -507,6 +508,7 @@ class Podaac:
 
         :param token: string token that is returned by PO.DAAC whilst \
         submitting a subset request.
+        :type token: :mod:`string`
 
         :returns: the status of the subset request.
 
@@ -535,7 +537,7 @@ class Podaac:
                 granule search. Example: ASCATA-L2-25km
         :type short_name: :mod:`string`
 
-        :param path: Destination directory into which the granule\
+        :param path: Destination directory into which the granule \
                 needs to be downloaded.
         :type format: :mod:`string`
         '''
