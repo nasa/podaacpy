@@ -41,6 +41,8 @@ class test_podaac(unittest.TestCase):
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError, self.podaac.dataset_metadata,
                       'PODAAC-GHMG2-2PO01', 'OSDPD-L2P-MSG02', 'is')
+        assert_raises(Exception, self.podaac.dataset_metadata,
+                      short_name='OSDPD-L2P-MSG02')
 
     # test case for the fucntion load_granule_md()
     def test_granule_metadata(self):
@@ -56,6 +58,8 @@ class test_podaac(unittest.TestCase):
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.granule_metadata, dataset_id='PODAAC', format='is')
+        assert_raises(Exception,
+                      self.podaac.granule_metadata, format='is')
 
     # test case for the function load_last24hours_datacasting_granule_md()
     def test_load_last24hours_datacasting_granule_md(self):
@@ -72,6 +76,7 @@ class test_podaac(unittest.TestCase):
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
+        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md, short_name='ASCATA-L2-25km', format='iso')
 
     # test case for the function load_dataset_variables
     def test_dataset_variable(self):
@@ -114,6 +119,8 @@ class test_podaac(unittest.TestCase):
         assert test_dataset_id == dataset_id
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.granule_search, dataset_id='PODAAC', format='html')
+        assert_raises(Exception,
+                      self.podaac.granule_search, format='html')
 
     # test case for the function load_image_granule()
     def test_granule_preview(self):
@@ -128,6 +135,10 @@ class test_podaac(unittest.TestCase):
         path = os.path.join(os.path.dirname(__file__),
                             '../' + dataset_id + '.png')
         os.remove(path)
+        assert_raises(Exception,
+                      self.podaac.granule_preview, image_variable='hello')
+        assert_raises(Exception,
+                      self.podaac.granule_preview, dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
 
     # test cases for the function subset_status
     def test_subset_status(self):
