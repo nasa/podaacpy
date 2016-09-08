@@ -208,12 +208,7 @@ class Podaac:
         '''
 
         try:
-            url = self.URL + 'dataset/variables/?'
-            if(dataset_id != ''):
-                url = url + 'datasetId=' + dataset_id
-            else:
-                raise Exception("Dataset Id is required")
-
+            url = self.URL + 'dataset/variables/?datasetId=' + dataset_id
             variables = requests.get(url)
             if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
                 variables.raise_for_status()
@@ -443,6 +438,8 @@ class Podaac:
 
         try:
             bbox = '-180,-90,180,90'
+            if(dataset_id == ''):
+                raise Exception("Required dataset_id")
             image_data = self.granule_search(dataset_id=dataset_id, bbox=bbox)
             root = ET.fromstring(image_data.encode('utf-8'))
 
