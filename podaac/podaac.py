@@ -69,125 +69,6 @@ class Podaac:
 
         return metadata.text
 
-    def granule_metadata(self, dataset_id='', short_name='', granule_name='', format='iso'):
-        '''Granule metadata service retrieves the metadata of a granule \
-                on PO.DAACs catalog in ISO-19115.
-
-        :param dataset_id: dataset persistent ID. dataset_id or short_name \
-                is required for this metadata service.
-        :type dataset_id: :mod:`string`
-
-        :param short_name: dataset short_name. dataset_id or short_name \
-                is required for this metadata service.
-        :type short_name: :mod:`string`
-
-        :param granule_name: granule name. granule name is required \
-                for this metadata service.
-        :type granule_name: :mod:`string`
-
-        :param format: metadata format. Default format is iso.
-        :type format: :mod:`string`
-
-        :returns: an xml response based on the requested 'format'.
-
-        '''
-
-        try:
-            url = self.URL + 'metadata/granule/?'
-            if(dataset_id != ''):
-                url = url + 'datasetId=' + dataset_id
-            else:
-                raise Exception("Dataset Id is required")
-            if(short_name != ''):
-                url = url + '&shortName=' + short_name
-            if(granule_name != ''):
-                url = url + '&granuleName=' + granule_name
-
-            url = url + '&format=' + format
-            granule_md = requests.get(url)
-            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
-                granule_md.raise_for_status()
-
-        except requests.exceptions.HTTPError as error:
-            print(error)
-            raise
-
-        return granule_md.text
-
-    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', format='datacasting', items_per_page=7):
-        '''Granule metadata service retrieves metadata for a list \
-                of granules archived within the last 24 hours in Datacasting \
-                format.
-
-        :param dataset_id: dataset persistent ID. dataset_id or short_name \
-                is required for this metadata service.
-        :type dataset_id: :mod:`string`
-
-        :param short_name: dataset short_name. dataset_id or short_name \
-                is required for this metadata service.
-        :type short_name: :mod:`string`
-
-        :param format: metadata format. Must set to 'datacasting'.
-        :type format: :mod:`string`
-
-        :param items_per_page: number of results per page. Default value is 7. \
-                The value range is from 0 to 5000.
-        :type items_per_page: :mod:`int`
-
-        :returns: an xml response based on the requested 'format'. Options \
-                are 'iso' and 'gcmd'.
-
-        '''
-
-        try:
-            url = self.URL + 'metadata/granule/?'
-            if(dataset_id != ''):
-                url = url + 'datasetId=' + dataset_id
-            else:
-                raise Exception("Dataset Id is required")
-            if(short_name != ''):
-                url = url + '&shortName=' + short_name
-
-            url = url + '&itemsPerPage=' + \
-                str(items_per_page) + '&format=' + format
-            granule_md = requests.get(url)
-            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
-                granule_md.raise_for_status()
-
-        except requests.exceptions.HTTPError as error:
-            print(error)
-            raise
-
-        return granule_md.text
-
-    def dataset_variables(self, dataset_id):
-        '''Provides list of dataset variables.
-
-        :param dataset_id: dataset persistent ID. dataset_id or short_name \
-                is required for this metadata service.
-        :type dataset_id: :mod:`string`
-
-        :returns: a list of dataset variables for the dataset.
-
-        '''
-
-        try:
-            url = self.URL + 'dataset/variables/?'
-            if(dataset_id != ''):
-                url = url + 'datasetId=' + dataset_id
-            else:
-                raise Exception("Dataset Id is required")
-
-            variables = requests.get(url)
-            if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
-                variables.raise_for_status()
-
-        except requests.exceptions.HTTPError as error:
-            print(error)
-            raise
-        dataset_variables = json.loads(variables.text)['variables']
-        return dataset_variables
-
     def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
@@ -312,6 +193,125 @@ class Podaac:
             raise
 
         return datasets.text
+
+    def dataset_variables(self, dataset_id):
+        '''Provides list of dataset variables.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :returns: a list of dataset variables for the dataset.
+
+        '''
+
+        try:
+            url = self.URL + 'dataset/variables/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+
+            variables = requests.get(url)
+            if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
+                variables.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+        dataset_variables = json.loads(variables.text)['variables']
+        return dataset_variables
+
+    def granule_metadata(self, dataset_id='', short_name='', granule_name='', format='iso'):
+        '''Granule metadata service retrieves the metadata of a granule \
+                on PO.DAACs catalog in ISO-19115.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :param short_name: dataset short_name. dataset_id or short_name \
+                is required for this metadata service.
+        :type short_name: :mod:`string`
+
+        :param granule_name: granule name. granule name is required \
+                for this metadata service.
+        :type granule_name: :mod:`string`
+
+        :param format: metadata format. Default format is iso.
+        :type format: :mod:`string`
+
+        :returns: an xml response based on the requested 'format'.
+
+        '''
+
+        try:
+            url = self.URL + 'metadata/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+            if(granule_name != ''):
+                url = url + '&granuleName=' + granule_name
+
+            url = url + '&format=' + format
+            granule_md = requests.get(url)
+            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
+                granule_md.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return granule_md.text
+
+    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', format='datacasting', items_per_page=7):
+        '''Granule metadata service retrieves metadata for a list \
+                of granules archived within the last 24 hours in Datacasting \
+                format.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :param short_name: dataset short_name. dataset_id or short_name \
+                is required for this metadata service.
+        :type short_name: :mod:`string`
+
+        :param format: metadata format. Must set to 'datacasting'.
+        :type format: :mod:`string`
+
+        :param items_per_page: number of results per page. Default value is 7. \
+                The value range is from 0 to 5000.
+        :type items_per_page: :mod:`int`
+
+        :returns: an xml response based on the requested 'format'. Options \
+                are 'iso' and 'gcmd'.
+
+        '''
+
+        try:
+            url = self.URL + 'metadata/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+
+            url = url + '&itemsPerPage=' + \
+                str(items_per_page) + '&format=' + format
+            granule_md = requests.get(url)
+            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
+                granule_md.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return granule_md.text
 
     def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
