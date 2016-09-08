@@ -13,11 +13,15 @@
 # limitations under the License.
 
 import requests
-import urllib
+import urllib.request
+import urllib.parse
+import http.client
 import os
+import json
 import xml.etree.ElementTree as ET
 
 URL = 'http://podaac.jpl.nasa.gov/ws/'
+IMAGE_URL = 'http://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
 
 
 class Podaac:
@@ -25,7 +29,7 @@ class Podaac:
     def __init__(self):
         self.URL = 'http://podaac.jpl.nasa.gov/ws/'
 
-    def load_dataset_md(self, dataset_id='', short_name='', format='iso'):
+    def dataset_metadata(self, dataset_id='', short_name='', format='iso'):
         '''Dataset metadata service retrieves the metadata of a \
                 dataset on PO.DAACs dataset catalog using the following \
                 parameters: dataset_id, short_name, and format.
@@ -46,8 +50,15 @@ class Podaac:
 
         '''
         try:
-            url = self.URL + 'metadata/dataset/?datasetId=' + \
-                dataset_id + '&shortName=' + short_name + '&format=' + format
+            url = self.URL + 'metadata/dataset/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+
+            url = url + '&format=' + format
             metadata = requests.get(url)
             if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503 or metadata.status_code == 408:
                 metadata.raise_for_status()
@@ -58,82 +69,7 @@ class Podaac:
 
         return metadata.text
 
-    def load_granule_md(self, dataset_id='', short_name='', granule_name='', format='iso'):
-        '''Granule metadata service retrieves the metadata of a granule \
-                on PO.DAACs catalog in ISO-19115.
-
-        :param dataset_id: dataset persistent ID. dataset_id or short_name \
-                is required for this metadata service.
-        :type dataset_id: :mod:`string`
-
-        :param short_name: dataset short_name. dataset_id or short_name \
-                is required for this metadata service.
-        :type short_name: :mod:`string`
-
-        :param granule_name: granule name. granule name is required \
-                for this metadata service.
-        :type granule_name: :mod:`string`
-
-        :param format: metadata format. Default format is iso.
-        :type format: :mod:`string`
-
-        :returns: an xml response based on the requested 'format'.
-
-        '''
-
-        try:
-            url = self.URL + 'metadata/granule?datasetId=' + dataset_id + '&shortName=' + \
-                short_name + '&granuleName=' + granule_name + '&format=' + format
-            granule_md = requests.get(url)
-            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
-                granule_md.raise_for_status()
-
-        except requests.exceptions.HTTPError as error:
-            print(error)
-            raise
-
-        return granule_md.text
-
-    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', format='datacasting', items_per_page=7):
-        '''Granule metadata service retrieves metadata for a list \
-                of granules archived within the last 24 hours in Datacasting \
-                format.
-
-        :param dataset_id: dataset persistent ID. dataset_id or short_name \
-                is required for this metadata service.
-        :type dataset_id: :mod:`string`
-
-        :param short_name: dataset short_name. dataset_id or short_name \
-                is required for this metadata service.
-        :type short_name: :mod:`string`
-
-        :param format: metadata format. Must set to 'datacasting'.
-        :type format: :mod:`string`
-
-        :param items_per_page: number of results per page. Default value is 7. \
-                The value range is from 0 to 5000.
-        :type items_per_page: :mod:`int`
-
-        :returns: an xml response based on the requested 'format'. Options \
-                are 'iso' and 'gcmd'.
-
-        '''
-
-        try:
-            url = self.URL + 'metadata/granule?datasetId=' + dataset_id + '&shortName=' + \
-                short_name + '&itemsPerPage=' + \
-                str(items_per_page) + '&format=' + format
-            granule_md = requests.get(url)
-            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
-                granule_md.raise_for_status()
-
-        except requests.exceptions.HTTPError as error:
-            print(error)
-            raise
-
-        return granule_md.text
-
-    def search_dataset(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
+    def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
                 dataset_id, short_name, start_time, end_time, bbox, and others.
@@ -216,10 +152,38 @@ class Podaac:
 
         '''
         try:
-            url = self.URL + 'search/dataset/?keyword=' + keyword + '&start_time=' + start_time + '&end_time=' + end_time + '&start_index=' + start_index + '&dataset_id=' + dataset_id + '&short_name=' + short_name + '&instrument=' + instrument + '&satellite=' + \
-                satellite + '&fileFormat=' + file_format + '&status=' + status + '&processLevel=' + process_level + '&sort_by=' + sort_by + \
-                '&bbox=' + bbox + '&itemsPerPage=' + items_per_page + \
-                '&pretty=' + pretty + '&format=' + format + '&full=' + full
+            url = self.URL + 'search/dataset/?'
+            if(dataset_id != ''):
+                url = url + 'keyword=' + keyword
+            if(start_time != ''):
+                url = url + '&startTime=' + start_time
+            if(end_time != ''):
+                url = url + '&endTime=' + end_time
+            if(bbox != ''):
+                url = url + '&bbox=' + bbox
+            if(start_index != ''):
+                url = url + '&startIndex=' + start_index
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+            if(instrument != ''):
+                url = url + '&instrument=' + instrument
+            if(satellite != ''):
+                url = url + '&satellite=' + satellite
+            if(file_format != ''):
+                url = url + '&fileFormat=' + file_format
+            if(status != ''):
+                url = url + '&status=' + status
+            if(process_level != ''):
+                url = url + '&processLevel=' + process_level
+            if(sort_by != ''):
+                url = url + '&sortBy=' + sort_by
+            if(bbox != ''):
+                url = url + '&bbox=' + bbox
+
+            url = url + '&itemsPerPage=' + items_per_page + '&pretty=' + \
+                pretty + '&format=' + format + '&full=' + full
             datasets = requests.get(url)
             if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408:
                 datasets.raise_for_status()
@@ -230,7 +194,126 @@ class Podaac:
 
         return datasets.text
 
-    def search_granule(self, dataset_id='', short_name='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
+    def dataset_variables(self, dataset_id):
+        '''Provides list of dataset variables.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :returns: a list of dataset variables for the dataset.
+
+        '''
+
+        try:
+            url = self.URL + 'dataset/variables/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+
+            variables = requests.get(url)
+            if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
+                variables.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+        dataset_variables = json.loads(variables.text)['variables']
+        return dataset_variables
+
+    def granule_metadata(self, dataset_id='', short_name='', granule_name='', format='iso'):
+        '''Granule metadata service retrieves the metadata of a granule \
+                on PO.DAACs catalog in ISO-19115.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :param short_name: dataset short_name. dataset_id or short_name \
+                is required for this metadata service.
+        :type short_name: :mod:`string`
+
+        :param granule_name: granule name. granule name is required \
+                for this metadata service.
+        :type granule_name: :mod:`string`
+
+        :param format: metadata format. Default format is iso.
+        :type format: :mod:`string`
+
+        :returns: an xml response based on the requested 'format'.
+
+        '''
+
+        try:
+            url = self.URL + 'metadata/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+            if(granule_name != ''):
+                url = url + '&granuleName=' + granule_name
+
+            url = url + '&format=' + format
+            granule_md = requests.get(url)
+            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
+                granule_md.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return granule_md.text
+
+    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', format='datacasting', items_per_page=7):
+        '''Granule metadata service retrieves metadata for a list \
+                of granules archived within the last 24 hours in Datacasting \
+                format.
+
+        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+                is required for this metadata service.
+        :type dataset_id: :mod:`string`
+
+        :param short_name: dataset short_name. dataset_id or short_name \
+                is required for this metadata service.
+        :type short_name: :mod:`string`
+
+        :param format: metadata format. Must set to 'datacasting'.
+        :type format: :mod:`string`
+
+        :param items_per_page: number of results per page. Default value is 7. \
+                The value range is from 0 to 5000.
+        :type items_per_page: :mod:`int`
+
+        :returns: an xml response based on the requested 'format'. Options \
+                are 'iso' and 'gcmd'.
+
+        '''
+
+        try:
+            url = self.URL + 'metadata/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
+            else:
+                raise Exception("Dataset Id is required")
+            if(short_name != ''):
+                url = url + '&shortName=' + short_name
+
+            url = url + '&itemsPerPage=' + \
+                str(items_per_page) + '&format=' + format
+            granule_md = requests.get(url)
+            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
+                granule_md.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return granule_md.text
+
+    def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -245,10 +328,6 @@ class Podaac:
         :param dataset_id: dataset persistent ID. dataset_id or short_name \
                 is required for a granule search. Example: PODAAC-ASOP2-25X01
         :type dataset_id: :mod:`string`
-
-        :param short_name: dataset short_name. dataset_id or short_name is \
-                required for a granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
 
         :param start_time: start time in the format of YYYY-MM-DDTHH:mm:ssZ. \
                 'Z' is the time-offset, where 'Z' signifies UTC or an actual offset \
@@ -298,14 +377,22 @@ class Podaac:
         '''
 
         try:
-            if(bbox == ''):
-                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&shortName=' + short_name + '&startTime=' + start_time + '&endTime=' + \
-                    end_time + '&startIndex=' + start_index + '&sortBy=' + sort_by + \
-                    '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
+            url = self.URL + 'search/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
             else:
-                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&shortName=' + short_name + '&startTime=' + start_time + '&endTime=' + end_time + \
-                    '&bbox=' + bbox + '&startIndex=' + start_index + '&sortBy=' + sort_by + \
-                    '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
+                raise Exception("Dataset Id is required")
+            if(start_time != ''):
+                url = url + '&startTime=' + start_time
+            if(end_time != ''):
+                url = url + '&endTime=' + end_time
+            if(bbox != ''):
+                url = url + '&bbox=' + bbox
+            if(start_index != ''):
+                url = url + '&startIndex=' + start_index
+
+            url = url + '&sortBy=' + sort_by + \
+                '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
             granules = requests.get(url)
             if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408:
                 granules.raise_for_status()
@@ -316,7 +403,7 @@ class Podaac:
 
         return granules.text
 
-    def load_image_granule(self, dataset_id='', short_name='', granule_name='', bbox='', height='', width='', style='', srs='', request='GetMap', service='WMS', version='1.3.0', format='image/png', layers='', path=''):
+    def granule_preview(self, dataset_id='', image_variable='', path=''):
         '''The PODAAC Image service renders granules in the \
                 PO.DAACs catalog to images such as jpeg and/or png. \
                 This image service also utilizes OGC WMS protocol. \
@@ -337,70 +424,13 @@ class Podaac:
                 PODAAC-ASOP2-25X01 :mod:`string`
         :type dataset_id: :mod:`string`
 
-        :param short_name: the shorter name for a dataset. \
-                Either short_name or dataset_id is required for a \
-                granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
+        :param image_variable: variables of the granule which have \
+                'Preview Images'.  Image variables can be found \
+                from Dataset Variable service. Use "id" from "imgVariable" \
+                element.\
+        :type image_variable: :mod:`string`
 
-        :param granule_name: name of the granule. \
-                Specifying granule_name insures only that granule \
-                is returned. Example: \
-                ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc
-        :type granule_name: :mod:`string`
-
-        :param request: The service response requested. Valid \
-                entries for WMS 1.3.0 are GetCapabilities, GetMap, \
-                GetLegendGraphic. Example: request=GetMap
-        :type request: :mod:`string`
-
-        :param service: service should be set to WMS. \
-                Example: service=WMS
-        :type service: :mod:`string`
-
-        :param version: The WMS version of the client, accepts \
-                values of 1.3.0 Example: version=1.3.0
-        :type version: :mod:`string`
-
-        :param format: Image format. Format is required for \
-                GetMap and GetLegendGraphic. Possible value : image/png
-        :type format: :mod:`string`
-
-        :param bbox: bounding box for spatial search. format should \
-                look like "bbox=45,0,180,90" which is in order of \
-                west, south, east, north. Longitude values needs to \
-                be in range of [-180, 180]. Latitude values needs to \
-                be in range of [-90, 90]. bbox is used for getMap \
-                request. Example: 45,0,180,90
-        :type bbox: :mod:`string`
-
-        :param height: Maximum height in pixels of the image. \
-                Height is required for getMap request. Example: 300
-        :type height: :mod:`int`
-
-        :param width: Maximum width in pixels of the image. \
-                width is used for getMap request. Example: 200
-        :type width: :mod:`int`
-
-        :param layers: A variable to image. This can be \
-                left blank, which then selects the default layer. \
-                layer is required for GetMap and GetLegendGraphic request. \
-                Example: wind_speed
-        :type layers: :mod:`string`
-
-        :param style: A colorbar to use when creating \
-                the image. This can be left blank, which then \
-                selects the default style. style is required in \
-                GetMap and GetLegendGraphic request. Example: \
-                paletteMedspirationIndexed
-        :type style: :mod:`string`
-
-        :param srs: The spatial reference system to project \
-                the data to. Currently only supports EPSG:4326. \
-                srs is used for getMap request. Leave blank for \
-                default projection. Example: EPSG:4326
-        :type srs: :mod:`string`
-
-        :param path: Destination directory into which the image\
+        :param path: Destination directory into which the granule\
                 needs to be downloaded.
         :type format: :mod:`string`
 
@@ -409,88 +439,86 @@ class Podaac:
         '''
 
         try:
-            url = self.URL + 'image/granule/?datasetId=' + dataset_id + '&shortName=' + short_name + '&granuleName=' + granule_name + '&request=' + request + '&bbox=' + bbox + \
-                '&height=' + height + '&width=' + width + '&style=' + style + '&srs=' + srs + \
-                '&service=' + service + '&version=' + version + \
-                '&format=' + format + '&layers=' + layers
+            bbox = '-180,-90,180,90'
+            image_data = self.granule_search(dataset_id=dataset_id, bbox=bbox)
+            root = ET.fromstring(image_data.encode('utf-8'))
+
+            # fetching the [URL Template]
+            url_template = ''
+            for entry in root.iter('{http://www.w3.org/2005/Atom}entry'):
+                for element in entry:
+                    if element.tag == '{http://www.w3.org/2005/Atom}link':
+                        if element.attrib['title'] == "Preview Image":
+                            url_template = element.attrib['href']
+                            break
+
+            if url_template == '':
+                raise Exception(
+                    "Preview Image not available for this dataset.")
+            url = url_template + '/' + image_variable + '.png'
+            print(url)
             if path == '':
                 path = os.path.join(os.path.dirname(
                     __file__), dataset_id + '.png')
             else:
                 path = path + '/' + dataset_id + '.png'
-            image = urllib.urlretrieve(url, path)
-            if image[1].getheader('Content-Type') == 'text/plain':
-                raise Exception(
-                    "Service type image not availalble for this dataset : " + dataset_id)
+            image = urllib.request.urlretrieve(url, path)
 
         except Exception:
             raise
 
         return image
 
-    def extract_granule(self, dataset_id='', short_name='', granule_name='', bbox='', format='', path=''):
-        '''Extract service subsets a granule in PO.DAAC catalog \
-        and produces either netcdf3 or hdf4 files. If the granule \
-        does not have any data in the given selected bounding box, \
-        HTTP 500 will be thrown since there is no data to be \
-        subsetted. Granule Search service can be used to find \
-        level 2 swath data. However, the level 2 spatial search \
-        uses coverage footprint polygons generated for each \
-        granule, and this footprint can contain no data or gaps. \
-        If the selected bounding box resides on no data or gaps, \
-        HTTP 500 will be thrown.
+    def granule_subset(self, input_file_path):
+        '''Subset Granule service allows users to Submit subset jobs. \
+        Use of this service should be preceded by a Granule Search in \
+        order to identify and generate a list of granules to be subsetted.
 
-        :param dataset_id: dataset persistent ID. dataset_id or \
-                short_name is required for a granule search. Example: \
-                PODAAC-ASOP2-25X01
-        :type dataset_id: :mod:`string`
+        :param input_file_path: path to a json file which contains the \
+        the request that you want to send to PO.DAAC
 
-        :param short_name: the shorter name for a dataset. \
-                Either short_name or dataset_id is required for a \
-                granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
-
-        :param granule_name: name of the granule. Specifying \
-                granule_name insures only that granule is returned. Example: \
-                ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc
-        :type granule_name: :mod:`string`
-
-        :param bbox: bounding box for spatial search. format \
-                should look like "bbox=0.0,-45.0,180.0,40.0" which is \
-                in order of west, south, east, north. Longitude values \
-                needs to be in range of [-180, 180]. Latitude values \
-                needs to be in range of [-90, 90]. Example: 45,0,180,90
-        :type bbox: :mod:`string`
-
-        :param format: Required. Saved file format. Possible \
-                values: netcdf, hdf
-        :type format: :mod:`string`
-
-        :param path: Destination directory into which the granule\
-                needs to be downloaded.
-        :type format: :mod:`string`
-
-        :returns: a netcdf file or hdf file
+        :returns: a token on successful request reception. This can be \
+        further used to check the status of the request.
 
         '''
-        try:
-            url = self.URL + 'extract/granule/?datasetId=' + dataset_id + '&shortName=' + \
-                short_name + '&granuleName=' + granule_name + \
-                '&bbox=' + bbox + '&format=' + format
-            if path == '':
-                path = os.path.join(os.path.dirname(__file__), granule_name)
-            else:
-                path = path + '/' + granule_name
-            granule = urllib.urlretrieve(url, path)
-            if granule[1].getheader('Content-Type') == 'text/plain':
-                raise Exception("Unexpected Error Occured")
+        input_data = open('input.json', 'r+')
+        input_data = json.load(input_data)
+        inputString = json.dumps(input_data)
 
-        except Exception:
-            raise
+        # submit subset request
+        params = urllib.parse.urlencode({'query': inputString})
+        headers = {
+            "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
+        conn = http.client.HTTPConnection("podaac.jpl.nasa.gov")
+        conn.request("POST", "/ws/subset/granule?request=submit",
+                     params, headers)
+        response = conn.getresponse()
 
-        return granule
+        data = response.read().decode('utf-8')
+        result = json.loads(data)
+        token = result['token']
+        conn.close()
 
-    def extract_l4_granule(self, dataset_id='', short_name='', path=''):
+        return token
+
+    def subset_status(self, token=''):
+        '''Subset Granule Status service allows users to check the status \
+        of submitted subset job.
+
+        :param token: string token that is returned by PO.DAAC whilst \
+        submitting a subset request.
+
+        :returns: the status of the subset request.
+
+        '''
+        url = self.URL + "subset/status?token=" + token
+        subset_data = requests.get(url).text
+        subset_data_json = json.loads(subset_data)
+        status = subset_data_json['status']
+
+        return status
+
+    def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional fucntion that we have provided apart \
         from the availalble webservices. The extract_l4_granule helps \
         retrieve the level 4 datasets from openDap server directly, \
@@ -513,8 +541,8 @@ class Podaac:
         '''
         try:
             start_index = '1'
-            search_data = self.search_granule(
-                dataset_id=dataset_id, short_name=short_name, start_index=start_index)
+            search_data = self.granule_search(
+                dataset_id=dataset_id, start_index=start_index)
             root = ET.fromstring(search_data.encode('utf-8'))
             url = root[12][6].attrib['href']
             url = url[:-5]
@@ -524,8 +552,8 @@ class Podaac:
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
                 path = path + '/' + granule_name
-            granule = urllib.urlretrieve(url, path)
-            if granule[1].getheader('Content-Type') == 'text/plain':
+            granule = urllib.request.urlretrieve(url, path)
+            if granule[1]['Content-Type'] == 'text/plain':
                 raise Exception("Unexpected Error Occured")
 
         except Exception:
