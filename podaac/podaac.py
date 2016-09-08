@@ -69,7 +69,9 @@ class Podaac:
 
         return metadata.text
 
-    def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', instrument='', satellite='', file_format='', status='', process_level='', sort_by='', bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
+    def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='', 
+                       instrument='', satellite='', file_format='', status='', process_level='', sort_by='', 
+                       bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
                 dataset_id, short_name, start_time, end_time, bbox, and others.
@@ -313,7 +315,8 @@ class Podaac:
 
         return granule_md.text
 
-    def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc', items_per_page='7', format='atom', pretty='True'):
+    def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc',
+                       items_per_page='7', format='atom', pretty='True'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -483,10 +486,10 @@ class Podaac:
         '''
         input_data = open('input.json', 'r+')
         input_data = json.load(input_data)
-        inputString = json.dumps(input_data)
+        input_string = json.dumps(input_data)
 
         # submit subset request
-        params = urllib.parse.urlencode({'query': inputString})
+        params = urllib.parse.urlencode({'query': input_string})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
         conn = http.client.HTTPConnection("podaac.jpl.nasa.gov")

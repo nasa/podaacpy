@@ -116,7 +116,7 @@ class PodaacUtils:
             name = name.split('\t')[3][:-1]
             dataset_short_names.append(name)
 
-        #dataset_short_names_level1 = []
+        # dataset_short_names_level1 = []
         dataset_short_names_level2 = self.list_available_granule_search_level2_dataset_short_names()
         dataset_short_names_level1 = list(
             set(dataset_short_names) - set(dataset_short_names_level2))
