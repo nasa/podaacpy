@@ -321,14 +321,22 @@ class Podaac:
         '''
 
         try:
-            if(bbox == ''):
-                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&startTime=' + start_time + '&endTime=' + \
-                    end_time + '&startIndex=' + start_index + '&sortBy=' + sort_by + \
-                    '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
+            url = self.URL + 'search/granule/?'
+            if(dataset_id != ''):
+                url = url + 'datasetId=' + dataset_id
             else:
-                url = self.URL + 'search/granule/?datasetId=' + dataset_id + '&startTime=' + start_time + '&endTime=' + end_time + \
-                    '&bbox=' + bbox + '&startIndex=' + start_index + '&sortBy=' + sort_by + \
-                    '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
+                raise Exception("Dataset Id is required")
+            if(start_time != ''):
+                url = url + '&startTime=' + start_time
+            if(end_time != ''):
+                url = url + '&endTime=' + end_time
+            if(bbox != ''):
+                url = url + '&bbox=' + bbox
+            if(start_index != ''):
+                url = url + '&startIndex=' + start_index
+
+            url = url + '&sortBy=' + sort_by + \
+                '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
             granules = requests.get(url)
             if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408:
                 granules.raise_for_status()
@@ -360,70 +368,13 @@ class Podaac:
                 PODAAC-ASOP2-25X01 :mod:`string`
         :type dataset_id: :mod:`string`
 
-        :param short_name: the shorter name for a dataset. \
-                Either short_name or dataset_id is required for a \
-                granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
+        :param image_variable: variables of the granule which have \
+                'Preview Images'.  Image variables can be found \
+                from Dataset Variable service. Use "id" from "imgVariable" \
+                element.\
+        :type image_variable: :mod:`string`
 
-        :param granule_name: name of the granule. \
-                Specifying granule_name insures only that granule \
-                is returned. Example: \
-                ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2.nc
-        :type granule_name: :mod:`string`
-
-        :param request: The service response requested. Valid \
-                entries for WMS 1.3.0 are GetCapabilities, GetMap, \
-                GetLegendGraphic. Example: request=GetMap
-        :type request: :mod:`string`
-
-        :param service: service should be set to WMS. \
-                Example: service=WMS
-        :type service: :mod:`string`
-
-        :param version: The WMS version of the client, accepts \
-                values of 1.3.0 Example: version=1.3.0
-        :type version: :mod:`string`
-
-        :param format: Image format. Format is required for \
-                GetMap and GetLegendGraphic. Possible value : image/png
-        :type format: :mod:`string`
-
-        :param bbox: bounding box for spatial search. format should \
-                look like "bbox=45,0,180,90" which is in order of \
-                west, south, east, north. Longitude values needs to \
-                be in range of [-180, 180]. Latitude values needs to \
-                be in range of [-90, 90]. bbox is used for getMap \
-                request. Example: 45,0,180,90
-        :type bbox: :mod:`string`
-
-        :param height: Maximum height in pixels of the image. \
-                Height is required for getMap request. Example: 300
-        :type height: :mod:`int`
-
-        :param width: Maximum width in pixels of the image. \
-                width is used for getMap request. Example: 200
-        :type width: :mod:`int`
-
-        :param layers: A variable to image. This can be \
-                left blank, which then selects the default layer. \
-                layer is required for GetMap and GetLegendGraphic request. \
-                Example: wind_speed
-        :type layers: :mod:`string`
-
-        :param style: A colorbar to use when creating \
-                the image. This can be left blank, which then \
-                selects the default style. style is required in \
-                GetMap and GetLegendGraphic request. Example: \
-                paletteMedspirationIndexed
-        :type style: :mod:`string`
-
-        :param srs: The spatial reference system to project \
-                the data to. Currently only supports EPSG:4326. \
-                srs is used for getMap request. Leave blank for \
-                default projection. Example: EPSG:4326
-        :type srs: :mod:`string`
-
-        :param path: Destination directory into which the image\
+        :param path: Destination directory into which the granule\
                 needs to be downloaded.
         :type format: :mod:`string`
 
@@ -432,7 +383,7 @@ class Podaac:
         '''
 
         try:
-            bbox = '180,-90,180,90'
+            bbox = '-180,-90,180,90'
             image_data = self.granule_search(dataset_id=dataset_id, bbox=bbox)
             root = ET.fromstring(image_data.encode('utf-8'))
 
@@ -446,8 +397,10 @@ class Podaac:
                             break
 
             if url_template == '':
-                raise Exception("Preview Image not available for this dataset.")
-            url = url_template + '/' + image_variable
+                raise Exception(
+                    "Preview Image not available for this dataset.")
+            url = url_template + '/' + image_variable + '.png'
+            print(url)
             if path == '':
                 path = os.path.join(os.path.dirname(
                     __file__), dataset_id + '.png')

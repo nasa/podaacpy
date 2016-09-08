@@ -113,7 +113,7 @@ class test_podaac(unittest.TestCase):
         assert granules != None
         assert test_dataset_id == dataset_id
         assert_raises(requests.exceptions.HTTPError,
-                      self.podaac.granule_search, format='html')
+                      self.podaac.granule_search, dataset_id='PODAAC', format='html')
 
     # test case for the function load_image_granule()
     def test_granule_preview(self):
