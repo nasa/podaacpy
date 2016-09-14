@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import requests
-import urllib.request
-import urllib.parse
+from future.standard_library import install_aliases
+install_aliases()
+from urllib.parse import urlparse, urlencode
+from urllib.request import urlretrieve
 import http.client
 import os
 import json
@@ -462,7 +464,7 @@ class Podaac:
                     __file__), dataset_id + '.png')
             else:
                 path = path + '/' + dataset_id + '.png'
-            image = urllib.request.urlretrieve(url, path)
+            image = urlretrieve(url, path)
 
         except Exception:
             raise
@@ -487,7 +489,7 @@ class Podaac:
         input_string = json.dumps(input_data)
 
         # submit subset request
-        params = urllib.parse.urlencode({'query': input_string})
+        params = urlencode({'query': input_string})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
         conn = http.client.HTTPConnection("podaac.jpl.nasa.gov")
@@ -554,7 +556,7 @@ class Podaac:
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
                 path = path + '/' + granule_name
-            granule = urllib.request.urlretrieve(url, path)
+            granule = urlretrieve(url, path)
             if granule[1]['Content-Type'] == 'text/plain':
                 raise Exception("Unexpected Error Occured")
 
