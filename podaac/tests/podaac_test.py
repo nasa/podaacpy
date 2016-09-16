@@ -139,7 +139,7 @@ class test_podaac(unittest.TestCase):
         os.remove(path)
         assert_raises(Exception,
                       self.podaac.granule_preview, image_variable='hello')
-        assert_raises(Exception,
+        assert_raises(HTTPError,
                       self.podaac.granule_preview, dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
 
     # test cases for the function subset_status
