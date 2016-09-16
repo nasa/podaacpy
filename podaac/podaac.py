@@ -13,11 +13,11 @@
 # limitations under the License.
 
 import requests
-from future.standard_library import install_aliases
-install_aliases()
-from urllib.parse import urlparse, urlencode
-from urllib.request import urlretrieve
-import http.client
+from future.standard_library import hooks
+with hooks():
+    from urllib.parse import urlparse, urlencode
+    from urllib.request import urlretrieve
+    import http.client
 import os
 import json
 import xml.etree.ElementTree as ET
