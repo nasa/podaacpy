@@ -15,6 +15,7 @@
 import requests
 from future.moves.urllib.parse import urlparse, urlencode
 from future.moves.urllib.request import urlretrieve
+from future.moves.urllib.error import HTTPError
 import http.client
 import os
 import json
@@ -456,13 +457,16 @@ class Podaac:
                 raise Exception(
                     "Preview Image not available for this dataset.")
             url = url_template + '/' + image_variable + '.png'
-            print(url)
             if path == '':
                 path = os.path.join(os.path.dirname(
                     __file__), dataset_id + '.png')
             else:
                 path = path + '/' + dataset_id + '.png'
             image = urlretrieve(url, path)
+
+        except HTTPError as error:
+            print(error)
+            raise
 
         except Exception:
             raise
