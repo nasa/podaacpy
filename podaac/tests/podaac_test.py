@@ -19,6 +19,7 @@ import requests
 import xml.etree.ElementTree as ET
 from nose.tools import assert_raises
 import unittest
+from future.moves.urllib.error import HTTPError
 
 
 class test_podaac(unittest.TestCase):
@@ -76,7 +77,8 @@ class test_podaac(unittest.TestCase):
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
-        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md, short_name='ASCATA-L2-25km', format='iso')
+        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md,
+                      short_name='ASCATA-L2-25km', format='iso')
 
     # test case for the function load_dataset_variables
     def test_dataset_variable(self):
@@ -137,7 +139,7 @@ class test_podaac(unittest.TestCase):
         os.remove(path)
         assert_raises(Exception,
                       self.podaac.granule_preview, image_variable='hello')
-        assert_raises(Exception,
+        assert_raises(HTTPError,
                       self.podaac.granule_preview, dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
 
     # test cases for the function subset_status
