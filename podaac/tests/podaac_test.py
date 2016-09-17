@@ -19,6 +19,7 @@ import requests
 import xml.etree.ElementTree as ET
 from nose.tools import assert_raises
 import unittest
+from future.moves.urllib.error import HTTPError
 
 
 class test_podaac(unittest.TestCase):
@@ -122,7 +123,7 @@ class test_podaac(unittest.TestCase):
         assert_raises(Exception,
                       self.podaac.granule_search, format='html')
 
-    # test case for the function load_image_granule()
+    # test case for the function granule_preview()
     def test_granule_preview(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         image_variable = 'wind_speed'
@@ -130,15 +131,15 @@ class test_podaac(unittest.TestCase):
             dataset_id=dataset_id, image_variable=image_variable)
 
         assert image_data != None
-        assert image_data[1]['Content-Type'] == 'image/png'
 
         path = os.path.join(os.path.dirname(__file__),
                             '../' + dataset_id + '.png')
         os.remove(path)
         assert_raises(Exception,
                       self.podaac.granule_preview, image_variable='hello')
-        assert_raises(Exception,
-                      self.podaac.granule_preview, dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
+        assert_raises(HTTPError,
+                      self.podaac.granule_preview,
+                      dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
 
     # test cases for the function subset_status
     def test_subset_status(self):
