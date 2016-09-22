@@ -77,7 +77,8 @@ class test_podaac(unittest.TestCase):
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
-        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md, short_name='ASCATA-L2-25km', format='iso')
+        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md,
+                      short_name='ASCATA-L2-25km', format='iso')
 
     # test case for the function load_dataset_variables
     def test_dataset_variable(self):
@@ -141,7 +142,14 @@ class test_podaac(unittest.TestCase):
                       self.podaac.granule_preview,
                       dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
 
-    # test cases for the function subset_status
+    # test case for the function granule_subset
+    def test_granule_subset(self):
+        path = os.path.dirname(os.path.abspath(__file__)) + "/test.json"
+        subset_token = self.podaac.granule_subset(input_file_path=path)
+
+        assert subset_token != ''
+
+    # test case for the function subset_status
     def test_subset_status(self):
         test_status = "unknown"
         token_1 = "a"

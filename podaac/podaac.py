@@ -16,7 +16,8 @@ import requests
 from future.moves.urllib.parse import urlparse, urlencode
 from future.moves.urllib.request import urlopen
 from future.moves.urllib.error import HTTPError
-import http.client
+from future.moves.http.client import HTTPConnection
+#import http.client
 import os
 import json
 import xml.etree.ElementTree as ET
@@ -483,15 +484,15 @@ class Podaac:
         further used to check the status of the request.
 
         '''
-        input_data = open('input.json', 'r+')
-        input_data = json.load(input_data)
+        data = open(input_file_path, 'r+')
+        input_data = json.load(data)
         input_string = json.dumps(input_data)
 
         # submit subset request
         params = urlencode({'query': input_string})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
-        conn = http.client.HTTPConnection("podaac.jpl.nasa.gov")
+        conn = HTTPConnection("podaac.jpl.nasa.gov")
         conn.request("POST", "/ws/subset/granule?request=submit",
                      params, headers)
         response = conn.getresponse()
