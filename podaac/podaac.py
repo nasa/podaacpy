@@ -17,7 +17,6 @@ from future.moves.urllib.parse import urlparse, urlencode
 from future.moves.urllib.request import urlopen
 from future.moves.urllib.error import HTTPError
 from future.moves.http.client import HTTPConnection
-#import http.client
 import os
 import json
 import xml.etree.ElementTree as ET

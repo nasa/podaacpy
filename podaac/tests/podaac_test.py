@@ -128,13 +128,14 @@ class test_podaac(unittest.TestCase):
     def test_granule_preview(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         image_variable = 'wind_speed'
+        path = os.path.dirname(os.path.abspath(__file__))
         image_data = self.podaac.granule_preview(
-            dataset_id=dataset_id, image_variable=image_variable)
+            dataset_id=dataset_id, image_variable=image_variable, path=path)
 
         assert image_data != None
 
         path = os.path.join(os.path.dirname(__file__),
-                            '../' + dataset_id + '.png')
+                            dataset_id + '.png')
         os.remove(path)
         assert_raises(Exception,
                       self.podaac.granule_preview, image_variable='hello')
