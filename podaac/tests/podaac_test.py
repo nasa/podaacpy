@@ -77,7 +77,8 @@ class test_podaac(unittest.TestCase):
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
-        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md, short_name='ASCATA-L2-25km', format='iso')
+        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md,
+                      short_name='ASCATA-L2-25km', format='iso')
 
     # test case for the function load_dataset_variables
     def test_dataset_variable(self):
@@ -127,13 +128,14 @@ class test_podaac(unittest.TestCase):
     def test_granule_preview(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         image_variable = 'wind_speed'
+        path = os.path.dirname(os.path.abspath(__file__))
         image_data = self.podaac.granule_preview(
-            dataset_id=dataset_id, image_variable=image_variable)
+            dataset_id=dataset_id, image_variable=image_variable, path=path)
 
         assert image_data != None
 
         path = os.path.join(os.path.dirname(__file__),
-                            '../' + dataset_id + '.png')
+                            dataset_id + '.png')
         os.remove(path)
         assert_raises(Exception,
                       self.podaac.granule_preview, image_variable='hello')
@@ -141,7 +143,14 @@ class test_podaac(unittest.TestCase):
                       self.podaac.granule_preview,
                       dataset_id='PODAAC-ASOP2-25X01', image_variable='hello')
 
-    # test cases for the function subset_status
+    # test case for the function granule_subset
+    def test_granule_subset(self):
+        path = os.path.dirname(os.path.abspath(__file__)) + "/test.json"
+        subset_token = self.podaac.granule_subset(input_file_path=path)
+
+        assert subset_token != ''
+
+    # test case for the function subset_status
     def test_subset_status(self):
         test_status = "unknown"
         token_1 = "a"
