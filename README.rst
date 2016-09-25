@@ -21,8 +21,8 @@ What is PO.DAAC?
 What does podaacpy offer?
 -------------------------
 
-The library provides a Python toolkit for interacting with all of
-PO.DAACs API's, namely
+The library provides a Python toolkit for interacting with all
+[PO.DAAC Web Services v3.2.2 API's](http://podaac.jpl.nasa.gov/ws), namely
 
 -  `PO.DAAC Web Services <https://podaac.jpl.nasa.gov/ws/>`__: services
    include
