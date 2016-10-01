@@ -27,13 +27,13 @@ class testMCC(unittest.TestCase):
         self.mcc = MCC()
 
     def test_check_remote_file(self):
-        url_upload = "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/2dim-grid.nc"
+        url_upload = "https://github.com/ioos/compliance-checker/raw/master/compliance_checker/tests/data/test_cdl_nc_file.nc"
         data = self.mcc.check_remote_file('CF', url_upload)
         data_json = json.loads(data)
 
         assert data != None
-        assert data_json["model"] == "NETCDF4"
-        assert data_json["fn"] == "2dim-grid.nc"
+        assert data_json["model"] == "NETCDF3_CLASSIC"
+        assert data_json["fn"] == "test_cdl_nc_file.nc"
         assert_raises(requests.exceptions.HTTPError, self.mcc.check_remote_file,
                       checkers='CF', url_upload='abc.xyz.com')
 
