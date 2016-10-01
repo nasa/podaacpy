@@ -506,6 +506,12 @@ class Podaac:
     def subset_status(self, token=''):
         '''Subset Granule Status service allows users to check the status \
         of submitted subset job.
+        The possible status that it returns include the following.. ::
+
+          * "submitted" : returned on successful submission of the request.
+          * "error" : returned when there is error in the JSON POST request.
+          * "unknown" : returned when the datasetId you sent is not valid.
+          * "done" : returned when subsetting job you submitted is done.
 
         :param token: string token that is returned by PO.DAAC whilst \
         submitting a subset request.
