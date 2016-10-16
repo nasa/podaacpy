@@ -34,7 +34,7 @@ _classifiers = [
 ]
 _description = 'PO.DAAC Python API'
 _download_url = 'http://pypi.python.org/pypi/podaacpy/'
-_requirements = ["beautifulsoup4", "coveralls", "future", "requests"]
+_requirements = ["beautifulsoup4", "future", "requests"]
 _keywords = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
 _license = 'Apache License, Version 2.0'
 _long_description = 'A python utility library for interacting with NASA JPLs PO.DAAC'
@@ -43,7 +43,7 @@ _namespaces = []
 _test_suite = 'podaac.tests'
 _url = 'https://github.com/lewismc/podaacpy'
 _version = '1.3.0'
-_zip_safe = True
+_zip_safe = False
 
 # Setup Metadata
 # --------------
