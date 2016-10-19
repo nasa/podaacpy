@@ -66,6 +66,12 @@ From the cheeseshop
 ::
 
     pip install podaacpy
+    
+or from conda
+
+::
+
+    conda install -c conda-forge podaacpy    
 
 or from source
 
