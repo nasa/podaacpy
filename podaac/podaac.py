@@ -18,6 +18,7 @@ from future.moves.urllib.request import urlopen
 from future.moves.urllib.error import HTTPError
 from future.moves.http.client import HTTPConnection
 import os
+import zipfile
 import json
 import time
 import xml.etree.ElementTree as ET
