@@ -19,6 +19,7 @@ from future.moves.urllib.error import HTTPError
 from future.moves.http.client import HTTPConnection
 import os
 import json
+import time
 import xml.etree.ElementTree as ET
 
 URL = 'http://podaac.jpl.nasa.gov/ws/'
@@ -527,6 +528,35 @@ class Podaac:
 
         return status
 
+    def download_subset_dataset(self, token='', path=''):
+        '''
+        '''
+        flag = 0
+        while(flag == 0):
+            url = url = self.URL + "subset/status?token=" + token
+            subset_response = requests.get(url).text
+            subset_response_json = json.loads(subset_response)
+            status = subset_response_json['status']
+            if (status == "done"):
+                flag = 1
+            if (status == "error"):
+                raise Exception(
+                    "Unexpected error occured for the subset job you have requested")
+            time.sleep(1)
+
+        print("Done! downloading the dataset zip .....")
+        download_url = subset_response_json['resultURLs'][0]
+        print(download_url)
+        if path == '':
+            path = os.path.join(os.path.dirname(__file__), 'dataset.zip')
+        else:
+            path = path + '/dataset.zip'
+        response = urlretrieve(url, path)
+        zip_content = zipfile.ZipFile(path)
+        z.extractall()
+
+        return flag
+
     def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional function that we have provided apart \
         from the availalble webservices. The extract_l4_granule helps \
@@ -562,10 +592,10 @@ class Podaac:
             else:
                 path = path + '/' + granule_name
             data = urlopen(url)
-            granule = open(path, 'wb')
-            granule.write(data.read())
             if data.info()['content-type'] == 'text/plain':
                 raise Exception("Unexpected Error Occured")
+            granule = open(path, 'wb')
+            granule.write(data.read())
 
         except Exception:
             raise
