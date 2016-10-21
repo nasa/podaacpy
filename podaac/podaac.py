@@ -472,7 +472,7 @@ class Podaac:
 
         return image
 
-    def granule_subset(self, input_file_path):
+    def granule_subset(self, input_file_path, path=''):
         '''Subset Granule service allows users to Submit subset jobs. \
         Use of this service should be preceded by a Granule Search in \
         order to identify and generate a list of granules to be subsetted.
@@ -481,8 +481,12 @@ class Podaac:
         the request that you want to send to PO.DAAC
         :type input_file_path: :mod:`string`
 
-        :returns: a token on successful request reception. This can be \
-        further used to check the status of the request.
+        :param path: path to a directory where you want the subsetted \
+        dataset to be stored.
+        :type path: :mod:`string`
+
+        :returns: a zip file downloaded and extracted in the destination\
+        directory path provided. 
 
         '''
         data = open(input_file_path, 'r+')
@@ -503,7 +507,28 @@ class Podaac:
         token = result['token']
         conn.close()
 
-        return token
+        flag = 0
+        while(flag == 0):
+            url = url = self.URL + "subset/status?token=" + token
+            subset_response = requests.get(url).text
+            subset_response_json = json.loads(subset_response)
+            status = subset_response_json['status']
+            if (status == "done"):
+                flag = 1
+            if (status == "error"):
+                raise Exception(
+                    "Unexpected error occured for the subset job you have requested")
+            time.sleep(1)
+
+        print("Done! downloading the dataset zip .....")
+        download_url = subset_response_json['resultURLs'][0]
+        if path == '':
+            path = os.path.join(os.path.dirname(__file__), 'dataset.zip')
+        else:
+            path = path + '/dataset.zip'
+        response = urlretrieve(url, path)
+        zip_content = zipfile.ZipFile(path)
+        z.extractall()
 
     def subset_status(self, token=''):
         '''Subset Granule Status service allows users to check the status \
@@ -528,35 +553,6 @@ class Podaac:
         status = subset_data_json['status']
 
         return status
-
-    def download_subset_dataset(self, token='', path=''):
-        '''
-        '''
-        flag = 0
-        while(flag == 0):
-            url = url = self.URL + "subset/status?token=" + token
-            subset_response = requests.get(url).text
-            subset_response_json = json.loads(subset_response)
-            status = subset_response_json['status']
-            if (status == "done"):
-                flag = 1
-            if (status == "error"):
-                raise Exception(
-                    "Unexpected error occured for the subset job you have requested")
-            time.sleep(1)
-
-        print("Done! downloading the dataset zip .....")
-        download_url = subset_response_json['resultURLs'][0]
-        print(download_url)
-        if path == '':
-            path = os.path.join(os.path.dirname(__file__), 'dataset.zip')
-        else:
-            path = path + '/dataset.zip'
-        response = urlretrieve(url, path)
-        zip_content = zipfile.ZipFile(path)
-        z.extractall()
-
-        return flag
 
     def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional function that we have provided apart \
