@@ -14,7 +14,7 @@
 
 import requests
 from future.moves.urllib.parse import urlparse, urlencode
-from future.moves.urllib.request import urlopen
+from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.urllib.error import HTTPError
 from future.moves.http.client import HTTPConnection
 import os
@@ -486,7 +486,7 @@ class Podaac:
         :type path: :mod:`string`
 
         :returns: a zip file downloaded and extracted in the destination\
-        directory path provided. 
+        directory path provided.
 
         '''
         data = open(input_file_path, 'r+')
@@ -522,10 +522,13 @@ class Podaac:
 
         print("Done! downloading the dataset zip .....")
         download_url = subset_response_json['resultURLs'][0]
+        split = download_url.split('/')
+        length = len(split)
+        zip_file_name = split[length-1]
         if path == '':
-            path = os.path.join(os.path.dirname(__file__), 'dataset.zip')
+            path = os.path.join(os.path.dirname(__file__), zip_file_name)
         else:
-            path = path + '/dataset.zip'
+            path = path + zip_file_name
         response = urlretrieve(url, path)
         zip_content = zipfile.ZipFile(path)
         z.extractall()
