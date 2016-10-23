@@ -145,10 +145,14 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function granule_subset
     def test_granule_subset(self):
-        path = os.path.dirname(os.path.abspath(__file__)) + "/test.json"
-        subset_token = self.podaac.granule_subset(input_file_path=path)
+        path1 = os.path.dirname(os.path.abspath(__file__)) + "/test.json"
+        path2 = os.path.abspath(__file__)
+        self.podaac.granule_subset(input_file_path=path1, path=path2)
 
-        assert subset_token != ''
+        assert os.path.isfile(
+            './subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc') == True
+        os.remove(
+            './subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc')
 
     # test case for the function subset_status
     def test_subset_status(self):

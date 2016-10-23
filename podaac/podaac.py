@@ -14,11 +14,13 @@
 
 import requests
 from future.moves.urllib.parse import urlparse, urlencode
-from future.moves.urllib.request import urlopen
+from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.urllib.error import HTTPError
 from future.moves.http.client import HTTPConnection
 import os
+import zipfile
 import json
+import time
 import xml.etree.ElementTree as ET
 
 URL = 'http://podaac.jpl.nasa.gov/ws/'
@@ -470,7 +472,7 @@ class Podaac:
 
         return image
 
-    def granule_subset(self, input_file_path):
+    def granule_subset(self, input_file_path, path=''):
         '''Subset Granule service allows users to Submit subset jobs. \
         Use of this service should be preceded by a Granule Search in \
         order to identify and generate a list of granules to be subsetted.
@@ -479,8 +481,12 @@ class Podaac:
         the request that you want to send to PO.DAAC
         :type input_file_path: :mod:`string`
 
-        :returns: a token on successful request reception. This can be \
-        further used to check the status of the request.
+        :param path: path to a directory where you want the subsetted \
+        dataset to be stored.
+        :type path: :mod:`string`
+
+        :returns: a zip file downloaded and extracted in the destination\
+        directory path provided.
 
         '''
         data = open(input_file_path, 'r+')
@@ -501,7 +507,32 @@ class Podaac:
         token = result['token']
         conn.close()
 
-        return token
+        flag = 0
+        while(flag == 0):
+            url = url = self.URL + "subset/status?token=" + token
+            subset_response = requests.get(url).text
+            subset_response_json = json.loads(subset_response)
+            status = subset_response_json['status']
+            if (status == "done"):
+                flag = 1
+            if (status == "error"):
+                raise Exception(
+                    "Unexpected error occured for the subset job you have requested")
+            time.sleep(1)
+
+        print("Done! downloading the dataset zip .....")
+        download_url = subset_response_json['resultURLs'][0]
+        split = download_url.split('/')
+        length = len(split)
+        zip_file_name = split[length-1]
+        if path == '':
+            path = os.path.join(os.path.dirname(__file__), zip_file_name)
+        else:
+            path = path + zip_file_name
+        response = urlretrieve(download_url, path)
+        zip_content = zipfile.ZipFile(path)
+        zip_content.extractall()
+        os.remove(path)
 
     def subset_status(self, token=''):
         '''Subset Granule Status service allows users to check the status \
@@ -562,10 +593,10 @@ class Podaac:
             else:
                 path = path + '/' + granule_name
             data = urlopen(url)
-            granule = open(path, 'wb')
-            granule.write(data.read())
             if data.info()['content-type'] == 'text/plain':
                 raise Exception("Unexpected Error Occured")
+            granule = open(path, 'wb')
+            granule.write(data.read())
 
         except Exception:
             raise
