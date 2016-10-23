@@ -529,9 +529,10 @@ class Podaac:
             path = os.path.join(os.path.dirname(__file__), zip_file_name)
         else:
             path = path + zip_file_name
-        response = urlretrieve(url, path)
+        response = urlretrieve(download_url, path)
         zip_content = zipfile.ZipFile(path)
         z.extractall()
+        os.remove(path)
 
     def subset_status(self, token=''):
         '''Subset Granule Status service allows users to check the status \
