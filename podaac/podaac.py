@@ -531,7 +531,7 @@ class Podaac:
             path = path + zip_file_name
         response = urlretrieve(download_url, path)
         zip_content = zipfile.ZipFile(path)
-        z.extractall()
+        zip_content.extractall()
         os.remove(path)
 
     def subset_status(self, token=''):
