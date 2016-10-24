@@ -161,7 +161,7 @@ Copyright and Export Classification
    :target: https://requires.io/github/lewismc/podaacpy/requirements/?branch=master
 .. |Code Health| image:: https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat-square
    :target: https://landscape.io/github/lewismc/podaacpy/master
-.. |Anaconda-Server Version| image:: https://img.shields.io/pypi/dm/podaacpy.svg?maxAge=2592000?style=plastic
+.. |Anaconda-Server Version| image:: https://anaconda.org/conda-forge/podaacpy/badges/version.svg
    :target: https://anaconda.org/conda-forge/podaacpy
 .. |Anaconda-Server Downloads| image:: https://anaconda.org/conda-forge/podaacpy/badges/downloads.svg
    :target: https://anaconda.org/conda-forge/podaacpy
