@@ -1,7 +1,7 @@
 podaacpy
 ========
 
-| |license| |PyPI| |Python3| |Python2| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Pypi Downloads|
+| |license| |PyPI| |Python3| |Python2| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Anaconda-Server Version| |Anaconda-Server Downloads|
 
 |image7|
 
@@ -161,7 +161,9 @@ Copyright and Export Classification
    :target: https://requires.io/github/lewismc/podaacpy/requirements/?branch=master
 .. |Code Health| image:: https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat-square
    :target: https://landscape.io/github/lewismc/podaacpy/master
-.. |Pypi Downloads| image:: https://img.shields.io/pypi/dm/podaacpy.svg?maxAge=2592000?style=plastic
-   :target: https://pypi.python.org/pypi/podaacpy/
+.. |Anaconda-Server Version| image:: https://img.shields.io/pypi/dm/podaacpy.svg?maxAge=2592000?style=plastic
+   :target: https://anaconda.org/conda-forge/podaacpy
+.. |Anaconda-Server Downloads| image:: https://anaconda.org/conda-forge/podaacpy/badges/downloads.svg
+   :target: https://anaconda.org/conda-forge/podaacpy
 .. |image7| image:: https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png
 
