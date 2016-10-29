@@ -524,7 +524,7 @@ class Podaac:
         download_url = subset_response_json['resultURLs'][0]
         split = download_url.split('/')
         length = len(split)
-        zip_file_name = split[length-1]
+        zip_file_name = split[length - 1]
         if path == '':
             path = os.path.join(os.path.dirname(__file__), zip_file_name)
         else:
@@ -592,11 +592,7 @@ class Podaac:
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
                 path = path + '/' + granule_name
-            data = urlopen(url)
-            if data.info()['content-type'] == 'text/plain':
-                raise Exception("Unexpected Error Occured")
-            granule = open(path, 'wb')
-            granule.write(data.read())
+            data = urlretrieve(url, path)
 
         except Exception:
             raise
