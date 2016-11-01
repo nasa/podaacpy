@@ -524,7 +524,7 @@ class Podaac:
         download_url = subset_response_json['resultURLs'][0]
         split = download_url.split('/')
         length = len(split)
-        zip_file_name = split[length-1]
+        zip_file_name = split[length - 1]
         if path == '':
             path = os.path.join(os.path.dirname(__file__), zip_file_name)
         else:
@@ -584,19 +584,14 @@ class Podaac:
             search_data = self.granule_search(
                 dataset_id=dataset_id, start_index=start_index)
             root = ET.fromstring(search_data.encode('utf-8'))
-            url = root[12][6].attrib['href']
-            url = url[:-5]
+            url = root[12][7].attrib['href']
             granule_name = root[12][0].text
             granule_name = granule_name.split('\t')[3][:-1]
             if path == '':
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
                 path = path + '/' + granule_name
-            data = urlopen(url)
-            if data.info()['content-type'] == 'text/plain':
-                raise Exception("Unexpected Error Occured")
-            granule = open(path, 'wb')
-            granule.write(data.read())
+            data = urlretrieve(url, path)
 
         except Exception:
             raise
