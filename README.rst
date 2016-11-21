@@ -94,7 +94,7 @@ Tests
 
 Additonally, click on the build sticker at the top of this readme to be
 directed to the most recent build on
-`travis-ci <https://travis-ci.org/lewismc/podaacpy>`__.
+`travis-ci <https://travis-ci.org/nasa/podaacpy>`__.
 
 Documentation
 -------------
@@ -153,8 +153,8 @@ Copyright and Export Classification
    :target: https://pypi.python.org/pypi/podaacpy
 .. |documentation| image:: https://readthedocs.org/projects/podaacpy/badge/?version=latest
    :target: http://podaacpy.readthedocs.org/en/latest/
-.. |Travis| image:: https://img.shields.io/travis/lewismc/podaacpy.svg?maxAge=2592000?style=plastic
-   :target: https://travis-ci.org/lewismc/podaacpy
+.. |Travis| image:: https://img.shields.io/travis/nasa/podaacpy.svg?maxAge=2592000?style=plastic
+   :target: https://travis-ci.org/nasa/podaacpy
 .. |Coveralls| image:: https://img.shields.io/coveralls/lewismc/podaacpy.svg?maxAge=2592000?style=plastic
    :target: https://coveralls.io/github/lewismc/podaacpy?branch=master
 .. |Requirements Status| image:: https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master
