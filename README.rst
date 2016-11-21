@@ -77,7 +77,7 @@ or from source
 
 ::
 
-    git clone https://github.com/lewismc/podaacpy.git && cd podaacpy
+    git clone https://github.com/nasa/podaacpy.git && cd podaacpy
     python setup.py install
 
 Tests
@@ -94,7 +94,7 @@ Tests
 
 Additonally, click on the build sticker at the top of this readme to be
 directed to the most recent build on
-`travis-ci <https://travis-ci.org/lewismc/podaacpy>`__.
+`travis-ci <https://travis-ci.org/nasa/podaacpy>`__.
 
 Documentation
 -------------
@@ -115,7 +115,7 @@ Community, Support and Development
 ----------------------------------
 
 | Please open a ticket in the `issue
-  tracker <https://github.com/lewismc/podaacpy/issues>`__.
+  tracker <https://github.com/nasa/podaacpy/issues>`__.
 | Please use
   `labels <https://help.github.com/articles/applying-labels-to-issues-and-pull-requests/>`__
   to
@@ -143,7 +143,7 @@ Copyright and Export Classification
     as may be required before exporting such information to foreign countries or 
     providing access to foreign persons.
 
-.. |license| image:: https://img.shields.io/github/license/lewismc/podaacpy.svg?maxAge=2592000
+.. |license| image:: https://img.shields.io/github/license/nasa/podaacpy.svg?maxAge=2592000
    :target: http://www.apache.org/licenses/LICENSE-2.0
 .. |Python3| image:: https://img.shields.io/badge/python-3-blue.svg
    :target: https://www.python.org/downloads/
@@ -153,14 +153,14 @@ Copyright and Export Classification
    :target: https://pypi.python.org/pypi/podaacpy
 .. |documentation| image:: https://readthedocs.org/projects/podaacpy/badge/?version=latest
    :target: http://podaacpy.readthedocs.org/en/latest/
-.. |Travis| image:: https://img.shields.io/travis/lewismc/podaacpy.svg?maxAge=2592000?style=plastic
-   :target: https://travis-ci.org/lewismc/podaacpy
-.. |Coveralls| image:: https://img.shields.io/coveralls/lewismc/podaacpy.svg?maxAge=2592000?style=plastic
-   :target: https://coveralls.io/github/lewismc/podaacpy?branch=master
+.. |Travis| image:: https://img.shields.io/travis/nasa/podaacpy.svg?maxAge=2592000?style=plastic
+   :target: https://travis-ci.org/nasa/podaacpy
+.. |Coveralls| image:: https://coveralls.io/repos/github/nasa/podaacpy/badge.svg?branch=master
+   :target: https://coveralls.io/github/nasa/podaacpy?branch=master
 .. |Requirements Status| image:: https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master
    :target: https://requires.io/github/lewismc/podaacpy/requirements/?branch=master
-.. |Code Health| image:: https://landscape.io/github/lewismc/podaacpy/master/landscape.svg?style=flat-square
-   :target: https://landscape.io/github/lewismc/podaacpy/master
+.. |Code Health| image:: https://landscape.io/github/nasa/podaacpy/master/landscape.svg?style=plastic
+   :target: https://landscape.io/github/nasa/podaacpy/master
 .. |Anaconda-Server Version| image:: https://anaconda.org/conda-forge/podaacpy/badges/version.svg
    :target: https://anaconda.org/conda-forge/podaacpy
 .. |Anaconda-Server Downloads| image:: https://anaconda.org/conda-forge/podaacpy/badges/downloads.svg
