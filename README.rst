@@ -157,7 +157,7 @@ Copyright and Export Classification
    :target: https://travis-ci.org/nasa/podaacpy
 .. |Coveralls| image:: https://coveralls.io/repos/github/nasa/podaacpy/badge.svg?branch=master
    :target: https://coveralls.io/github/nasa/podaacpy?branch=master
-.. |Requirements Status| image:: https://requires.io/github/lewismc/podaacpy/requirements.svg?branch=master
+.. |Requirements Status| image:: https://requires.io/github/nasa/podaacpy/requirements.svg?branch=master
    :target: https://requires.io/github/nasa/podaacpy/requirements/?branch=master
 .. |Code Health| image:: https://landscape.io/github/nasa/podaacpy/master/landscape.svg?style=plastic
    :target: https://landscape.io/github/nasa/podaacpy/master
