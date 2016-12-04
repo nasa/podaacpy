@@ -64,3 +64,34 @@ class L2SS:
             raise
 
         return variables.text
+
+    def granule_search(self, dataset_id='', bbox='', startTime='', endTime='', name='', sort='', startIndex='', itemsPerPage=''):
+        try:
+            url = self.URL + 'granule/search?'
+            if(dataset_id):
+                url = url + 'datasetId=' + dataset_id
+            if(bbox):
+                url = url + '&bbox=' + bbox
+            if(startTime):
+                url = url + '&startTime=' + startTime
+            if(endTime):
+                url = url + '&endTime=' + endTime
+            if(startIndex):
+                url = url + '&startIndex=' + startIndex
+            if(itemsPerPage):
+                url = url + '&itemsPerPage=' + itemsPerPage
+            if(name):
+                url = url + '&name=' + name
+            if(sort):
+                url = url + '&sort=' + sort
+
+            granules = requests.get(url)
+            status_codes = [404, 400, 503, 408]
+            if granules.status_code in status_codes:
+                granules.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return granules.text

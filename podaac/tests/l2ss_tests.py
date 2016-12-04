@@ -35,8 +35,19 @@ class test_podaac(unittest.TestCase):
     # test case for the function dataset_variables()
     def test_dataset_variables(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
-        variables = json.loads(self.l2ss.dataset_variables(dataset_id=dataset_id))
+        variables = json.loads(
+            self.l2ss.dataset_variables(dataset_id=dataset_id))
         variables_data = variables['imgVariables']
 
         assert len(variables_data) != 0
-        assert_raises(requests.exceptions.HTTPError, self.l2ss.dataset_variables, dataset_id='PODAAC')
+        assert_raises(requests.exceptions.HTTPError,
+                      self.l2ss.dataset_variables, dataset_id='PODAAC')
+
+    # test case for the function granule_search
+    def test_granule_search(self):
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        granules = self.l2ss.granule_search(dataset_id=dataset_id)
+        granules_json = json.loads(granules)
+
+        assert granules_json['response']['docs'][0][
+            'Granule-DatasetId'] == dataset_id
