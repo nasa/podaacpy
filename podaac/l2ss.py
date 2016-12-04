@@ -50,3 +50,17 @@ class L2SS:
             raise
 
         return datasets.text
+
+    def dataset_variables(self, dataset_id):
+        try:
+            url = self.URL + '/dataset/variable?datasetId=' + dataset_id
+            variables = requests.get(url)
+            status_codes = [404, 400, 503, 408]
+            if variables.status_code in status_codes:
+                variables.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return variables.text

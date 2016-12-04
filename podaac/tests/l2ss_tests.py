@@ -11,8 +11,10 @@
 # limitations under the License.
 
 import unittest
-from ..l2ss import L2SS
 import json
+import requests
+from ..l2ss import L2SS
+from nose.tools import assert_raises
 
 
 class test_podaac(unittest.TestCase):
@@ -21,6 +23,7 @@ class test_podaac(unittest.TestCase):
     def setUp(self):
         self.l2ss = L2SS()
 
+    # test case for the fucntion dataset_search()
     def test_dataset_search(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         dataset = self.l2ss.dataset_search(dataset_id=dataset_id)
@@ -28,3 +31,12 @@ class test_podaac(unittest.TestCase):
 
         assert dataset_json['response']['docs'][0][
             'Dataset-PersistentId'] == dataset_id
+
+    # test case for the function dataset_variables()
+    def test_dataset_variables(self):
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        variables = json.loads(self.l2ss.dataset_variables(dataset_id=dataset_id))
+        variables_data = variables['imgVariables']
+
+        assert len(variables_data) != 0
+        assert_raises(requests.exceptions.HTTPError, self.l2ss.dataset_variables, dataset_id='PODAAC')
