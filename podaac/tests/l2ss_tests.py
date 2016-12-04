@@ -26,7 +26,14 @@ class test_podaac(unittest.TestCase):
     # test case for the fucntion dataset_search()
     def test_dataset_search(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
-        dataset = self.l2ss.dataset_search(dataset_id=dataset_id)
+        variable = ['Surface Winds']
+        sensor = 'Advanced Scatterometer'
+        provider = 'KNMI'
+        startTime = '2016-12-4T22:39:52Z'
+        startIndex = '0'
+        itemsPerPage = '7'
+        dataset = self.l2ss.dataset_search(dataset_id=dataset_id, variable=variable, startTime=startTime,sensor=sensor,
+                                           provider=provider, startIndex=startIndex, itemsPerPage=itemsPerPage)
         dataset_json = json.loads(dataset)
 
         assert dataset_json['response']['docs'][0][
@@ -46,7 +53,15 @@ class test_podaac(unittest.TestCase):
     # test case for the function granule_search
     def test_granule_search(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
-        granules = self.l2ss.granule_search(dataset_id=dataset_id)
+        bbox = '-180,-90,180,90'
+        startTime = '2016-07-16T04:18:00Z'
+        endTime = '2016-07-16T05:56:56Z'
+        itemsPerPage = '7'
+        startIndex = '0'
+        name = 'ascat_20160716_041800_metopa_50541_eps_o_250_2401_ovw.l2.nc'
+        sort = 'Granule-Name asc'
+        granules = self.l2ss.granule_search(dataset_id=dataset_id, bbox=bbox, startTime=startTime, endTime=endTime,
+                                            itemsPerPage=itemsPerPage, startIndex=startIndex, name=name, sort=sort)
         granules_json = json.loads(granules)
 
         assert granules_json['response']['docs'][0][
