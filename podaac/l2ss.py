@@ -95,3 +95,22 @@ class L2SS:
             raise
 
         return granules.text
+
+    def granules_availability(self, dataset_id='', startTime='', endTime='', gap='', bbox=''):
+        try:
+            url = self.URL + 'granule/availability?'
+            url = url + 'datasetId=' + dataset_id + '&startTime=' + \
+                startTime + '&endTime=' + endTime + '&gap=' + gap
+            if(bbox):
+                url = url + '&bbox=' + bbox
+
+            granule_availability = requests.get(url)
+            status_codes = [404, 400, 503, 408]
+            if granule_availability.status_code in status_codes:
+                granule_availability.raise_for_status()
+
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            raise
+
+        return granule_availability.text

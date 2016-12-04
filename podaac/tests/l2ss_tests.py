@@ -32,7 +32,7 @@ class test_podaac(unittest.TestCase):
         startTime = '2016-12-4T22:39:52Z'
         startIndex = '0'
         itemsPerPage = '7'
-        dataset = self.l2ss.dataset_search(dataset_id=dataset_id, variable=variable, startTime=startTime,sensor=sensor,
+        dataset = self.l2ss.dataset_search(dataset_id=dataset_id, variable=variable, startTime=startTime, sensor=sensor,
                                            provider=provider, startIndex=startIndex, itemsPerPage=itemsPerPage)
         dataset_json = json.loads(dataset)
 
@@ -66,3 +66,19 @@ class test_podaac(unittest.TestCase):
 
         assert granules_json['response']['docs'][0][
             'Granule-DatasetId'] == dataset_id
+
+    # test case for the function granules_availability
+    def test_granules_availability(self):
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        bbox = '-180,-90,180,90'
+        startTime = '2014-10-12T11:42:00Z'
+        endTime = '2016-10-12T11:42:00Z'
+        gap = 'DAY'
+        granule_availability = json.loads(self.l2ss.granules_availability(
+            dataset_id=dataset_id, startTime=startTime, endTime=endTime, bbox=bbox, gap=gap))
+        availability_data = granule_availability[
+            'facet_counts']['facet_dates']['Granule-StartTime']
+
+        assert len(availability_data) != 0
+        assert_raises(requests.exceptions.HTTPError,
+                      self.l2ss.granules_availability, dataset_id=dataset_id)
