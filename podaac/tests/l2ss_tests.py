@@ -13,6 +13,8 @@
 import unittest
 import json
 import requests
+import os
+from future.moves.urllib.error import HTTPError
 from ..l2ss import L2SS
 from nose.tools import assert_raises
 
@@ -82,3 +84,62 @@ class test_podaac(unittest.TestCase):
         assert len(availability_data) != 0
         assert_raises(requests.exceptions.HTTPError,
                       self.l2ss.granules_availability, dataset_id=dataset_id)
+
+    # test case for the function granule_preview_image
+    def test_granule_preview_image(self):
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        granule = 'ascat_20140520_005700_metopa_39344_eps_o_250_2300_ovw.l2.nc'
+        year = '2014'
+        day = '140'
+        variable = 'wind_speed'
+        path = os.path.join(os.path.dirname(__file__))
+        image = self.l2ss.granule_preview_image(
+            dataset_id=dataset_id, granule=granule, year=year, day=day, variable=variable, path=path)
+
+        assert image != None
+        path = os.path.join(os.path.dirname(__file__),
+                            dataset_id + '.png')
+        os.remove(path)
+        assert_raises(HTTPError,
+                      self.l2ss.granule_preview_image, dataset_id=dataset_id, granule=granule, year=year, day=day, variable='wind_spee')
+
+    # test case for the function image_palette
+    def test_image_palette(self):
+        palette_name = 'paletteMedspirationIndexed'
+        test_palette_name = 'medspiration'
+        palette = json.loads(
+            self.l2ss.image_palette(palette_name=palette_name))
+        palette_name = palette['Palette'][
+            'attributes']['attribute'][0]['value']
+
+        assert palette_name == test_palette_name
+        assert_raises(requests.exceptions.HTTPError,
+                      self.l2ss.image_palette, palette_name='SomeUnknownPalette')
+
+    # test case for the function granule_download
+    def test_granule_download(self):
+        query = {
+            "email": "unknown@unknown.com",
+            "query":
+            [
+                {
+                    "compact": "true",
+                    "datasetId": "PODAAC-ASOP2-25X01",
+                    "bbox": "-180,-90,180,90",
+                    "variables": ["lat", "lon", "time", "wind_speed"],
+                    "granuleIds": ["ascat_20140520_005700_metopa_39344_eps_o_250_2300_ovw.l2.nc"]
+                }
+            ]
+        }
+        self.l2ss.granule_download(query_string=query)
+        assert os.path.isfile(
+            './subsetted-ascat_20140520_005700_metopa_39344_eps_o_250_2300_ovw.l2.nc') == True
+        os.remove(
+            './subsetted-ascat_20140520_005700_metopa_39344_eps_o_250_2300_ovw.l2.nc')
+
+    # test case for the function subset_status
+    def test_subset_status(self):
+        test_token_status = "unknown"
+        token = 'FakeToken'
+
+        assert_raises(Exception, self.l2ss.subset_status, token=token)
