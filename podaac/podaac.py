@@ -54,16 +54,17 @@ class Podaac:
         '''
         try:
             url = self.URL + 'metadata/dataset/?'
-            if(dataset_id != ''):
+            if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(short_name != ''):
+            if(short_name):
                 url = url + '&shortName=' + short_name
 
             url = url + '&format=' + format
             metadata = requests.get(url)
-            if metadata.status_code == 404 or metadata.status_code == 400 or metadata.status_code == 503 or metadata.status_code == 408:
+            status_codes = [404, 400, 503, 408]
+            if metadata.status_code in status_codes:
                 metadata.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
@@ -158,39 +159,40 @@ class Podaac:
         '''
         try:
             url = self.URL + 'search/dataset/?'
-            if(dataset_id != ''):
-                url = url + 'keyword=' + keyword
-            if(start_time != ''):
-                url = url + '&startTime=' + start_time
-            if(end_time != ''):
-                url = url + '&endTime=' + end_time
-            if(bbox != ''):
-                url = url + '&bbox=' + bbox
-            if(start_index != ''):
-                url = url + '&startIndex=' + start_index
-            if(dataset_id != ''):
-                url = url + 'datasetId=' + dataset_id
-            if(short_name != ''):
-                url = url + '&shortName=' + short_name
-            if(instrument != ''):
-                url = url + '&instrument=' + instrument
-            if(satellite != ''):
-                url = url + '&satellite=' + satellite
-            if(file_format != ''):
-                url = url + '&fileFormat=' + file_format
-            if(status != ''):
-                url = url + '&status=' + status
-            if(process_level != ''):
-                url = url + '&processLevel=' + process_level
-            if(sort_by != ''):
-                url = url + '&sortBy=' + sort_by
-            if(bbox != ''):
-                url = url + '&bbox=' + bbox
-
-            url = url + '&itemsPerPage=' + items_per_page + '&pretty=' + \
+            url = url + 'itemsPerPage=' + items_per_page + '&pretty=' + \
                 pretty + '&format=' + format + '&full=' + full
+
+            if(dataset_id):
+                url = url + '&keyword=' + keyword
+            if(start_time):
+                url = url + '&startTime=' + start_time
+            if(end_time):
+                url = url + '&endTime=' + end_time
+            if(bbox):
+                url = url + '&bbox=' + bbox
+            if(start_index):
+                url = url + '&startIndex=' + start_index
+            if(dataset_id):
+                url = url + '&datasetId=' + dataset_id
+            if(short_name):
+                url = url + '&shortName=' + short_name
+            if(instrument):
+                url = url + '&instrument=' + instrument
+            if(satellite):
+                url = url + '&satellite=' + satellite
+            if(file_format):
+                url = url + '&fileFormat=' + file_format
+            if(status):
+                url = url + '&status=' + status
+            if(process_level):
+                url = url + '&processLevel=' + process_level
+            if(sort_by):
+                url = url + '&sortBy=' + sort_by
+            if(bbox):
+                url = url + '&bbox=' + bbox
             datasets = requests.get(url)
-            if datasets.status_code == 404 or datasets.status_code == 400 or datasets.status_code == 503 or datasets.status_code == 408:
+            status_codes = [404, 400, 503, 408]
+            if datasets.status_code in status_codes:
                 datasets.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
@@ -213,7 +215,8 @@ class Podaac:
         try:
             url = self.URL + 'dataset/variables/?datasetId=' + dataset_id
             variables = requests.get(url)
-            if variables.status_code == 404 or variables.status_code == 400 or variables.status_code == 503 or variables.status_code == 408:
+            status_codes = [404, 400, 503, 408]
+            if variables.status_code in status_codes:
                 variables.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
@@ -247,18 +250,19 @@ class Podaac:
 
         try:
             url = self.URL + 'metadata/granule/?'
-            if(dataset_id != ''):
+            if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(short_name != ''):
+            if(short_name):
                 url = url + '&shortName=' + short_name
-            if(granule_name != ''):
+            if(granule_name):
                 url = url + '&granuleName=' + granule_name
 
             url = url + '&format=' + format
             granule_md = requests.get(url)
-            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
+            status_codes = [404, 400, 503, 408]
+            if granule_md.status_code in status_codes:
                 granule_md.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
@@ -294,17 +298,18 @@ class Podaac:
 
         try:
             url = self.URL + 'metadata/granule/?'
-            if(dataset_id != ''):
+            if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(short_name != ''):
+            if(short_name):
                 url = url + '&shortName=' + short_name
 
             url = url + '&itemsPerPage=' + \
                 str(items_per_page) + '&format=' + format
             granule_md = requests.get(url)
-            if granule_md.status_code == 404 or granule_md.status_code == 400 or granule_md.status_code == 503 or granule_md.status_code == 408:
+            status_codes = [404, 400, 503, 408]
+            if granule_md.status_code in status_codes:
                 granule_md.raise_for_status()
 
         except requests.exceptions.HTTPError as error:
@@ -379,23 +384,24 @@ class Podaac:
 
         try:
             url = self.URL + 'search/granule/?'
-            if(dataset_id != ''):
+            if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(start_time != ''):
+            if(start_time):
                 url = url + '&startTime=' + start_time
-            if(end_time != ''):
+            if(end_time):
                 url = url + '&endTime=' + end_time
-            if(bbox != ''):
+            if(bbox):
                 url = url + '&bbox=' + bbox
-            if(start_index != ''):
+            if(start_index):
                 url = url + '&startIndex=' + start_index
 
             url = url + '&sortBy=' + sort_by + \
                 '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
             granules = requests.get(url)
-            if granules.status_code == 404 or granules.status_code == 400 or granules.status_code == 503 or granules.status_code == 408:
+            status_codes = [404, 400, 503, 408]
+            if granules.status_code in status_codes:
                 granules.raise_for_status()
 
         except requests.exceptions.HTTPError as error:

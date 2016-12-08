@@ -50,8 +50,9 @@ class test_podaac(unittest.TestCase):
         dataset_id = 'PODAAC-GHMG2-2PO01'
         dataset_short_name = 'OSDPD-L2P-MSG02'
         granule_name = '20120912-MSG02-OSDPD-L2P-MSG02_0200Z-v01.nc'
+
         granule_md = self.podaac.granule_metadata(
-            dataset_id, dataset_short_name, granule_name)
+            dataset_id=dataset_id, short_name=dataset_short_name, granule_name=granule_name)
         root = ET.fromstring(granule_md.encode('utf-8'))
         short_name = root[1][0].attrib
 
@@ -90,10 +91,21 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function search_dataset()
     def test_dataset_search(self):
-        format = 'atom'
-        items_per_page = '400'
-        datasets = self.podaac.dataset_search(
-            format=format, items_per_page=items_per_page)
+        dataset_id = 'PODAAC-ASOP2-25X01'
+        short_name = 'ASCATA-L2-25km'
+        start_time = '2000-01-01T01:30:00Z'
+        end_time = '2012-02-01T01:30:00Z'
+        start_index = '0'
+        keyword = 'modis'
+        instrument = 'MODIS'
+        satellite = 'AQUA'
+        file_format = 'NetCDF'
+        status = 'OPEN'
+        process_level = '2'
+        sort_by = 'timeAsc'
+        bbox = '-45,-45,45,45'
+        datasets = self.podaac.dataset_search(dataset_id=dataset_id, short_name=short_name, start_time=start_time, end_time=end_time, start_index=start_index,
+                                              keyword=keyword, instrument=instrument, satellite=satellite, file_format=file_format, status=status, process_level=process_level, sort_by=sort_by, bbox=bbox)
         root = ET.fromstring(datasets.encode('utf-8'))
         service_name = "PO.DAAC Dataset Search Service"
         test_service_name = root[3][0].text.split('\t')[3][:-1]
