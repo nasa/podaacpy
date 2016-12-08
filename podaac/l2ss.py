@@ -138,7 +138,7 @@ class L2SS:
         except Exception:
             raise
 
-        except HTTPError, error:
+        except HTTPError(error):
             status_codes = [404, 400, 503, 408]
             if error.code in status_codes:
                 raise error
