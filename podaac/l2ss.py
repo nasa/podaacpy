@@ -26,7 +26,7 @@ class L2SS:
     def __init__(self):
         self.URL = 'http://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
 
-    def dataset_search(self, dataset_id='', variable=[], sensor='', provider='', startTime='', endTime='', startIndex='', itemsPerPage=''):
+    def dataset_search(self, dataset_id='', variable=[], sensor='', provider='', start_time='', end_time='', start_index='', items_per_page=''):
         try:
             url = self.URL + 'dataset/search?'
             if(dataset_id):
@@ -38,14 +38,14 @@ class L2SS:
                 url = url + '&sensor=' + sensor
             if(provider):
                 url = url + '&provider=' + provider
-            if(startTime):
-                url = url + '&startTime=' + startTime
-            if(endTime):
-                url = url + '&endTime=' + endTime
-            if(startIndex):
-                url = url + '&startIndex=' + startIndex
-            if(itemsPerPage):
-                url = url + '&itemsPerPage=' + itemsPerPage
+            if(start_time):
+                url = url + '&startTime=' + start_time
+            if(end_time):
+                url = url + '&endTime=' + end_time
+            if(start_index):
+                url = url + '&startIndex=' + start_index
+            if(items_per_page):
+                url = url + '&itemsPerPage=' + items_per_page
 
             datasets = requests.get(url)
             status_codes = [404, 400, 503, 408]
@@ -72,21 +72,21 @@ class L2SS:
 
         return variables.text
 
-    def granule_search(self, dataset_id='', bbox='', startTime='', endTime='', name='', sort='', startIndex='', itemsPerPage=''):
+    def granule_search(self, dataset_id='', bbox='', start_time='', end_time='', name='', sort='', start_index='', items_per_page=''):
         try:
             url = self.URL + 'granule/search?'
             if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             if(bbox):
                 url = url + '&bbox=' + bbox
-            if(startTime):
-                url = url + '&startTime=' + startTime
-            if(endTime):
-                url = url + '&endTime=' + endTime
-            if(startIndex):
-                url = url + '&startIndex=' + startIndex
-            if(itemsPerPage):
-                url = url + '&itemsPerPage=' + itemsPerPage
+            if(start_time):
+                url = url + '&startTime=' + start_time
+            if(end_time):
+                url = url + '&endTime=' + end_time
+            if(start_index):
+                url = url + '&startIndex=' + start_index
+            if(items_per_page):
+                url = url + '&itemsPerPage=' + items_per_page
             if(name):
                 url = url + '&name=' + name
             if(sort):
@@ -103,11 +103,11 @@ class L2SS:
 
         return granules.text
 
-    def granules_availability(self, dataset_id='', startTime='', endTime='', gap='', bbox=''):
+    def granules_availability(self, dataset_id='', start_time='', end_time='', gap='', bbox=''):
         try:
             url = self.URL + 'granule/availability?'
             url = url + 'datasetId=' + dataset_id + '&startTime=' + \
-                startTime + '&endTime=' + endTime + '&gap=' + gap
+                start_time + '&endTime=' + end_time + '&gap=' + gap
             if(bbox):
                 url = url + '&bbox=' + bbox
 
@@ -137,11 +137,6 @@ class L2SS:
 
         except Exception:
             raise
-
-        except HTTPError(error):
-            status_codes = [404, 400, 503, 408]
-            if error.code in status_codes:
-                raise error
 
         return image
 

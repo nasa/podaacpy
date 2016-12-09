@@ -31,11 +31,11 @@ class test_podaac(unittest.TestCase):
         variable = ['Surface Winds']
         sensor = 'Advanced Scatterometer'
         provider = 'KNMI'
-        startTime = '2016-12-4T22:39:52Z'
-        startIndex = '0'
-        itemsPerPage = '7'
-        dataset = self.l2ss.dataset_search(dataset_id=dataset_id, variable=variable, startTime=startTime, sensor=sensor,
-                                           provider=provider, startIndex=startIndex, itemsPerPage=itemsPerPage)
+        start_time = '2016-12-4T22:39:52Z'
+        start_index = '0'
+        items_per_page = '7'
+        dataset = self.l2ss.dataset_search(dataset_id=dataset_id, variable=variable, start_time=start_time, sensor=sensor,
+                                           provider=provider, start_index=start_index, items_per_page=items_per_page)
         dataset_json = json.loads(dataset)
 
         assert dataset_json['response']['docs'][0][
@@ -56,14 +56,14 @@ class test_podaac(unittest.TestCase):
     def test_granule_search(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         bbox = '-180,-90,180,90'
-        startTime = '2016-07-16T04:18:00Z'
-        endTime = '2016-07-16T05:56:56Z'
-        itemsPerPage = '7'
-        startIndex = '0'
+        start_time = '2016-07-16T04:18:00Z'
+        end_time = '2016-07-16T05:56:56Z'
+        items_per_page = '7'
+        start_index = '0'
         name = 'ascat_20160716_041800_metopa_50541_eps_o_250_2401_ovw.l2.nc'
         sort = 'Granule-Name asc'
-        granules = self.l2ss.granule_search(dataset_id=dataset_id, bbox=bbox, startTime=startTime, endTime=endTime,
-                                            itemsPerPage=itemsPerPage, startIndex=startIndex, name=name, sort=sort)
+        granules = self.l2ss.granule_search(dataset_id=dataset_id, bbox=bbox, start_time=start_time, end_time=end_time,
+                                            items_per_page=items_per_page, start_index=start_index, name=name, sort=sort)
         granules_json = json.loads(granules)
 
         assert granules_json['response']['docs'][0][
@@ -73,11 +73,11 @@ class test_podaac(unittest.TestCase):
     def test_granules_availability(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         bbox = '-180,-90,180,90'
-        startTime = '2014-10-12T11:42:00Z'
-        endTime = '2016-10-12T11:42:00Z'
+        start_time = '2014-10-12T11:42:00Z'
+        end_time = '2016-10-12T11:42:00Z'
         gap = 'DAY'
         granule_availability = json.loads(self.l2ss.granules_availability(
-            dataset_id=dataset_id, startTime=startTime, endTime=endTime, bbox=bbox, gap=gap))
+            dataset_id=dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, gap=gap))
         availability_data = granule_availability[
             'facet_counts']['facet_dates']['Granule-StartTime']
 
