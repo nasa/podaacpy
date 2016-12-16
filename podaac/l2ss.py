@@ -15,7 +15,6 @@ import os
 import json
 import time
 import zipfile
-from future.moves.urllib.error import HTTPError
 from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.urllib.parse import urlencode
 from future.moves.http.client import HTTPConnection
@@ -34,29 +33,29 @@ class L2SS:
 
             :param variable: Search for datasets with variable name. For multi-value input, \
                 this input is taken as a list. Example: [ 'Sea Surface Temperature', 'Surface Wind']
-            :type short_name: :mod:`list`
+            :type variable: :mod:`list`
 
             :param sensor: Search for datasets with sensor. For multi-value input, \
                 this input is taken as a list.
-            :type format: :mod:`string`
+            :type sensor: :mod:`list`
 
             :param provider: Search for datasets with provider. For multi-value input, \
                 this input is taken as a list.
-            :type format: :mod:`string`
+            :type provider: :mod:`list`
 
             :param start_time: Lower time bound. If not specified, lower time bound of \
                 the dataset will be used. Example: '2011-12-31T23:59:59-06:00Z'
-            :type format: :mod:`string`
+            :type start_time: :mod:`string`
 
             :param end_time: Upper time bound. If not specified, upper time bound of \
                 the dataset will be used. Example: 2019-12-31T23:59:59-06:00Z
-            :type format: :mod:`string`
+            :type end_time: :mod:`string`
 
             :param items_per_page: number of results to return.
-            :type format: :mod:`string`
+            :type items_per_page: :mod:`string`
 
             :param start_index: start index of result.
-            :type format: :mod:`string`
+            :type start_index: :mod:`string`
 
             :returns: a json response containing the datasets.
         '''
@@ -94,6 +93,13 @@ class L2SS:
         return datasets.text
 
     def dataset_variables(self, dataset_id):
+        ''' Dataset Variable retrieves dataset configuration information including variables.
+
+            :param dataset_id: datasetId for the configuration information.
+            :type dataset_id: :mod:`string`
+
+            :returns: a json response containing the dataset variables.
+        '''
         try:
             url = self.URL + '/dataset/variable?datasetId=' + dataset_id
             variables = requests.get(url)
@@ -108,6 +114,42 @@ class L2SS:
         return variables.text
 
     def granule_search(self, dataset_id='', bbox='', start_time='', end_time='', name='', sort='', start_index='', items_per_page=''):
+        ''' Granule Search retrieves all base granule information (datasetId, start time, end time) \
+            matching the specified datasetId, date, and region. This approach may change if \
+            the data/querying turns out to be too expensive. Response is structured in a minimalistic\
+            way to cut down on the file size.
+
+            :param dataset_id: Search granules belong to given PODAAC Dataset persistent ID.
+            :type dataset_id: :mod:`string`
+
+            :param bbox: Search granules with Bounding box Ex: '-180,-90,180,90'
+            :type bbox: :mod:`string`
+
+            :param start_time: Lower time bound. If not specified, lower time bound of \
+                the dataset will be used. Example: '2011-12-31T23:59:59-06:00Z'
+            :type start_time: :mod:`string`
+
+            :param end_time: Upper time bound. If not specified, upper time bound of \
+                the dataset will be used. Example: 2019-12-31T23:59:59-06:00Z
+            :type end_time: :mod:`string`
+
+            :param name : Search granules with exact name or name pattern using wildcard\
+                search Example: ascat* this matches name that starts with "ascat"
+            :type name: :mod:`string`
+
+            :param sort: Sort output. There are two strings delimited by space.\
+                The first string is the field name, and the second string is 'asc' or 'desc'\
+                Example: sort='Granule-Name asc'
+            :type sort: :mod:`string`
+
+            :param items_per_page: number of results to return.
+            :type items_per_page: :mod:`string`
+
+            :param start_index: start index of result.
+            :type start_index: :mod:`string`
+
+            :returns: a json response containing the dataset granules.
+        '''
         try:
             url = self.URL + 'granule/search?'
             if(dataset_id):
@@ -139,6 +181,28 @@ class L2SS:
         return granules.text
 
     def granules_availability(self, dataset_id='', start_time='', end_time='', gap='', bbox=''):
+        ''' Granules Availability calculates granule counts per day or month from given date range.
+
+            :param dataset_id: Search granules belong to given PODAAC Dataset persistent ID.
+            :type dataset_id: :mod:`string`
+
+            :param start_time: Lower time bound. If not specified, lower time bound of \
+                the dataset will be used. Example: '2011-12-31T23:59:59-06:00Z'
+            :type start_time: :mod:`string`
+
+            :param end_time: Upper time bound. If not specified, upper time bound of \
+                the dataset will be used. Example: 2019-12-31T23:59:59-06:00Z
+            :type end_time: :mod:`string`
+
+            :param gap: The size of each date range expressed as an interval to be added\
+                to the lower bound. Example: 'DAY', 'MONTHS'
+            :type gap: :mod:`string`
+
+            :param bbox: Search granules with Bounding box Ex: '-180,-90,180,90'
+            :type bbox: :mod:`string`
+
+            :returns: a json response containing the granule count and other relevant information.
+        '''
         try:
             url = self.URL + 'granule/availability?'
             url = url + 'datasetId=' + dataset_id + '&startTime=' + \
@@ -158,6 +222,26 @@ class L2SS:
         return granule_availability.text
 
     def granule_preview_image(self, dataset_id, granule, year, day, variable, path=''):
+        ''' Granule Preview Image Service provides thumbnail image of selected variable for\
+            selected granule.
+
+            :param dataset_id: Search granules belong to given PODAAC Dataset persistent ID.
+            :type dataset_id: :mod:`string`
+
+            :param granule: string granule name.
+            :type granule: :mod:`string`
+
+            :param year: year in 4 digits. Example= '2014'
+            :type year: :mod:`string`
+
+            :param day: day of year in 3 digits. Example= '140'
+            :type day: :mod:`string`
+
+            :param variable_id: Variable id described in dataset variable service.
+            :type variable_id: :mod:`string`
+
+            :returns: returns thumbnail image of selected variable for selected granule.
+        '''
         try:
             url = self.URL + 'preview/' + dataset_id + '/' + year + \
                 '/' + day + '/' + granule + '/' + variable + '.png'
@@ -176,6 +260,14 @@ class L2SS:
         return image
 
     def image_palette(self, palette_name):
+        ''' Image Palette service retrieves palette descriptor in json format
+
+            :param palette_name: palette_name whose palette descriptor we want to\
+                retrieve.
+            :type palette_name: :mod:`string`
+
+            :returns: returns palette descriptor in json format.
+        '''
         try:
             url = self.URL + 'palettes/' + palette_name + '.json'
             image_palette = requests.get(url)
@@ -190,6 +282,19 @@ class L2SS:
         return image_palette.text
 
     def granule_download(self, query_string, path=''):
+        ''' Granule Download service submits a job to subset and download. Upon a successful request,\
+            token will be returned which can be used to check status.
+
+            :param query_string: data collection query json as a string.
+            :type query_string: :mod:`string`
+
+            :param path: path to a directory where you want the subsetted \
+                dataset to be stored.
+            :type path: :mod:`string`
+
+            :returns: a zip file downloaded and extracted in the destination\
+                directory path provided.
+        '''
         params = urlencode({'query': query_string})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
@@ -233,6 +338,20 @@ class L2SS:
         os.remove(path)
 
     def subset_status(self, token):
+        ''' Subset Status service check status on existing download job.
+            The possible status that it returns include the following.. ::
+
+              * "queued"
+              * "processing"
+              * "partial error"
+              * "done"
+              * "error"
+
+            :param token: job token. job token is provided when submitting the job.
+            :type token: :mod:`string`
+
+            :returns: the status of the subset request.
+        '''
         try:
             url = self.URL + 'subset/status?token=' + token
             response = requests.get(url)
