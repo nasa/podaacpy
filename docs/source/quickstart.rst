@@ -16,8 +16,6 @@
 Quickstart
 **********
 
-*author*: Lewis John McGibbney (lewismc@apache.org)
-
 Purpose
 -------
 The following document explains how to quickly get up and running with podaac. It explains how to execute the key commands and explains (at a high level) what those commands are doing e.g. what input and output we can expect. More detail on expressive use of the various API's including function level API documentation can be found in subsequent pages of this documentation guide.

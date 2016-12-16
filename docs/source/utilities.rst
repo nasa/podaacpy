@@ -16,7 +16,5 @@
 podaacpy utilities API
 ************************
 
-*author*: Lewis John McGibbney (lewismc@apache.org)
-
 .. autoclass:: podaac_utils.PodaacUtils
     :members:

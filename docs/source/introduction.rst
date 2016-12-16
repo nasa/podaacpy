@@ -16,8 +16,6 @@
 Introduction to podaacpy
 ************************
 
-*author*: Lewis John McGibbney (lewismc@apache.org)
-
 ============
 Introduction
 ============

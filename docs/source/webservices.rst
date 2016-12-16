@@ -16,7 +16,5 @@
 podaacpy webservices API
 ************************
 
-*author*: Lewis John McGibbney (lewismc@apache.org)
-
 .. autoclass:: podaac.Podaac
     :members:

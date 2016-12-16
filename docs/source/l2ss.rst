@@ -12,28 +12,9 @@
    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    # See the License for the specific language governing permissions and
    # limitations under the License.
+   
+podaacpy Level 2 Sub-Setting
+****************************
 
-Welcome to podaacpy's documentation!
-=========================================
-
-Contents:
-
-.. toctree::
-   :maxdepth: 4
-
-   introduction
-   quickstart
-   utilities
-   webservices
-   mcc
-   l2ss
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+.. autoclass:: l2ss.L2SS
+    :members:

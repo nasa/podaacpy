@@ -64,7 +64,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'podaacpy'
-copyright = u'2016, Lewis John McGibbney'
+copyright = u'2016, by the California Institute of Technology'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

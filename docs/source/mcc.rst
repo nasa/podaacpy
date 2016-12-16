@@ -16,7 +16,5 @@
 podaacpy metadata compliance checker (mcc) API
 **********************************************
 
-*author*: Lewis John McGibbney (lewismc@apache.org)
-
 .. autoclass:: mcc.MCC
     :members:
