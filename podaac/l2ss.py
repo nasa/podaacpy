@@ -26,7 +26,40 @@ class L2SS:
     def __init__(self):
         self.URL = 'http://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
 
-    def dataset_search(self, dataset_id='', variable=[], sensor='', provider='', start_time='', end_time='', start_index='', items_per_page=''):
+    def dataset_search(self, dataset_id='', variable=[], sensor=[], provider=[], start_time='', end_time='', start_index='', items_per_page=''):
+        ''' Dataset search service lists available datasets and returns them.
+
+            :param dataset_id: Search dataset belong to given PODAAC Dataset persistent ID.
+            :type dataset_id: :mod:`string`
+
+            :param variable: Search for datasets with variable name. For multi-value input, \
+                this input is taken as a list. Example: [ 'Sea Surface Temperature', 'Surface Wind']
+            :type short_name: :mod:`list`
+
+            :param sensor: Search for datasets with sensor. For multi-value input, \
+                this input is taken as a list.
+            :type format: :mod:`string`
+
+            :param provider: Search for datasets with provider. For multi-value input, \
+                this input is taken as a list.
+            :type format: :mod:`string`
+
+            :param start_time: Lower time bound. If not specified, lower time bound of \
+                the dataset will be used. Example: '2011-12-31T23:59:59-06:00Z'
+            :type format: :mod:`string`
+
+            :param end_time: Upper time bound. If not specified, upper time bound of \
+                the dataset will be used. Example: 2019-12-31T23:59:59-06:00Z
+            :type format: :mod:`string`
+
+            :param items_per_page: number of results to return.
+            :type format: :mod:`string`
+
+            :param start_index: start index of result.
+            :type format: :mod:`string`
+
+            :returns: a json response containing the datasets.
+        '''
         try:
             url = self.URL + 'dataset/search?'
             if(dataset_id):
@@ -35,9 +68,11 @@ class L2SS:
                 for var in variable:
                     url = url + '&variable=' + var
             if(sensor):
-                url = url + '&sensor=' + sensor
+                for item in sensor:
+                    url = url + '&sensor=' + item
             if(provider):
-                url = url + '&provider=' + provider
+                for item in provider:
+                    url = url + '&provider=' + item
             if(start_time):
                 url = url + '&startTime=' + start_time
             if(end_time):
