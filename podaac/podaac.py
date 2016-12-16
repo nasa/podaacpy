@@ -13,9 +13,8 @@
 # limitations under the License.
 
 import requests
-from future.moves.urllib.parse import urlparse, urlencode
+from future.moves.urllib.parse import urlencode
 from future.moves.urllib.request import urlopen, urlretrieve
-from future.moves.urllib.error import HTTPError
 from future.moves.http.client import HTTPConnection
 import os
 import zipfile
@@ -597,7 +596,7 @@ class Podaac:
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
                 path = path + '/' + granule_name
-            data = urlretrieve(url, path)
+            urlretrieve(url, path)
 
         except Exception:
             raise
