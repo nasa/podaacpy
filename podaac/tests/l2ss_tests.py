@@ -29,8 +29,8 @@ class test_podaac(unittest.TestCase):
     def test_dataset_search(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         variable = ['Surface Winds']
-        sensor = 'Advanced Scatterometer'
-        provider = 'KNMI'
+        sensor = ['Advanced Scatterometer']
+        provider = ['KNMI']
         start_time = '2016-12-4T22:39:52Z'
         start_index = '0'
         items_per_page = '7'
