@@ -1,3 +1,14 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain  a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0 Unless
+# 
+# required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS"
+# BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language
+# governing permissions and limitations under the License.
 language: python
 python:
   - '2.7'
@@ -32,7 +43,7 @@ deploy: # Runs on every commit to master branch
     user: lewismc
     password:
         secure: Q4BwpJPlAR4WSeAmS4Q20dy35RHdfdzA6nQHC+5f76zDfKiebhFc7JZ6dl5Rsqpq0yJtmhoaLlj7qBbFtk1JjEkJhj7/M7jinYdaY0v3JMDuZPx/ReLmCtWtOcre9qb0x/XoGDO4hJfklvqesmIk9Ai9YVJq46BlRRLwM2M5ys08EGobr/3++B2lyMsexjhBMWzWzYGFFq26iHdEHKGskxjNkNCkTcZWnfCsMAPoG0ZxyCwhO0TGT8W7kloqN40q/+/l6DwrrAmYWvckrFy0ItHbtCVDNK1jxlijr1IrbXpMtpzyaCCsHc+21AbsJyMG9oyuMJw/e6YfzIoA3gAnUv99iFTAk5LQh6DIYeGRjggSjX9H4oelEc1c9LC3mfI0LqahIUDZQPiWGWBlHqRSUzrT9zhwiBs/5fBsQPLWSz8TvlqwSixYTwN9xm+D9Bczwftr8h4R3ucxuBbntGtmvMGBEHE14IrJcrleUBkZ1aWNEXkE/sos0bardMukM1FRlBIFTk9NCsAVBKOUvcZvdGQlVu1lVJ+nxeSROTMIFvRRs3n2L8Tpr4/uMslVW2zq66+gNES9f0B+kW+V77RVeii+B8sB9HFS1i56rV85rVURI15QPlx9L+5wbFTofnJNzdNCRr7WIlT133oMzn3cjRCS9mztSen+ywyPI7ZDmHI=
+    distributions: sdist bdist_wheel
     on:
         tags: true # Deploy only on tagged commits
-        distributions: sdist bdist_wheel
         branch: master
