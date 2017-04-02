@@ -58,6 +58,10 @@ The library provides a Python toolkit for interacting with all
    | Climate and Forecast (CF) and Attribute Convention for Dataset
      Discovery (ACDD) metadata conventions.
 
+-  | `Level 2 Subsetting 
+      <https://podaac-tools.jpl.nasa.gov/hitide/>`__: allows users to subset 
+      and download popular PO.DAAC level 2 (swath) datasets.
+
 Installation
 ------------
 
