@@ -74,13 +74,11 @@ class PodaacUtils:
         for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
             dataset_id = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
-            dataset_id = dataset_id.split('\t')[3][:-1]
             dataset_ids.append(dataset_id)
 
         for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
             dataset_id = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text
-            dataset_id = dataset_id.split('\t')[3][:-1]
             dataset_ids.append(dataset_id)
 
         dataset_ids_level1 = []
@@ -107,13 +105,11 @@ class PodaacUtils:
         for entry in root1.findall('{http://www.w3.org/2005/Atom}entry'):
             name = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
-            name = name.split('\t')[3][:-1]
             dataset_short_names.append(name)
 
         for entry in root2.findall('{http://www.w3.org/2005/Atom}entry'):
             name = entry.find(
                 '{http://podaac.jpl.nasa.gov/opensearch/}shortName').text
-            name = name.split('\t')[3][:-1]
             dataset_short_names.append(name)
 
         # dataset_short_names_level1 = []
