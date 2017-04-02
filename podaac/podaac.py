@@ -591,7 +591,7 @@ class Podaac:
             root = ET.fromstring(search_data.encode('utf-8'))
             url = root[12][7].attrib['href']
             granule_name = root[12][0].text
-            granule_name = granule_name.split('\t')[3][:-1]
+            granule_name = granule_name.rsplit(".", 1)[0]
             if path == '':
                 path = os.path.join(os.path.dirname(__file__), granule_name)
             else:
