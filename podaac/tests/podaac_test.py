@@ -108,7 +108,7 @@ class test_podaac(unittest.TestCase):
                                               keyword=keyword, instrument=instrument, satellite=satellite, file_format=file_format, status=status, process_level=process_level, sort_by=sort_by, bbox=bbox)
         root = ET.fromstring(datasets.encode('utf-8'))
         service_name = "PO.DAAC Dataset Search Service"
-        test_service_name = root[3][0].text.split('\t')[3][:-1]
+        test_service_name = root[3][0].text
 
         assert datasets != None
         assert test_service_name == service_name
@@ -127,7 +127,7 @@ class test_podaac(unittest.TestCase):
             dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, format=format)
         root = ET.fromstring(granules.encode('utf-8'))
         dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
-            '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text.split('\t')[3]
+            '{http://podaac.jpl.nasa.gov/opensearch/}datasetId').text.rsplit('.')[0]
 
         assert granules != None
         assert test_dataset_id == dataset_id
@@ -180,15 +180,12 @@ class test_podaac(unittest.TestCase):
     # test case for the function extract_l4_granule()
     def test_extract_l4_granule(self):
         dataset_id = 'PODAAC-GHCMC-4FM02'
-        test_format = '.nc'
         path = os.path.dirname(os.path.abspath(__file__))
         granule_name = self.podaac.extract_l4_granule(
             dataset_id, path)
         length = len(granule_name)
-        format = granule_name[length - 3:length]
 
         assert granule_name != None
-        assert format == test_format
         assert_raises(Exception, self.podaac.extract_l4_granule,
                       dataset_id='ABCDEF')
 

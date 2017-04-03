@@ -16,7 +16,7 @@ import json
 import time
 import zipfile
 from future.moves.urllib.request import urlopen, urlretrieve
-from future.moves.urllib.parse import urlencode
+from future.moves.urllib.parse import urlencode, quote
 from future.moves.http.client import HTTPConnection
 
 
@@ -60,7 +60,7 @@ class L2SS:
             :returns: a json response containing the datasets.
         '''
         try:
-            url = self.URL + 'dataset/search?'
+            url = 'dataset/search?'
             if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             if(variable):
@@ -81,6 +81,7 @@ class L2SS:
             if(items_per_page):
                 url = url + '&itemsPerPage=' + items_per_page
 
+            url = self.URL + quote(url)
             datasets = requests.get(url)
             status_codes = [404, 400, 503, 408]
             if datasets.status_code in status_codes:
@@ -151,7 +152,7 @@ class L2SS:
             :returns: a json response containing the dataset granules.
         '''
         try:
-            url = self.URL + 'granule/search?'
+            url = 'granule/search?'
             if(dataset_id):
                 url = url + 'datasetId=' + dataset_id
             if(bbox):
@@ -169,6 +170,7 @@ class L2SS:
             if(sort):
                 url = url + '&sort=' + sort
 
+            url = self.URL + quote(url)
             granules = requests.get(url)
             status_codes = [404, 400, 503, 408]
             if granules.status_code in status_codes:
