@@ -41,8 +41,8 @@ _long_description = 'A python utility library for interacting with NASA JPLs PO.
 _name = 'podaacpy'
 _namespaces = []
 _test_suite = 'podaac.tests'
-_url = 'https://github.com/lewismc/podaacpy'
-_version = '1.8.0'
+_url = 'https://github.com/nasa/podaacpy'
+_version = '1.9.0'
 _zip_safe = False
 
 # Setup Metadata
