@@ -19,7 +19,7 @@ import requests
 class MCC:
 
     def __init__(self):
-        self.URL = 'http://podaac-uat.jpl.nasa.gov/mcc/check'
+        self.URL = 'https://podaac-uat.jpl.nasa.gov/mcc/check'
 
     def check_remote_file(self, checkers, url_upload, response='json'):
         '''GET a remote file e.g. from an OPeNDAP URL and compliance \

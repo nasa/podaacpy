@@ -17,13 +17,13 @@ import time
 import zipfile
 from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.urllib.parse import urlencode
-from future.moves.http.client import HTTPConnection
+from future.moves.http.client import HTTPSConnection
 
 
 class L2SS:
 
     def __init__(self):
-        self.URL = 'http://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
+        self.URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
 
     def dataset_search(self, dataset_id='', variable=[], sensor=[], provider=[], start_time='', end_time='', start_index='', items_per_page=''):
         ''' Dataset search service lists available datasets and returns them.
@@ -298,7 +298,7 @@ class L2SS:
         params = urlencode({'query': query_string})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
-        connection = HTTPConnection("podaac-tools.jpl.nasa.gov")
+        connection = HTTPSConnection("podaac-tools.jpl.nasa.gov")
         connection.request("POST", "/l2ss-services/l2ss/subset/submit",
                            params, headers)
         response = connection.getresponse()

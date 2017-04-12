@@ -15,15 +15,15 @@
 import requests
 from future.moves.urllib.parse import urlencode
 from future.moves.urllib.request import urlopen, urlretrieve
-from future.moves.http.client import HTTPConnection
+from future.moves.http.client import HTTPSConnection
 import os
 import zipfile
 import json
 import time
 import xml.etree.ElementTree as ET
 
-URL = 'http://podaac.jpl.nasa.gov/ws/'
-IMAGE_URL = 'http://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
+URL = 'https://podaac.jpl.nasa.gov/ws/'
+IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
 
 
 class Podaac:
@@ -502,7 +502,7 @@ class Podaac:
         params = urlencode({'query': input_string})
         headers = {
             "Content-type": "application/x-www-form-urlencoded", "Accept": "*"}
-        conn = HTTPConnection("podaac.jpl.nasa.gov")
+        conn = HTTPSConnection("podaac.jpl.nasa.gov")
         conn.request("POST", "/ws/subset/granule?request=submit",
                      params, headers)
         response = conn.getresponse()
