@@ -29,7 +29,7 @@ IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
 class Podaac:
 
     def __init__(self):
-        self.URL = 'http://podaac.jpl.nasa.gov/ws/'
+        self.URL = 'https://podaac.jpl.nasa.gov/ws/'
 
     def dataset_metadata(self, dataset_id='', short_name='', format='iso'):
         '''Dataset metadata service retrieves the metadata of a \
@@ -574,11 +574,6 @@ class Podaac:
                 short_name is required for a granule search. Example: \
                 PODAAC-ASOP2-25X01
         :type dataset_id: :mod:`string`
-
-        :param short_name: the shorter name for a dataset. \
-                Either short_name or dataset_id is required for a \
-                granule search. Example: ASCATA-L2-25km
-        :type short_name: :mod:`string`
 
         :param path: Destination directory into which the granule \
                 needs to be downloaded.

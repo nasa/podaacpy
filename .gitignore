@@ -60,3 +60,9 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# Test artifacts
+*.png
+
+# Release and installation generated files
+doc.txt
