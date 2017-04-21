@@ -16,11 +16,13 @@ import requests
 from future.moves.urllib.parse import urlencode
 from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.http.client import HTTPSConnection
+import gzip
 import os
 import zipfile
 import json
 import time
 import xml.etree.ElementTree as ET
+import ntpath
 
 URL = 'https://podaac.jpl.nasa.gov/ws/'
 IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
@@ -53,11 +55,11 @@ class Podaac:
         '''
         try:
             url = self.URL + 'metadata/dataset/?'
-            if(dataset_id):
+            if dataset_id:
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(short_name):
+            if short_name:
                 url = url + '&shortName=' + short_name
 
             url = url + '&format=' + format
@@ -161,33 +163,33 @@ class Podaac:
             url = url + 'itemsPerPage=' + items_per_page + '&pretty=' + \
                 pretty + '&format=' + format + '&full=' + full
 
-            if(dataset_id):
+            if dataset_id:
                 url = url + '&keyword=' + keyword
-            if(start_time):
+            if start_time:
                 url = url + '&startTime=' + start_time
-            if(end_time):
+            if end_time:
                 url = url + '&endTime=' + end_time
-            if(bbox):
+            if bbox:
                 url = url + '&bbox=' + bbox
-            if(start_index):
+            if start_index:
                 url = url + '&startIndex=' + start_index
-            if(dataset_id):
+            if dataset_id:
                 url = url + '&datasetId=' + dataset_id
-            if(short_name):
+            if short_name:
                 url = url + '&shortName=' + short_name
-            if(instrument):
+            if instrument:
                 url = url + '&instrument=' + instrument
-            if(satellite):
+            if satellite:
                 url = url + '&satellite=' + satellite
-            if(file_format):
+            if file_format:
                 url = url + '&fileFormat=' + file_format
-            if(status):
+            if status:
                 url = url + '&status=' + status
-            if(process_level):
+            if process_level:
                 url = url + '&processLevel=' + process_level
-            if(sort_by):
+            if sort_by:
                 url = url + '&sortBy=' + sort_by
-            if(bbox):
+            if bbox:
                 url = url + '&bbox=' + bbox
             datasets = requests.get(url)
             status_codes = [404, 400, 503, 408]
@@ -249,13 +251,13 @@ class Podaac:
 
         try:
             url = self.URL + 'metadata/granule/?'
-            if(dataset_id):
+            if dataset_id:
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(short_name):
+            if short_name:
                 url = url + '&shortName=' + short_name
-            if(granule_name):
+            if granule_name:
                 url = url + '&granuleName=' + granule_name
 
             url = url + '&format=' + format
@@ -297,11 +299,11 @@ class Podaac:
 
         try:
             url = self.URL + 'metadata/granule/?'
-            if(dataset_id):
+            if dataset_id:
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(short_name):
+            if short_name:
                 url = url + '&shortName=' + short_name
 
             url = url + '&itemsPerPage=' + \
@@ -383,17 +385,17 @@ class Podaac:
 
         try:
             url = self.URL + 'search/granule/?'
-            if(dataset_id):
+            if dataset_id:
                 url = url + 'datasetId=' + dataset_id
             else:
                 raise Exception("Dataset Id is required")
-            if(start_time):
+            if start_time:
                 url = url + '&startTime=' + start_time
-            if(end_time):
+            if end_time:
                 url = url + '&endTime=' + end_time
-            if(bbox):
+            if bbox:
                 url = url + '&bbox=' + bbox
-            if(start_index):
+            if start_index:
                 url = url + '&startIndex=' + start_index
 
             url = url + '&sortBy=' + sort_by + \
@@ -446,7 +448,7 @@ class Podaac:
 
         try:
             bbox = '-180,-90,180,90'
-            if(dataset_id == ''):
+            if dataset_id == '':
                 raise Exception("Required dataset_id")
             image_data = self.granule_search(dataset_id=dataset_id, bbox=bbox)
             root = ET.fromstring(image_data.encode('utf-8'))
@@ -490,8 +492,8 @@ class Podaac:
         dataset to be stored.
         :type path: :mod:`string`
 
-        :returns: a zip file downloaded and extracted in the destination\
-        directory path provided.
+        :returns: a string token which can be used to determine the status\
+        of a subset task.
 
         '''
         data = open(input_file_path, 'r+')
@@ -513,31 +515,34 @@ class Podaac:
         conn.close()
 
         flag = 0
-        while(flag == 0):
+        while flag == 0:
             url = url = self.URL + "subset/status?token=" + token
             subset_response = requests.get(url).text
             subset_response_json = json.loads(subset_response)
             status = subset_response_json['status']
-            if (status == "done"):
+            if status == "done":
                 flag = 1
-            if (status == "error"):
+            if status == "error":
                 raise Exception(
-                    "Unexpected error occured for the subset job you have requested")
+                    "Unexpected error occured for the subset job you have requested. You may wish to post your issue to the PO.DAAC forum https://podaac.jpl.nasa.gov/forum/")
             time.sleep(1)
 
-        print("Done! downloading the dataset zip .....")
         download_url = subset_response_json['resultURLs'][0]
         split = download_url.split('/')
         length = len(split)
         zip_file_name = split[length - 1]
         if path == '':
-            path = os.path.join(os.path.dirname(__file__), zip_file_name)
+            zip_path = os.path.join(os.path.dirname(__file__), zip_file_name)
         else:
-            path = path + zip_file_name
-        response = urlretrieve(download_url, path)
-        zip_content = zipfile.ZipFile(path)
-        zip_content.extractall()
-        os.remove(path)
+            zip_path = path + '/' + zip_file_name
+        response = urlretrieve(download_url, zip_path)
+        zip_content = zipfile.ZipFile(zip_path)
+        for i in zip_content.infolist():
+            granule_name = i.filename
+        zip_content.extractall(path=path)
+        print("Podaacpy completed granule subset task for granule '%s'. Granule available at '%s'." % (granule_name, path))
+        os.remove(zip_path)
+        return granule_name
 
     def subset_status(self, token=''):
         '''Subset Granule Status service allows users to check the status \
@@ -553,7 +558,7 @@ class Podaac:
         submitting a subset request.
         :type token: :mod:`string`
 
-        :returns: the status of the subset request.
+        :returns: the a status string of the subset request.
 
         '''
         url = self.URL + "subset/status?token=" + token
@@ -568,7 +573,7 @@ class Podaac:
         from the availalble webservices. The extract_l4_granule helps \
         retrieve the level 4 datasets from openDap server directly, \
         accompanied by the search granule for retrieving granule name \
-        related to the specific dataset_id and short_name
+        related to the specific dataset_id.
 
         :param dataset_id: dataset persistent ID. dataset_id or \
                 short_name is required for a granule search. Example: \
@@ -578,6 +583,8 @@ class Podaac:
         :param path: Destination directory into which the granule \
                 needs to be downloaded.
         :type format: :mod:`string`
+
+        :returns: 
         '''
         try:
             start_index = '1'
@@ -585,14 +592,19 @@ class Podaac:
                 dataset_id=dataset_id, start_index=start_index)
             root = ET.fromstring(search_data.encode('utf-8'))
             url = root[12][7].attrib['href']
+            compressed_granule = ntpath.basename(url)
             granule_name = root[12][0].text
-            granule_name = granule_name.rsplit(".", 1)[0]
             if path == '':
-                path = os.path.join(os.path.dirname(__file__), granule_name)
+                compressed_path = os.path.join(os.path.dirname(__file__), compressed_granule)
             else:
-                path = path + '/' + granule_name
-            urlretrieve(url, path)
-
+                compressed_path = path + '/' + compressed_granule
+            urlretrieve(url, compressed_path)
+            if compressed_granule.endswith('.gz'):
+                compressed_granule = gzip.open(compressed_path, 'rb')
+                uncompressed_granule = open(path + '/' + granule_name, 'wb')
+                uncompressed_granule.write(compressed_granule.read())
+                compressed_granule.close()
+                uncompressed_granule.close()
         except Exception:
             raise
 

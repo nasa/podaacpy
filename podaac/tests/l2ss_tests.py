@@ -19,7 +19,7 @@ from ..l2ss import L2SS
 from nose.tools import assert_raises
 
 
-class test_podaac(unittest.TestCase):
+class TestL2SS(unittest.TestCase):
 
     @classmethod
     def setUp(self):
@@ -139,7 +139,5 @@ class test_podaac(unittest.TestCase):
 
     # test case for the function subset_status
     def test_subset_status(self):
-        test_token_status = "unknown"
         token = 'FakeToken'
-
         assert_raises(Exception, self.l2ss.subset_status, token=token)

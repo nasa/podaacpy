@@ -22,7 +22,7 @@ import unittest
 from future.moves.urllib.error import HTTPError
 
 
-class test_podaac(unittest.TestCase):
+class TestPodaac(unittest.TestCase):
 
     @classmethod
     def setUp(self):
@@ -84,7 +84,6 @@ class test_podaac(unittest.TestCase):
     # test case for the function load_dataset_variables
     def test_dataset_variable(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
-        dataset_variables = self.podaac.dataset_variables(dataset_id)
 
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.dataset_variables, dataset_id='PODAAC')
@@ -158,13 +157,13 @@ class test_podaac(unittest.TestCase):
     # test case for the function granule_subset
     def test_granule_subset(self):
         path1 = os.path.dirname(os.path.abspath(__file__)) + "/test.json"
-        path2 = os.path.abspath(__file__)
+        path2 = os.path.dirname(__file__)
         self.podaac.granule_subset(input_file_path=path1, path=path2)
 
-        assert os.path.isfile(
-            './subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc') == True
-        os.remove(
-            './subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc')
+        assert os.path.isfile(path2 + 
+            '/subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc') == True
+        os.remove(path2 +
+            '/subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc')
 
     # test case for the function subset_status
     def test_subset_status(self):
@@ -183,7 +182,6 @@ class test_podaac(unittest.TestCase):
         path = os.path.dirname(os.path.abspath(__file__))
         granule_name = self.podaac.extract_l4_granule(
             dataset_id, path)
-        length = len(granule_name)
 
         assert granule_name != None
         assert_raises(Exception, self.podaac.extract_l4_granule,

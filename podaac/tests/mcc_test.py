@@ -21,7 +21,7 @@ from nose.tools import assert_raises
 import unittest
 
 
-class testMCC(unittest.TestCase):
+class TestMCC(unittest.TestCase):
 
     def setUp(self):
         self.mcc = MCC()
