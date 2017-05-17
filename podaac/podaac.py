@@ -482,7 +482,9 @@ class Podaac:
     def granule_subset(self, input_file_path, path=''):
         '''Subset Granule service allows users to Submit subset jobs. \
         Use of this service should be preceded by a Granule Search in \
-        order to identify and generate a list of granules to be subsetted.
+        order to identify and generate a list of granules to be subsetted. \
+        NOTE : At present PODAAC's granule subsetting service is only \
+        restricted to Level2 granules.
 
         :param input_file_path: path to a json file which contains the \
         the request that you want to send to PO.DAAC
