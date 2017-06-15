@@ -84,6 +84,10 @@ or from source
     git clone https://github.com/nasa/podaacpy.git && cd podaacpy
     python setup.py install
 
+Quickstart
+----------
+Check out the **examples** directory for our Jupyter notebook examples.
+
 Tests
 -----
 

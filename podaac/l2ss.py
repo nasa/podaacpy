@@ -61,24 +61,24 @@ class L2SS:
         '''
         try:
             url = self.URL + 'dataset/search?'
-            if(dataset_id):
+            if dataset_id:
                 url = url + 'datasetId=' + dataset_id
-            if(variable):
+            if variable:
                 for var in variable:
                     url = url + '&variable=' + var
-            if(sensor):
+            if sensor:
                 for item in sensor:
                     url = url + '&sensor=' + item
-            if(provider):
+            if provider:
                 for item in provider:
                     url = url + '&provider=' + item
-            if(start_time):
+            if start_time:
                 url = url + '&startTime=' + start_time
-            if(end_time):
+            if end_time:
                 url = url + '&endTime=' + end_time
-            if(start_index):
+            if start_index:
                 url = url + '&startIndex=' + start_index
-            if(items_per_page):
+            if items_per_page:
                 url = url + '&itemsPerPage=' + items_per_page
 
             datasets = requests.get(url)
@@ -152,21 +152,21 @@ class L2SS:
         '''
         try:
             url = self.URL + 'granule/search?'
-            if(dataset_id):
+            if dataset_id:
                 url = url + 'datasetId=' + dataset_id
-            if(bbox):
+            if bbox:
                 url = url + '&bbox=' + bbox
-            if(start_time):
+            if start_time:
                 url = url + '&startTime=' + start_time
-            if(end_time):
+            if end_time:
                 url = url + '&endTime=' + end_time
-            if(start_index):
+            if start_index:
                 url = url + '&startIndex=' + start_index
-            if(items_per_page):
+            if items_per_page:
                 url = url + '&itemsPerPage=' + items_per_page
-            if(name):
+            if name:
                 url = url + '&name=' + name
-            if(sort):
+            if sort:
                 url = url + '&sort=' + sort
 
             granules = requests.get(url)
@@ -207,7 +207,7 @@ class L2SS:
             url = self.URL + 'granule/availability?'
             url = url + 'datasetId=' + dataset_id + '&startTime=' + \
                 start_time + '&endTime=' + end_time + '&gap=' + gap
-            if(bbox):
+            if bbox:
                 url = url + '&bbox=' + bbox
 
             granule_availability = requests.get(url)
@@ -245,7 +245,7 @@ class L2SS:
         try:
             url = self.URL + 'preview/' + dataset_id + '/' + year + \
                 '/' + day + '/' + granule + '/' + variable + '.png'
-            if(path):
+            if path:
                 path = path + '/' + dataset_id + '.png'
             else:
                 path = os.path.join(os.path.dirname(
@@ -308,17 +308,17 @@ class L2SS:
         connection.close()
 
         flag = 0
-        while(flag == 0):
+        while flag == 0:
             url = url = self.URL + "subset/status?token=" + token
             subset_response = requests.get(url).text
             subset_response_json = json.loads(subset_response)
             status = subset_response_json['status']
-            if (status == "done"):
+            if status == "done":
                 flag = 1
-            if (status == "error"):
+            if status == "error":
                 raise Exception(
                     "Unexpected error occured for the subset job you have requested")
-            if (status == 'partial error'):
+            if status == "partial error":
                 raise Exception(
                     "The job was done but with some errors, please submit the job again")
             time.sleep(1)
@@ -357,7 +357,7 @@ class L2SS:
             response = requests.get(url)
             response_json = json.loads(response.text)
             status = response_json['status']
-            if(status == 'unknown'):
+            if status == "unknown":
                 raise Exception("Invalid Token : Please check your token")
 
         except Exception:
