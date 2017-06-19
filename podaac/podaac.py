@@ -525,8 +525,7 @@ class Podaac:
             if status == "done":
                 flag = 1
             if status == "error":
-                raise Exception(
-                    "Unexpected error occured for the subset job you have requested. You may wish to post your issue to the PO.DAAC forum https://podaac.jpl.nasa.gov/forum/")
+                raise Exception("Unexpected error during subset job, post your issue to the PO.DAAC forum https://podaac.jpl.nasa.gov/forum/")
             time.sleep(1)
 
         download_url = subset_response_json['resultURLs'][0]
@@ -586,7 +585,7 @@ class Podaac:
                 needs to be downloaded.
         :type format: :mod:`string`
 
-        :returns: 
+        :returns: string representation of granule name.
         '''
         try:
             start_index = '1'
