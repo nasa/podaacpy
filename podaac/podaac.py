@@ -26,7 +26,9 @@ import ntpath
 
 URL = 'https://podaac.jpl.nasa.gov/ws/'
 IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
-
+HEADERS = {
+    'User-Agent': 'Podaacpy Python Library'
+}
 
 class Podaac:
 
@@ -63,7 +65,7 @@ class Podaac:
                 url = url + '&shortName=' + short_name
 
             url = url + '&format=' + format
-            metadata = requests.get(url)
+            metadata = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if metadata.status_code in status_codes:
                 metadata.raise_for_status()
@@ -191,7 +193,7 @@ class Podaac:
                 url = url + '&sortBy=' + sort_by
             if bbox:
                 url = url + '&bbox=' + bbox
-            datasets = requests.get(url)
+            datasets = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if datasets.status_code in status_codes:
                 datasets.raise_for_status()
@@ -215,7 +217,7 @@ class Podaac:
 
         try:
             url = self.URL + 'dataset/variables/?datasetId=' + dataset_id
-            variables = requests.get(url)
+            variables = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if variables.status_code in status_codes:
                 variables.raise_for_status()
@@ -261,7 +263,7 @@ class Podaac:
                 url = url + '&granuleName=' + granule_name
 
             url = url + '&format=' + format
-            granule_md = requests.get(url)
+            granule_md = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granule_md.status_code in status_codes:
                 granule_md.raise_for_status()
@@ -308,7 +310,7 @@ class Podaac:
 
             url = url + '&itemsPerPage=' + \
                 str(items_per_page) + '&format=' + format
-            granule_md = requests.get(url)
+            granule_md = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granule_md.status_code in status_codes:
                 granule_md.raise_for_status()
@@ -400,7 +402,7 @@ class Podaac:
 
             url = url + '&sortBy=' + sort_by + \
                 '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
-            granules = requests.get(url)
+            granules = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granules.status_code in status_codes:
                 granules.raise_for_status()
@@ -519,7 +521,7 @@ class Podaac:
         flag = 0
         while flag == 0:
             url = url = self.URL + "subset/status?token=" + token
-            subset_response = requests.get(url).text
+            subset_response = requests.get(url, headers=HEADERS).text
             subset_response_json = json.loads(subset_response)
             status = subset_response_json['status']
             if status == "done":
@@ -563,7 +565,7 @@ class Podaac:
 
         '''
         url = self.URL + "subset/status?token=" + token
-        subset_data = requests.get(url).text
+        subset_data = requests.get(url, headers=HEADERS).text
         subset_data_json = json.loads(subset_data)
         status = subset_data_json['status']
 
