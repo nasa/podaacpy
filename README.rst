@@ -1,7 +1,7 @@
 podaacpy
 ========
 
-| |license| |PyPI| |Python3| |Python2| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Anaconda-Server Version| |Anaconda-Server Downloads|
+| |license| |PyPI| |pyversion| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Anaconda-Server Version| |Anaconda-Server Downloads|
 
 |image7|
 
