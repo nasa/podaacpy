@@ -22,7 +22,7 @@ What does podaacpy offer?
 -------------------------
 
 The library provides a Python toolkit for interacting with all
-[PO.DAAC Web Services v3.2.2 API's](http://podaac.jpl.nasa.gov/ws), namely
+[PO.DAAC Web Services v3.2.2 APIs](http://podaac.jpl.nasa.gov/ws), namely
 
 -  `PO.DAAC Web Services <https://podaac.jpl.nasa.gov/ws/>`__: services
    include
@@ -61,6 +61,13 @@ The library provides a Python toolkit for interacting with all
 -  | `Level 2 Subsetting 
       <https://podaac-tools.jpl.nasa.gov/hitide/>`__: allows users to subset 
       and download popular PO.DAAC level 2 (swath) datasets.
+
+Additionally, Podaacpy provides the following ocean-related data services 
+
+- `NASA OceanColor Web <https://oceancolor.gsfc.nasa.gov>`_:
+
+- `File Search <https://oceandata.sci.gsfc.nasa.gov/api/file_search>`_ -  locate publically available files within the NASA Ocean Data Processing System (ODPS)
+- `Bulk data downloads via HTTP <https://oceancolor.gsfc.nasa.gov/forum/oceancolor/topic_show.pl?pid=12520>`_ - mimic FTP bulk data downloads using the `HTTP-based data distribution server <https://oceandata.sci.gsfc.nasa.gov>`_.
 
 Installation
 ------------
@@ -153,10 +160,8 @@ Copyright and Export Classification
 
 .. |license| image:: https://img.shields.io/github/license/nasa/podaacpy.svg?maxAge=2592000
    :target: http://www.apache.org/licenses/LICENSE-2.0
-.. |Python3| image:: https://img.shields.io/badge/python-3-blue.svg
-   :target: https://www.python.org/downloads/
-.. |Python2| image:: https://img.shields.io/badge/python-2-blue.svg
-   :target: https://www.python.org/downloads/
+.. |pyversion| image:: https://img.shields.io/pypi/pyversions/podaacpy.svg
+   :target: https://pypi.python.org/pypi/podaacpy
 .. |PyPI| image:: https://img.shields.io/pypi/v/podaacpy.svg?maxAge=2592000?style=plastic
    :target: https://pypi.python.org/pypi/podaacpy
 .. |documentation| image:: https://readthedocs.org/projects/podaacpy/badge/?version=latest
