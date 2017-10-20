@@ -43,3 +43,9 @@ The library provides a Python toolkit for interacting with all of PO.DAACs API's
  * `Subset Status <http://podaac.jpl.nasa.gov/ws/subset/status/index.html>`_ - Subset Granule Status service allows users to check the status of submitted subset job
 
 * `Metadata Compliance Checker <http://podaac-uat.jpl.nasa.gov/mcc>`_: an online tool and web service designed to check and validate the contents of netCDF and HDF granules for the Climate and Forecast (CF) and Attribute Convention for Dataset Discovery (ACDD) metadata conventions.
+
+Additionally, Podaacpy provides the following ocean-related data services 
+* `NASA OceanColor Web <https://oceancolor.gsfc.nasa.gov>`_:
+
+ * `File Search <https://oceandata.sci.gsfc.nasa.gov/api/file_search>`_ -  locate publically available files within the NASA Ocean Data Processing System (ODPS)
+ * `Bulk data downloads via HTTP <https://oceancolor.gsfc.nasa.gov/forum/oceancolor/topic_show.pl?pid=12520>`_ - mimic FTP bulk data downloads using the `HTTP-based data distribution server <https://oceandata.sci.gsfc.nasa.gov>`_.
