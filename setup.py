@@ -42,7 +42,7 @@ _name = 'podaacpy'
 _namespaces = []
 _test_suite = 'podaac.tests'
 _url = 'https://github.com/nasa/podaacpy'
-_version = '1.9.0'
+_version = '2.0.0'
 _zip_safe = False
 
 # Setup Metadata
