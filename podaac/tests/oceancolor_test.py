@@ -34,8 +34,12 @@ class TestOceanColor(unittest.TestCase):
 
         assert data != None
         print(data)
-        assert type(data) is str
+        assert type(data) is type(u'')
         assert len(data) != 0
+
+        assert_raises(Exception, self.oceancolor.file_search, sensor='random')
+        assert_raises(Exception, self.oceancolor.file_search, sdate='1996-11-01', edate='1997-01-01',
+                dtype='L3b', add_url='1', results_as_file='1', search='*DAY_CHL*')
 
     # test case for the function get_file(()
     def test_get_file(self):
