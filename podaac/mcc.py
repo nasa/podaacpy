@@ -23,7 +23,7 @@ class MCC:
 
     def check_remote_file(self, checkers, url_upload, response='json'):
         '''GET a remote file e.g. from an OPeNDAP URL and compliance \
-                check it against the endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check.
+                check it against the endpoint at https://podaac-uat.jpl.nasa.gov/mcc/check.
 
         :param checkers: Must specify at least one test. Multiple tests are \
                 delimited by commas. Possible values include 'ACDD-x.x', \
@@ -59,7 +59,7 @@ class MCC:
 
     def check_local_file(self, acdd_version, gds2_parameters, file_upload, response='json'):
         '''POST a local file to the metadata compliance checker \
-                endpoint at http://podaac-uat.jpl.nasa.gov/mcc/check
+                endpoint at https://podaac-uat.jpl.nasa.gov/mcc/check
 
         :param acdd_version: Must be present and and set to either 1.1 or 1.3. \
                 'acdd' tag must also be present and must be set to 'on'.

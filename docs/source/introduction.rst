@@ -42,7 +42,7 @@ The library provides a Python toolkit for interacting with all of PO.DAACs API's
  * `Granule Subset <https://podaac.jpl.nasa.gov/ws/subset/granule/index.html>`_ - Subset Granule service allows users to submit subset jobs
  * `Subset Status <https://podaac.jpl.nasa.gov/ws/subset/status/index.html>`_ - Subset Granule Status service allows users to check the status of submitted subset job
 
-* `Metadata Compliance Checker <http://podaac-uat.jpl.nasa.gov/mcc>`_: an online tool and web service designed to check and validate the contents of netCDF and HDF granules for the Climate and Forecast (CF) and Attribute Convention for Dataset Discovery (ACDD) metadata conventions.
+* `Metadata Compliance Checker <https://podaac-uat.jpl.nasa.gov/mcc>`_: an online tool and web service designed to check and validate the contents of netCDF and HDF granules for the Climate and Forecast (CF) and Attribute Convention for Dataset Discovery (ACDD) metadata conventions.
 
 Additionally, Podaacpy provides the following ocean-related data services 
 * `NASA OceanColor Web <https://oceancolor.gsfc.nasa.gov>`_:
