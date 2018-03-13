@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import requests
 from future.moves.urllib.parse import urlencode
 from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.http.client import HTTPSConnection
 import gzip
-import os
-import zipfile
 import json
+import ntpath
+import os
+from podaac import podaac_utils
+import requests
 import time
 import xml.etree.ElementTree as ET
-import ntpath
+import zipfile
 
 URL = 'https://podaac.jpl.nasa.gov/ws/'
 IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
