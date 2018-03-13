@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from bs4 import BeautifulSoup
+sys.path.insert(0, '../podaac')
 from podaac import podaac as pd
 import requests
 import xml.etree.ElementTree as ET
