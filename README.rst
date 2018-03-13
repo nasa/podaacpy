@@ -6,7 +6,7 @@ podaacpy
 |image7|
 
 A python utility library for interacting with NASA JPL's
-`PO.DAAC <http://podaac.jpl.nasa.gov>`__
+`PO.DAAC <https://podaac.jpl.nasa.gov>`__
 
 What is PO.DAAC?
 ----------------
@@ -22,36 +22,36 @@ What does podaacpy offer?
 -------------------------
 
 The library provides a Python toolkit for interacting with all
-[PO.DAAC Web Services v3.2.2 APIs](http://podaac.jpl.nasa.gov/ws), namely
+[PO.DAAC Web Services v3.2.2 APIs](https://podaac.jpl.nasa.gov/ws), namely
 
 -  `PO.DAAC Web Services <https://podaac.jpl.nasa.gov/ws/>`__: services
    include
 -  `Dataset
-   Metadata <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`__
+   Metadata <https://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`__
    - retrieves the metadata of a dataset
 -  `Granule
-   Metadata <http://podaac.jpl.nasa.gov/ws/metadata/granule/index.html>`__
+   Metadata <https://podaac.jpl.nasa.gov/ws/metadata/granule/index.html>`__
    - retrieves the metadata of a granule
 -  `Search
-   Dataset <http://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`__
+   Dataset <https://podaac.jpl.nasa.gov/ws/search/dataset/index.html>`__
    - searches PO.DAAC's dataset catalog, over Level 2, Level 3, and
    Level 4 datasets
 -  `Search
-   Granule <http://podaac.jpl.nasa.gov/ws/search/granule/index.html>`__
+   Granule <https://podaac.jpl.nasa.gov/ws/search/granule/index.html>`__
    - does granule searching on PO.DAAC level 2 swath datasets
    (individual orbits of a satellite), and level 3 & 4 gridded datasets
    (time averaged to span the globe)
 -  `Image
-   Granule <http://podaac.jpl.nasa.gov/ws/image/granule/index.html>`__ -
+   Granule <https://podaac.jpl.nasa.gov/ws/image/granule/index.html>`__ -
    renders granules in the PO.DAAC's catalog to images such as jpeg
    and/or png
 -  `Extract
-   Granule <http://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`__
+   Granule <https://podaac.jpl.nasa.gov/ws/extract/granule/index.html>`__
    - subsets a granule in PO.DAAC catalog and produces either netcdf3 or
    hdf4 files
 
 -  | `Metadata Compliance
-     Checker <http://podaac-uat.jpl.nasa.gov/mcc>`__: an online tool and
+     Checker <https://podaac-uat.jpl.nasa.gov/mcc>`__: an online tool and
      web
    | service designed to check and validate the contents of netCDF and
      HDF granules for the
