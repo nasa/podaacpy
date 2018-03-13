@@ -19,7 +19,6 @@ import gzip
 import json
 import ntpath
 import os
-from podaac import podaac_utils
 import requests
 import time
 import xml.etree.ElementTree as ET
