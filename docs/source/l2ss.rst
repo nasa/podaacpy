@@ -13,8 +13,8 @@
    # See the License for the specific language governing permissions and
    # limitations under the License.
    
-podaacpy Level 2 Subsessting (L2SS) API
-***************************************
+podaacpy Level 2 Subsetting (L2SS) API
+**************************************
 
 .. autoclass:: l2ss.L2SS
     :members:
