@@ -573,8 +573,8 @@ class Podaac:
 
     def extract_l4_granule(self, dataset_id='', path=''):
         '''This is an additional function that we have provided apart \
-        from the availalble webservices. The extract_l4_granule helps \
-        retrieve the level 4 datasets from openDap server directly, \
+        from the available webservices. The extract_l4_granule helps \
+        retrieve the level 4 datasets from OPeNDAP server directly, \
         accompanied by the search granule for retrieving granule name \
         related to the specific dataset_id.
 
