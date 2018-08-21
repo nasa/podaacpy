@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from bs4 import BeautifulSoup
-from . import podaac as pd
+import podaac as pd
 import requests
 import xml.etree.ElementTree as ET
 

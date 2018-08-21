@@ -13,3 +13,7 @@ You can run the notebooks as follows
 Quickstart
 ----------
 Once the Jupyter server is running on http://localhost:8888/ you can access the quickstart notebook **podaacpy_getting_started_tutorial.ipynb**.
+
+Other Examples
+--------------
+Over time we will add more examples involving Podaacpy. If you have some examples you would like to share, please open a `pull request <https://github.com/nasa/podaacpy/pulls>`_.
