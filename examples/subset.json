@@ -1,0 +1,12 @@
+{
+    "email":"lewis.j.mcgibbney@jpl.nasa.gov",
+    "query":[
+        {
+            "datasetId":"PODAAC-ASOP2-12C01",
+            "granuleIds":["ascat_20170601_035400_metopa_55087_eps_o_coa_2401_ovw.l2.nc"],
+            "bbox":"-105,5,-10,50",
+            "variables":["wvc_quality_flag","wind_speed","wind_dir","lat","lon","time"],
+            "compact":false
+        }
+    ]
+}
