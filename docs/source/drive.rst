@@ -13,8 +13,8 @@
    # See the License for the specific language governing permissions and
    # limitations under the License.
    
-podaacpy utilities API
-**********************
+podaacpy drive API
+******************
 
-.. autoclass:: podaac_utils.PodaacUtils
+.. autoclass:: drive.Drive
     :members:

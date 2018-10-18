@@ -62,6 +62,10 @@ The library provides a Python toolkit for interacting with all
       <https://podaac-tools.jpl.nasa.gov/hitide/>`__: allows users to subset 
       and download popular PO.DAAC level 2 (swath) datasets.
 
+-  | `PO.DAAC Drive <https://podaac-tools.jpl.nasa.gov/drive/>`__: an HTTP based 
+      data access service. PO.DAAC Drive replicates much of the functionality 
+      of FTP while addressing many of its issues.
+
 Additionally, Podaacpy provides the following ocean-related data services 
 
 - `NASA OceanColor Web <https://oceancolor.gsfc.nasa.gov>`_:
