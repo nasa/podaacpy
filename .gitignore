@@ -71,3 +71,6 @@ doc.txt
 .project
 .pydevproject
 .settings/
+
+# Example files
+examples/*.nc
