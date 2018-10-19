@@ -87,10 +87,12 @@ class Drive:
             else:
                 compressed_path = path + '/' + compressed_granule
             r = requests.get(granule, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
-            if r.status_code == 200:
-                with open(compressed_path, 'wb') as f:
-                    for chunk in r:
-                        f.write(chunk)
+            if r.status_code != 200:
+            	raise Error("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
+            with open(compressed_path, 'wb') as f:
+                for chunk in r:
+                    f.write(chunk)
+
             if compressed_granule.endswith('.gz'):
                 compressed_granule = gzip.open(compressed_path, 'rb')
                 uncompressed_granule = open(path + '/' + granule_name, 'wb')
