@@ -17,7 +17,6 @@ from . import podaac as pd
 import requests
 import xml.etree.ElementTree as ET
 
-
 class PodaacUtils:
 
     def __init__(self):
@@ -201,3 +200,19 @@ class PodaacUtils:
             l4_dataset_short_names.append(l4_dataset_short_name)
 
         return l4_dataset_short_names
+
+    def mine_granules_from_granule_search(self, granule_search_response=''):
+        '''Convenience function which extracts the granule names for \
+           a given granule search obtained using podaac.granule_search(). \
+           The response of this function is an array of strings denoting the \
+           granule names for the granule search.
+
+           :param granule_search_response: the output response of a podaac.granule_search()
+            :type path: :mod:`string`
+
+            :returns: prints an array of granule names.
+        '''
+        search_str = '<title>'
+        granule_list = [ str(i) for i in granule_search_response.strip().split() if search_str in i and 'PO.DAAC' not in i ]
+        strp_granule_list = [ i.replace('<title>','').replace('</title>','') for i in granule_list ]
+        return strp_granule_list
