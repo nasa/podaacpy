@@ -126,7 +126,8 @@ class PodaacUtils:
             dataset_short_names.append(name)
 
         # dataset_short_names_level1 = []
-        dataset_short_names_level2 = self.list_available_granule_search_level2_dataset_short_names()
+        dataset_short_names_level2 = \
+            self.list_available_granule_search_level2_dataset_short_names()
         dataset_short_names_level1 = list(
             set(dataset_short_names) - set(dataset_short_names_level2))
 
@@ -217,6 +218,9 @@ class PodaacUtils:
 
         '''
         search_str = '<title>'
-        granule_list = [ str(i) for i in granule_search_response.strip().split() if search_str in i and 'PO.DAAC' not in i ]
-        strp_granule_list = [ i.replace('<title>','').replace('</title>','') for i in granule_list ]
+        granule_list = \
+            [ str(i) for i in granule_search_response.strip().split() 
+                if search_str in i and 'PO.DAAC' not in i ]
+        strp_granule_list = \
+            [ i.replace('<title>','').replace('</title>','') for i in granule_list ]
         return strp_granule_list
