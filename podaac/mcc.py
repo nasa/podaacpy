@@ -15,7 +15,6 @@
 import os
 import requests
 
-
 class MCC:
 
     def __init__(self):

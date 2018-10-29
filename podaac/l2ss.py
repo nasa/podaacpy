@@ -19,7 +19,6 @@ from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.urllib.parse import urlencode
 from future.moves.http.client import HTTPSConnection
 
-
 class L2SS:
 
     def __init__(self):

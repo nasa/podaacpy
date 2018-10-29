@@ -13,9 +13,12 @@
 # limitations under the License.
 
 from bs4 import BeautifulSoup
-from . import podaac as pd
 import requests
 import xml.etree.ElementTree as ET
+try:
+    from . import podaac as p
+except:
+    import podaac as p
 
 class PodaacUtils:
 
@@ -170,7 +173,7 @@ class PodaacUtils:
         :returns: a comma-seperated list of level4 dataset id's
 
         '''
-        podaac = pd.Podaac()
+        podaac = p.Podaac()
         data = podaac.dataset_search(process_level='4', items_per_page='400')
         root = ET.fromstring(data.encode('utf-8'))
 
@@ -189,7 +192,7 @@ class PodaacUtils:
         :returns: a comma-seperated list of level4 dataset short names.
 
         '''
-        podaac = pd.Podaac()
+        podaac = p.Podaac()
         data = podaac.dataset_search(process_level='4', items_per_page='400')
         l4_dataset_short_names = []
         root = ET.fromstring(data.encode('utf-8'))
@@ -203,14 +206,15 @@ class PodaacUtils:
 
     def mine_granules_from_granule_search(self, granule_search_response=''):
         '''Convenience function which extracts the granule names for \
-           a given granule search obtained using podaac.granule_search(). \
-           The response of this function is an array of strings denoting the \
-           granule names for the granule search.
+                a given granule search obtained using podaac.granule_search(). \
+                The response of this function is an array of strings denoting the \
+                granule names for the granule search.
 
-           :param granule_search_response: the output response of a podaac.granule_search()
-            :type path: :mod:`string`
+        :param granule_search_response: the output response of a podaac.granule_search()
+        :type path: :mod:`string`
 
-            :returns: prints an array of granule names.
+        :returns: prints an array of granule names.
+
         '''
         search_str = '<title>'
         granule_list = [ str(i) for i in granule_search_response.strip().split() if search_str in i and 'PO.DAAC' not in i ]
