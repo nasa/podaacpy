@@ -1,12 +1,14 @@
 podaacpy
 ========
 
-| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Anaconda-Server Version| |Anaconda-Server Downloads|
+| |DOI| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Anaconda-Server Version| |Anaconda-Server Downloads|
 
 |image7|
 
 A python utility library for interacting with NASA JPL's
 `PO.DAAC <https://podaac.jpl.nasa.gov>`__
+
+If you are using Podaacpy in your research, please consider citing the software |DOI|
 
 What is PO.DAAC?
 ----------------
@@ -162,6 +164,8 @@ Copyright and Export Classification
     as may be required before exporting such information to foreign countries or 
     providing access to foreign persons.
 
+.. |DOI| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1751973.svg
+   :target: https://doi.org/10.5281/zenodo.1751973
 .. |license| image:: https://img.shields.io/github/license/nasa/podaacpy.svg?maxAge=2592000
    :target: http://www.apache.org/licenses/LICENSE-2.0
 .. |PyPI| image:: https://img.shields.io/pypi/v/podaacpy.svg?maxAge=2592000?style=plastic
