@@ -39,7 +39,7 @@ More on using Podaac functions later... first lets look at some convenience func
 
 Convenience Functions
 ^^^^^^^^^^^^^^^^^^^^^
-There are a number of convenience functions which aid various types of search. These help decypher the rather cryptic dataset id's, dataset short names, etc. present within PO.DAAC.  These functions accept no parameters. They do however account for the fact that availaility of certain datasets within PO.DAAC is not constant. Additionally some services are only available for certain datasets. The functions encapsulate those underlying variables and always return current, available results which can be interpreted and used within the other functions in this file. 
+There are a number of convenience functions which aid various types of search. These help decypher the rather cryptic dataset id's, dataset short names, etc. present within PO.DAAC.  These functions accept no parameters. They do however account for the fact that availability of certain datasets within PO.DAAC is not constant. Additionally some services are only available for certain datasets. The functions encapsulate those underlying variables and always return current, available results which can be interpreted and used within the other functions in this file. 
 
 First lets define the relevant import ::
   
