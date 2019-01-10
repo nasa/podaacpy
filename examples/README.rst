@@ -1,7 +1,7 @@
 Examples
 ========
 
-You've arrived at our quickstart and examples. All of them are delivered as `Jupyter Notebooks <https://jupyter.org/>`__. This means you need to have Jupyter installed before you start, please check out the `installation documentartion <https://jupyter.org/install.html>`__. 
+You've arrived at our quickstart and examples. All of them are delivered as `Jupyter Notebooks <https://jupyter.org/>`__. This means you need to have Jupyter installed before you start, please check out the `installation documentation <https://jupyter.org/install.html>`__. 
 
 You can run the notebooks as follows 
 
