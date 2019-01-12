@@ -14,11 +14,8 @@
 
 from ..oceancolor import OceanColor
 import os
-import requests
-import xml.etree.ElementTree as ET
 from nose.tools import assert_raises
 import unittest
-from future.moves.urllib.error import HTTPError
 
 
 class TestOceanColor(unittest.TestCase):
