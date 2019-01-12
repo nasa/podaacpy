@@ -34,6 +34,10 @@ class TestOceanColor(unittest.TestCase):
         assert type(data) is type(u'')
         assert len(data) != 0
 
+        # must have a valid sensor AND either 'search' OR 'sub-id'
+        data2 = self.oceancolor.file_search(sensor='octs', sub_id='2218')
+        assert data2 != None
+
         assert_raises(Exception, self.oceancolor.file_search, sensor='random')
         assert_raises(Exception, self.oceancolor.file_search, sdate='1996-11-01', edate='1997-01-01',
                 dtype='L3b', add_url='1', results_as_file='1', search='*DAY_CHL*')
