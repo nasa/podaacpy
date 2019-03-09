@@ -165,7 +165,7 @@ class Podaac:
             url = url + 'itemsPerPage=' + items_per_page + '&pretty=' + \
                 pretty + '&format=' + format + '&full=' + full
 
-            if dataset_id:
+            if keyword:
                 url = url + '&keyword=' + keyword
             if start_time:
                 url = url + '&startTime=' + start_time
