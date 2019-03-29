@@ -66,9 +66,14 @@ class Drive:
 
     def download_granules(self, granule_collection=[], path=''):
         ''' Granule download service downloads a granule collection \
-            from PO.DAAC Drive to the users' local machine at the given path.
+            from PO.DAAC Drive to the users' local machine at the given path. Note, as \
+            of https://github.com/nasa/podaacpy/issues/131 we now maintain the PO.DAAC \
+            Drive directory structure. This is to say, if the Drive URL was \
+            https://podaac-tools.jpl.nasa.gov/drive/files/allData/ghrsst/data/GDS2/L2P/AVHRR19_L/NAVO/v1/2019/088/20190329001403-NAVO-L2P_GHRSST-SST1m-AVHRR19_L-v02.0-fv01.0.nc \
+            then a directory structure would be created as follows \
+            allData/ghrsst/data/GDS2/L2P/AVHRR19_L/NAVO/v1/2019/088/20190329001403-NAVO-L2P_GHRSST-SST1m-AVHRR19_L-v02.0-fv01.0.nc
 
-            :param granule_collection: a populated collection of PO.DAAC Drive granules. \
+            :param granule_collection: a populated collection of PO.DAAC Drive Granule URLs. \
                 These can be obtained by using the drive.mine_drive_urls_from_granule_search() \
                 function which itself merely wraps a podaac.granule_search() request.
             :type granule_collection: :mod:`string`
@@ -76,27 +81,29 @@ class Drive:
             :param path: path to a directory where you want the data to be stored.
             :type path: :mod:`string`
 
-            :returns: a zip file downloaded and extracted in the destination\
+            :returns: a zip file downloaded and extracted in the destination \
                 directory path provided.
         '''
-        for granule in granule_collection:
-            compressed_granule = ntpath.basename(granule)
-            granule_name = os.path.splitext(compressed_granule)[0]
+        for granule_url in granule_collection:
+            directory_structure, granule = os.path.split(granule_url[46:])
+            print(directory_structure +  ":" + granule)
+            granule_name = os.path.splitext(granule)[0]
             if path == '':
-                compressed_path = os.path.join(os.path.dirname(__file__), compressed_granule)
+                granule_path = os.path.join(os.path.dirname(__file__), directory_structure)
             else:
-                compressed_path = path + '/' + compressed_granule
-            r = requests.get(granule, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
+                granule_path = path + '/'  + directory_structure
+            r = requests.get(granule_url, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
             if r.status_code != 200:
-            	raise Error("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
-            with open(compressed_path, 'wb') as f:
+                raise Error("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
+            os.makedirs(granule_path, exist_ok=True)
+            with open(granule_path + "/" + granule, 'wb') as f:
                 for chunk in r:
                     f.write(chunk)
 
-            if compressed_granule.endswith('.gz'):
-                compressed_granule = gzip.open(compressed_path, 'rb')
-                uncompressed_granule = open(path + '/' + granule_name, 'wb')
-                uncompressed_granule.write(compressed_granule.read())
-                compressed_granule.close()
+            if granule.endswith('.gz'):
+                gzip_granule = gzip.open(granule_path + "/" + granule, 'rb')
+                uncompressed_granule = open(granule_path + "/" + granule_name, 'wb')
+                uncompressed_granule.write(gzip_granule.read())
+                gzip_granule.close()
                 uncompressed_granule.close()
-            os.remove(compressed_path)
+                os.remove(granule_path + "/" + granule)
