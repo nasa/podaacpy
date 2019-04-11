@@ -27,7 +27,7 @@ import zipfile
 URL = 'https://podaac.jpl.nasa.gov/ws/'
 IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
 HEADERS = {
-    'User-Agent': 'Podaacpy Python Library'
+    'User-Agent': 'Podaacpy Python Library v2.3.0'
 }
 
 class Podaac:
@@ -205,9 +205,9 @@ class Podaac:
         return datasets.text
 
     def dataset_variables(self, dataset_id):
-        '''Provides list of dataset variables.
+        '''Given a PO.DAAC dataset identifier this function will return list of dataset variables.
 
-        :param dataset_id: dataset persistent ID. dataset_id or short_name \
+        :param dataset_id: dataset persistent ID. dataset_id \
                 is required for this metadata service.
         :type dataset_id: :mod:`string`
 
@@ -215,17 +215,33 @@ class Podaac:
 
         '''
 
+        dataset_url = ""
+        dataset_variables = []
+        dataset = self.granule_search(dataset_id=dataset_id)
+        root = ET.fromstring(dataset.encode('utf-8'))
+        dataset_entry = root.findall("./{http://www.w3.org/2005/Atom}entry")[0]
+        dataset_links = dataset_entry.findall("{http://www.w3.org/2005/Atom}link")
+        for link in dataset_links:
+            if(link.attrib['title'] == "OPeNDAP URL"):
+                dataset_url = link.attrib['href'].replace('html', 'ddx')
+                break
         try:
-            url = self.URL + 'dataset/variables/?datasetId=' + dataset_id
-            variables = requests.get(url, headers=HEADERS)
+            dataset_ddx_response = requests.get(dataset_url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
-            if variables.status_code in status_codes:
-                variables.raise_for_status()
+            if dataset_ddx_response.status_code in status_codes:
+                dataset_ddx_response.raise_for_status()
+        
+            root = ET.fromstring(dataset_ddx_response.text.encode('utf-8'))
+            dataset_vars = root.findall("{http://xml.opendap.org/ns/DAP/3.2#}Array")
+            dataset_vars.extend(root.findall("{http://xml.opendap.org/ns/DAP/3.2#}Grid"))
+            for variable in dataset_vars:
+                dataset_variables.append(variable.attrib['name'])
 
         except requests.exceptions.HTTPError as error:
+            print("It's likely that variable search is not available for your dataset. " +
+                "Please see https://github.com/nasa/podaacpy/issues/128")
             print(error)
             raise
-        dataset_variables = json.loads(variables.text)['variables']
         return dataset_variables
 
     def granule_metadata(self, dataset_id='', short_name='', granule_name='', format='iso'):
