@@ -62,6 +62,8 @@ class Drive:
             href = ftp_link.get('href')
             if 'ftp://podaac-ftp.jpl.nasa.gov/' in href:
                 drive_list.append(href.replace('ftp://podaac-ftp.jpl.nasa.gov', self.URL))
+            elif self.URL in href:
+                drive_list.append(href)
         return drive_list
 
     def download_granules(self, granule_collection=[], path=''):
