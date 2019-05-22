@@ -96,7 +96,7 @@ class Drive:
                 granule_path = path + '/'  + directory_structure
             r = requests.get(granule_url, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
             if r.status_code != 200:
-                raise Error("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
+                raise PermissionError("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
             os.makedirs(granule_path, exist_ok=True)
             with open(granule_path + "/" + granule, 'wb') as f:
                 for chunk in r:
