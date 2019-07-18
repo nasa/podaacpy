@@ -1,7 +1,7 @@
 podaacpy
 ========
 
-| |DOI| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Code Health| |Anaconda-Server Version| |Anaconda-Server Downloads|
+| |DOI| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Anaconda-Server Version| |Anaconda-Server Downloads|
 
 |image7|
 
@@ -178,8 +178,6 @@ Copyright and Export Classification
    :target: https://coveralls.io/github/nasa/podaacpy?branch=master
 .. |Requirements Status| image:: https://requires.io/github/nasa/podaacpy/requirements.svg?branch=master
    :target: https://requires.io/github/nasa/podaacpy/requirements/?branch=master
-.. |Code Health| image:: https://landscape.io/github/nasa/podaacpy/master/landscape.svg?style=plastic
-   :target: https://landscape.io/github/nasa/podaacpy/master
 .. |Anaconda-Server Version| image:: https://anaconda.org/conda-forge/podaacpy/badges/version.svg
    :target: https://anaconda.org/conda-forge/podaacpy
 .. |Anaconda-Server Downloads| image:: https://anaconda.org/conda-forge/podaacpy/badges/downloads.svg
