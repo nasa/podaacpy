@@ -140,7 +140,7 @@ class OceanColor:
                 raise Exception("'file' parameter is required!")
             file = os.path.basename(urlparse(url).path)
             if path == '':
-            	path = os.path.join(os.path.dirname(__file__), file)
+                path = os.path.join(os.path.dirname(__file__), file)
             else:
                 path = path + '/' + file
             urlretrieve(url, path)

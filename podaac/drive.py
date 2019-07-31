@@ -12,11 +12,10 @@
 
 import configparser
 import gzip
-import ntpath
 import os
 import requests
-import shutil
 from requests.auth import HTTPBasicAuth
+
 
 class Drive:
 
@@ -49,10 +48,10 @@ class Drive:
            a given granule search obtained using podaac.granule_search(). \
            The response of this function is an array of strings denoting the \
            PO.DAAC Drive URLs to the granules.
-            
+
            :param granule_search_response: the output response of a podaac.granule_search()
             :type path: :mod:`string`
-            
+
             :returns: prints an array of PO.DAAC Drive URLs.
         '''
         from bs4 import BeautifulSoup
@@ -66,7 +65,7 @@ class Drive:
                 drive_list.append(href)
         return drive_list
 
-    def download_granules(self, granule_collection=[], path=''):
+    def download_granules(self, granule_collection=None, path=''):
         ''' Granule download service downloads a granule collection \
             from PO.DAAC Drive to the users' local machine at the given path. Note, as \
             of https://github.com/nasa/podaacpy/issues/131 we now maintain the PO.DAAC \
@@ -86,6 +85,9 @@ class Drive:
             :returns: a zip file downloaded and extracted in the destination \
                 directory path provided.
         '''
+        if granule_collection is None:
+            granule_collection = []
+
         for granule_url in granule_collection:
             directory_structure, granule = os.path.split(granule_url[46:])
             print(directory_structure +  ":" + granule)

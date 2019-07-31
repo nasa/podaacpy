@@ -19,12 +19,13 @@ from future.moves.urllib.request import urlopen, urlretrieve
 from future.moves.urllib.parse import urlencode
 from future.moves.http.client import HTTPSConnection
 
+
 class L2SS:
 
     def __init__(self):
         self.URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
 
-    def dataset_search(self, dataset_id='', variable=[], sensor=[], provider=[], start_time='', end_time='', start_index='', items_per_page=''):
+    def dataset_search(self, dataset_id='', variable=None, sensor=None, provider=None, start_time='', end_time='', start_index='', items_per_page=''):
         ''' Dataset search service lists available datasets and returns them.
 
             :param dataset_id: Search dataset belong to given PODAAC Dataset persistent ID.
@@ -58,6 +59,16 @@ class L2SS:
 
             :returns: a json response containing the datasets.
         '''
+
+        if variable is None:
+            variable = []
+
+        if sensor is None:
+            sensor = []
+
+        if provider is None:
+            provider = []
+
         try:
             url = self.URL + 'dataset/search?'
             if dataset_id:
