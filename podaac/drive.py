@@ -57,11 +57,9 @@ class Drive:
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(granule_search_response, 'html.parser')
         drive_list = []
-        for ftp_link in soup.find_all('link'):
-            href = ftp_link.get('href')
-            if 'ftp://podaac-ftp.jpl.nasa.gov/' in href:
-                drive_list.append(href.replace('ftp://podaac-ftp.jpl.nasa.gov', self.URL))
-            elif self.URL in href:
+        for drive_link in soup.find_all('link'):
+            href = drive_link.get('href')
+            if self.URL in href:
                 drive_list.append(href)
         return drive_list
 
@@ -106,8 +104,8 @@ class Drive:
 
             if granule.endswith('.gz'):
                 gzip_granule = gzip.open(granule_path + "/" + granule, 'rb')
-                uncompressed_granule = open(granule_path + "/" + granule_name, 'wb')
-                uncompressed_granule.write(gzip_granule.read())
-                gzip_granule.close()
-                uncompressed_granule.close()
-                os.remove(granule_path + "/" + granule)
+                with open(granule_path + "/" + granule_name, 'wb') as uncompressed_granule:
+                    uncompressed_granule.write(gzip_granule.read())
+                    gzip_granule.close()
+                    uncompressed_granule.close()
+                    os.remove(granule_path + "/" + granule)

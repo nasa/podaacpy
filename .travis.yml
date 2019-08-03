@@ -9,14 +9,14 @@
 # BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
 # express or implied. See the License for the specific language
 # governing permissions and limitations under the License.
+dist: xenial   # required for Python >= 3.7
 language: python
 python:
   - "2.7"
   - "3.6"
-  - "3.7-dev"
-  # PyPy versions
-  - "pypy2.7"
-  - "pypy3.5"
+  - "3.7"
+  #- "3.7-dev"  # 3.7 development branch
+  #- "3.8-dev"  # 3.8 development branch
 notifications:
   email: false
 cache:

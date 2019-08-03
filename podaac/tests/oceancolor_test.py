@@ -21,8 +21,8 @@ import unittest
 class TestOceanColor(unittest.TestCase):
 
     @classmethod
-    def setUp(self):
-        self.oceancolor = OceanColor()
+    def setUp(cls):
+        cls.oceancolor = OceanColor()
 
     # test case for the function file_search()
     def test_file_search(self):
@@ -31,7 +31,7 @@ class TestOceanColor(unittest.TestCase):
 
         assert data != None
         print(data)
-        assert type(data) is type(u'')
+        assert isinstance(data, str)
         assert len(data) != 0
 
         # must have a valid sensor AND either 'search' OR 'sub-id'

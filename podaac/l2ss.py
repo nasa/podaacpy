@@ -260,11 +260,12 @@ class L2SS:
             else:
                 path = os.path.join(os.path.dirname(
                     __file__), dataset_id + '.png')
-            image_file = open(path, 'wb')
-            image = urlopen(url)
-            image_file.write(image.read())
+            with open(path, 'wb') as image_file:
+                image = urlopen(url)
+                image_file.write(image.read())
 
-        except Exception:
+        except Exception as e:
+            print(e)
             raise
 
         return image
@@ -370,5 +371,6 @@ class L2SS:
             if status == "unknown":
                 raise Exception("Invalid Token : Please check your token")
 
-        except Exception:
+        except Exception as e:
+            print(e)
             raise

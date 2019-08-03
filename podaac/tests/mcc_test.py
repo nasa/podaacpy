@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 from ..mcc import MCC
 import os
 import requests
 import json
 from nose.tools import assert_raises
 import unittest
-
 
 class TestMCC(unittest.TestCase):
 
@@ -37,13 +35,34 @@ class TestMCC(unittest.TestCase):
         assert_raises(requests.exceptions.HTTPError, self.mcc.check_remote_file,
                       checkers='CF', url_upload='abc.xyz.com')
 
-    def test_check_local_file(self):
+    #Tests mcc.check_local_file with the default JSON response format
+    def test_check_local_file_json_response(self):
         file_upload = "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
         path = os.path.join(os.path.dirname(__file__), file_upload)
-        data = self.mcc.check_local_file(1.1, 'L2P', path)
+        data = self.mcc.check_local_file(1.1, 'L2P', path, response='json')
         data_json = json.loads(data)
 
         assert data != None
         assert data_json["model"] == "NETCDF3_CLASSIC"
         assert data_json["fn"] == file_upload
         assert_raises(Exception, self.mcc.check_local_file, 1.1, 'L2P', " ")
+
+    #Tests mcc.check_local_file with the html response format
+    def test_check_local_file_html_response(self):
+        file_upload = "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
+        path = os.path.join(os.path.dirname(__file__), file_upload)
+        data = self.mcc.check_local_file(1.1, 'L2P', path, response='html')
+
+        self.assertTrue(data.strip().startswith('<!DOCTYPE html>'))
+        assert_raises(Exception, self.mcc.check_local_file, 1.1, 'L2P', " ")
+
+    #Tests mcc.check_local_file with the pdf response format
+    def test_check_local_file_pdf_response(self):
+        file_upload = "ascat_20130719_230600_metopa_35024_eps_o_250_2200_ovw.l2_subsetted_.nc"
+        path = os.path.join(os.path.dirname(__file__), file_upload)
+        data = self.mcc.check_local_file(1.1, 'L2P', path, response='pdf')
+
+        assert data != None
+        self.assertTrue(data.strip().startswith('%PDF-1.4'))
+        assert_raises(Exception, self.mcc.check_local_file, 1.1, 'L2P', " ")
+

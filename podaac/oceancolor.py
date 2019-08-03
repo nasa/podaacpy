@@ -147,5 +147,6 @@ class OceanColor:
             print("Downloaded '%s' to '%s'" % (file, path))
             return file
 
-        except Exception:
+        except Exception as e:
+            print(e)
             raise
