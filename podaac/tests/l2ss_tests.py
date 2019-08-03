@@ -22,8 +22,8 @@ from nose.tools import assert_raises
 class TestL2SS(unittest.TestCase):
 
     @classmethod
-    def setUp(self):
-        self.l2ss = L2SS()
+    def setUp(cls):
+        cls.l2ss = L2SS()
 
     # test case for the fucntion dataset_search()
     def test_dataset_search(self):

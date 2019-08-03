@@ -21,7 +21,7 @@ import ntpath
 import os
 import requests
 import time
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 import zipfile
 
 URL = 'https://podaac.jpl.nasa.gov/ws/'
@@ -36,7 +36,7 @@ class Podaac:
     def __init__(self):
         self.URL = 'https://podaac.jpl.nasa.gov/ws/'
 
-    def dataset_metadata(self, dataset_id='', short_name='', format='iso'):
+    def dataset_metadata(self, dataset_id='', short_name='', _format='iso'):
         '''Dataset metadata service retrieves the metadata of a \
                 dataset on PO.DAACs dataset catalog using the following \
                 parameters: dataset_id, short_name, and format.
@@ -49,8 +49,8 @@ class Podaac:
                 is required for this metadata service.
         :type short_name: :mod:`string`
 
-        :param format: metadata format. Default format is iso.
-        :type format: :mod:`string`
+        :param _format: metadata format. Default format is iso.
+        :type _format: :mod:`string`
 
         :returns: an xml response based on the requested 'format'. Options \
         are 'iso' and 'gcmd'.
@@ -65,7 +65,7 @@ class Podaac:
             if short_name:
                 url = url + '&shortName=' + short_name
 
-            url = url + '&format=' + format
+            url = url + '&format=' + _format
             metadata = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if metadata.status_code in status_codes:
@@ -79,7 +79,7 @@ class Podaac:
 
     def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='',
                        instrument='', satellite='', file_format='', status='', process_level='', sort_by='',
-                       bbox='', items_per_page='7', pretty='True', format='atom', full='False'):
+                       bbox='', items_per_page='7', pretty='True', _format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
                 dataset_id, short_name, start_time, end_time, bbox, and others.
@@ -136,9 +136,9 @@ class Podaac:
                 If pretty is not specified, pretty is set to true.
         :type pretty: :mod:`boolean`
 
-        :param format: response format. If format is not specified, \
+        :param _format: response format. If format is not specified, \
                 format is set to atom. Possible values: atom, html.
-        :type format: :mod:`string`
+        :type _format: :mod:`string`
 
         :param sort_by: determines ordering of response. If sort_by \
                 is not specified, sort order is by score (most relevant \
@@ -164,7 +164,7 @@ class Podaac:
         try:
             url = self.URL + 'search/dataset/?'
             url = url + 'itemsPerPage=' + items_per_page + '&pretty=' + \
-                pretty + '&format=' + format + '&full=' + full
+                pretty + '&format=' + _format + '&full=' + full
 
             if keyword:
                 url = url + '&keyword=' + keyword
@@ -245,7 +245,7 @@ class Podaac:
             raise
         return dataset_variables
 
-    def granule_metadata(self, dataset_id='', short_name='', granule_name='', format='iso'):
+    def granule_metadata(self, dataset_id='', short_name='', granule_name='', _format='iso'):
         '''Granule metadata service retrieves the metadata of a granule \
                 on PO.DAACs catalog in ISO-19115.
 
@@ -261,8 +261,8 @@ class Podaac:
                 for this metadata service.
         :type granule_name: :mod:`string`
 
-        :param format: metadata format. Default format is iso.
-        :type format: :mod:`string`
+        :param _format: metadata format. Default format is iso.
+        :type _format: :mod:`string`
 
         :returns: an xml response based on the requested 'format'.
 
@@ -279,7 +279,7 @@ class Podaac:
             if granule_name:
                 url = url + '&granuleName=' + granule_name
 
-            url = url + '&format=' + format
+            url = url + '&format=' + _format
             granule_md = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granule_md.status_code in status_codes:
@@ -291,7 +291,7 @@ class Podaac:
 
         return granule_md.text
 
-    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', format='datacasting', items_per_page=7):
+    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', _format='datacasting', items_per_page=7):
         '''Granule metadata service retrieves metadata for a list \
                 of granules archived within the last 24 hours in Datacasting \
                 format.
@@ -304,8 +304,8 @@ class Podaac:
                 is required for this metadata service.
         :type short_name: :mod:`string`
 
-        :param format: metadata format. Must set to 'datacasting'.
-        :type format: :mod:`string`
+        :param _format: metadata format. Must set to 'datacasting'.
+        :type _format: :mod:`string`
 
         :param items_per_page: number of results per page. Default value is 7. \
                 The value range is from 0 to 5000.
@@ -326,7 +326,7 @@ class Podaac:
                 url = url + '&shortName=' + short_name
 
             url = url + '&itemsPerPage=' + \
-                str(items_per_page) + '&format=' + format
+                str(items_per_page) + '&format=' + _format
             granule_md = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granule_md.status_code in status_codes:
@@ -339,7 +339,7 @@ class Podaac:
         return granule_md.text
 
     def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc',
-                       items_per_page='7', format='atom', pretty='True'):
+                       items_per_page='7', _format='atom', pretty='True'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -388,9 +388,9 @@ class Podaac:
                 values: timeAsc, timeDesc.
         :type sort_by: :mod:`string`
 
-        :param format: response format. If format is not specified, \
+        :param _format: response format. If format is not specified, \
                 format is set to atom. Possible values: atom, html.
-        :type format: :mod:`string`
+        :type _format: :mod:`string`
 
         :param pretty: "true" to enable pretty output for xml. \
                 If pretty is not specified, pretty is set to true. Possible \
@@ -418,7 +418,7 @@ class Podaac:
                 url = url + '&startIndex=' + start_index
 
             url = url + '&sortBy=' + sort_by + \
-                '&itemsPerPage=' + items_per_page + '&format=' + format + '&pretty=' + pretty
+                '&itemsPerPage=' + items_per_page + '&format=' + _format + '&pretty=' + pretty
             granules = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granules.status_code in status_codes:
@@ -490,10 +490,11 @@ class Podaac:
                     __file__), dataset_id + '.png')
             else:
                 path = path + '/' + dataset_id + '.png'
-            image = open(path, 'wb')
-            image.write(urlopen(url).read())
+            with open(path, 'wb') as image:
+                image.write(urlopen(url).read())
 
-        except Exception:
+        except Exception as e:
+            print(e)
             raise
 
         return image
@@ -621,11 +622,12 @@ class Podaac:
             urlretrieve(url, compressed_path)
             if compressed_granule.endswith('.gz'):
                 compressed_granule = gzip.open(compressed_path, 'rb')
-                uncompressed_granule = open(path + '/' + granule_name, 'wb')
-                uncompressed_granule.write(compressed_granule.read())
-                compressed_granule.close()
-                uncompressed_granule.close()
-        except Exception:
+                with open(path + '/' + granule_name, 'wb') as uncompressed_granule:
+                    uncompressed_granule.write(compressed_granule.read())
+                    compressed_granule.close()
+                    uncompressed_granule.close()
+        except Exception as e:
+            print(e)
             raise
 
         return granule_name

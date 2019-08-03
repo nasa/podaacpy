@@ -106,8 +106,8 @@ class Drive:
 
             if granule.endswith('.gz'):
                 gzip_granule = gzip.open(granule_path + "/" + granule, 'rb')
-                uncompressed_granule = open(granule_path + "/" + granule_name, 'wb')
-                uncompressed_granule.write(gzip_granule.read())
-                gzip_granule.close()
-                uncompressed_granule.close()
-                os.remove(granule_path + "/" + granule)
+                with open(granule_path + "/" + granule_name, 'wb') as uncompressed_granule:
+                    uncompressed_granule.write(gzip_granule.read())
+                    gzip_granule.close()
+                    uncompressed_granule.close()
+                    os.remove(granule_path + "/" + granule)

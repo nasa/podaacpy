@@ -16,7 +16,7 @@ from ..podaac import Podaac
 from ..podaac_utils import PodaacUtils
 import os
 import requests
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 from nose.tools import assert_raises
 import unittest
 from future.moves.urllib.error import HTTPError
@@ -25,9 +25,9 @@ from future.moves.urllib.error import HTTPError
 class TestPodaac(unittest.TestCase):
 
     @classmethod
-    def setUp(self):
-        self.podaac = Podaac()
-        self.podaac_utils = PodaacUtils()
+    def setUp(cls):
+        cls.podaac = Podaac()
+        cls.podaac_utils = PodaacUtils()
 
     # test case for the function dataset_metadata()
     def test_dataset_metadata(self):
@@ -59,36 +59,34 @@ class TestPodaac(unittest.TestCase):
         assert granule_md != None
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError,
-                      self.podaac.granule_metadata, dataset_id='PODAAC', format='is')
+                      self.podaac.granule_metadata, dataset_id='PODAAC', _format='is')
         assert_raises(Exception,
-                      self.podaac.granule_metadata, format='is')
+                      self.podaac.granule_metadata, _format='is')
 
     # test case for the function load_last24hours_datacasting_granule_md()
     def test_load_last24hours_datacasting_granule_md(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         dataset_short_name = 'ASCATA-L2-25km'
-        format = 'datacasting'
+        _format = 'datacasting'
         items_per_page = 10
         granule_md = self.podaac.load_last24hours_datacasting_granule_md(
-            dataset_id, dataset_short_name, format, items_per_page)
+            dataset_id, dataset_short_name, _format, items_per_page)
         root = ET.fromstring(granule_md.encode('utf-8'))
         dataset_id_ = root[0][3].text
 
         assert granule_md != None
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
-                      'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', format='iso')
+                      'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', _format='iso')
         assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md,
-                      short_name='ASCATA-L2-25km', format='iso')
+                      short_name='ASCATA-L2-25km', _format='iso')
 
-    # test case for the function load_dataset_variables
+    # test case for the function dataset_variables
     def test_dataset_variable(self):
-        dataset_id = 'PODAAC-ASOP2-25X01'
-
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.dataset_variables, dataset_id='PODAAC')
 
-    # test case for the function search_dataset()
+    # test case for the function dataset_search()
     def test_dataset_search(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         short_name = 'ASCATA-L2-25km'
@@ -112,18 +110,18 @@ class TestPodaac(unittest.TestCase):
         assert datasets != None
         assert test_service_name == service_name
         assert_raises(requests.exceptions.HTTPError,
-                      self.podaac.dataset_search, format='iso')
+                      self.podaac.dataset_search, _format='iso')
 
-    # test case for the function search_granule()
+    # test case for the function granule_search()
     def test_granule_search(self):
         test_dataset_id = 'PODAAC-ASOP2-25X01'
         start_time = '2013-01-01T01:30:00Z'
         end_time = '2014-01-01T00:00:00Z'
         bbox = '-45,-45,45,45'
         start_index = '1'
-        format = 'atom'
+        _format = 'atom'
         granules = self.podaac.granule_search(
-            dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, format=format)
+            dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, _format=_format)
         root = ET.fromstring(granules.encode('utf-8'))
         dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
             '{https://podaac.jpl.nasa.gov/opensearch/}datasetId').text.rsplit('.')[0]
@@ -131,9 +129,9 @@ class TestPodaac(unittest.TestCase):
         assert granules != None
         assert test_dataset_id == dataset_id
         assert_raises(requests.exceptions.HTTPError,
-                      self.podaac.granule_search, dataset_id='PODAAC', format='html')
+                      self.podaac.granule_search, dataset_id='PODAAC', _format='html')
         assert_raises(Exception,
-                      self.podaac.granule_search, format='html')
+                      self.podaac.granule_search, _format='html')
 
     # test case for the function granule_preview()
     def test_granule_preview(self):

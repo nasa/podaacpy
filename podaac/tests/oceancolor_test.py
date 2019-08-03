@@ -21,8 +21,8 @@ import unittest
 class TestOceanColor(unittest.TestCase):
 
     @classmethod
-    def setUp(self):
-        self.oceancolor = OceanColor()
+    def setUp(cls):
+        cls.oceancolor = OceanColor()
 
     # test case for the function file_search()
     def test_file_search(self):

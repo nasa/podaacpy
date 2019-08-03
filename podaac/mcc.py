@@ -18,7 +18,7 @@ import requests
 class MCC:
 
     def __init__(self):
-        self.URL = 'https://podaac-uat.jpl.nasa.gov/mcc/check'
+        self.URL = 'https://podaac-tools.jpl.nasa.gov/mcc/check'
 
     def check_remote_file(self, checkers, url_upload, response='json'):
         '''GET a remote file e.g. from an OPeNDAP URL and compliance \
@@ -88,7 +88,7 @@ class MCC:
 
             files = {'file-upload': open(file_upload, 'rb+')}
             data = {'CF': 'on', 'ACDD': 'on', 'ACDD-version': acdd_version,
-                    'GDS2': 'on', 'GDS2-parameters': gds2_parameters, 'response': 'json'}
+                    'GDS2': 'on', 'GDS2-parameters': gds2_parameters, 'response': response}
             result = requests.post(self.URL, files=files, data=data)
             if result.status_code == 404 or result.status_code == 400 or result.status_code == 503 or result.status_code == 408:
                 result.raise_for_status()
@@ -97,7 +97,8 @@ class MCC:
             print(error)
             raise
 
-        except Exception:
+        except Exception as e:
+            print(e)
             raise
 
         return result.text
