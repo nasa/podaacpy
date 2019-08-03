@@ -52,6 +52,7 @@ _zip_safe = False
 def _read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
+
 _header = '*' * len(_name) + '\n' + _name + '\n' + '*' * len(_name)
 _longDescription = '\n\n'.join([
     _header,
