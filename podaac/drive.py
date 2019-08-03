@@ -88,7 +88,7 @@ class Drive:
 
         for granule_url in granule_collection:
             directory_structure, granule = os.path.split(granule_url[46:])
-            print(directory_structure +  ":" + granule)
+            print(directory_structure + ":" + granule)
             granule_name = os.path.splitext(granule)[0]
             if path == '':
                 granule_path = os.path.join(os.path.dirname(__file__), directory_structure)
