@@ -17,6 +17,7 @@ import requests
 
 class MCC:
 
+    
     def __init__(self):
         self.URL = 'https://podaac-tools.jpl.nasa.gov/mcc/check'
 

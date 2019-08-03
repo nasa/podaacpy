@@ -88,12 +88,12 @@ class Drive:
 
         for granule_url in granule_collection:
             directory_structure, granule = os.path.split(granule_url[46:])
-            print(directory_structure +  ":" + granule)
+            print(directory_structure + ":" + granule)
             granule_name = os.path.splitext(granule)[0]
             if path == '':
                 granule_path = os.path.join(os.path.dirname(__file__), directory_structure)
             else:
-                granule_path = path + '/'  + directory_structure
+                granule_path = path + '/' + directory_structure
             r = requests.get(granule_url, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
             if r.status_code != 200:
                 raise PermissionError("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
