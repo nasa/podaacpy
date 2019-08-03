@@ -220,7 +220,7 @@ class PodaacUtils:
         search_str = '<title>'
         granule_list = \
             [str(i) for i in granule_search_response.strip().split() 
-                if search_str in i and 'PO.DAAC' not in i ]
+                if search_str in i and 'PO.DAAC' not in i]
         strp_granule_list = \
-            [i.replace('<title>','').replace('</title>','') for i in granule_list ]
+            [i.replace('<title>','').replace('</title>','') for i in granule_list]
         return strp_granule_list
