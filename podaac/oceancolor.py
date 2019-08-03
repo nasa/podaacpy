@@ -25,6 +25,7 @@ HEADERS = {
 
 class OceanColor:
 
+    
     def __init__(self):
         self.SEARCH_URL = 'https://oceandata.sci.gsfc.nasa.gov/api/file_search?'
         # self.GET_URL = 'https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/'
