@@ -240,7 +240,7 @@ class Podaac:
 
         except requests.exceptions.HTTPError as error:
             print("It's likely that variable search is not available for your dataset. " +
-                "Please see https://github.com/nasa/podaacpy/issues/128")
+                  "Please see https://github.com/nasa/podaacpy/issues/128")
             print(error)
             raise
         return dataset_variables
