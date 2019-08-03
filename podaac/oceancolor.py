@@ -29,8 +29,7 @@ class OceanColor:
         self.SEARCH_URL = 'https://oceandata.sci.gsfc.nasa.gov/api/file_search?'
         #self.GET_URL = 'https://oceandata.sci.gsfc.nasa.gov/cgi/getfile/'
 
-    def file_search(self, sensor='', sdate='', edate='', dtype='', add_url='1', results_as_file='1',
-                       search='', sub_id='', std_only='1', cksum='', output_format='json'):
+    def file_search(self, sensor='', sdate='', edate='', dtype='', add_url='1', results_as_file='1',search='', sub_id='', std_only='1', cksum='', output_format='json'):
         '''File search service retrieves publically available files within the \
                 NASA Ocean Data Processing System.
 
