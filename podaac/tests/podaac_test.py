@@ -193,7 +193,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_all_available_granule_search_dataset_ids()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function
@@ -202,7 +202,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_all_available_granule_search_dataset_short_names()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function
@@ -211,7 +211,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_available_granule_search_level2_dataset_ids()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function
@@ -220,7 +220,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_available_granule_search_level2_dataset_short_names()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function list_all_available_extract_granule_dataset_ids()
@@ -228,7 +228,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_all_available_extract_granule_dataset_ids()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function
@@ -237,7 +237,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_all_available_extract_granule_dataset_short_names()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function
@@ -246,7 +246,7 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_level4_dataset_ids()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
 
     # test case for the function
@@ -255,5 +255,5 @@ class TestPodaac(unittest.TestCase):
         data = self.podaac_utils.list_level4_dataset_short_names()
 
         assert data != None
-        assert type(data) is list
+        assert isinstance(data, list)
         assert len(data) != 0
