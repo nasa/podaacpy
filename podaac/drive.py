@@ -93,7 +93,7 @@ class Drive:
             if path == '':
                 granule_path = os.path.join(os.path.dirname(__file__), directory_structure)
             else:
-                granule_path = path + '/'  + directory_structure
+                granule_path = path + '/' + directory_structure
             r = requests.get(granule_url, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
             if r.status_code != 200:
                 raise PermissionError("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
