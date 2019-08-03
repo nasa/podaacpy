@@ -15,8 +15,8 @@ python:
   - "2.7"
   - "3.6"
   - "3.7"
-  - "3.7-dev"  # 3.7 development branch
-  - "3.8-dev"  # 3.8 development branch
+  #- "3.7-dev"  # 3.7 development branch
+  #- "3.8-dev"  # 3.8 development branch
 notifications:
   email: false
 cache:
