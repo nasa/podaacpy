@@ -18,7 +18,6 @@ import requests
 import json
 from nose.tools import assert_raises
 import unittest
-import magic
 
 class TestMCC(unittest.TestCase):
 
