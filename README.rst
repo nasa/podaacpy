@@ -8,6 +8,10 @@ podaacpy
 A python utility library for interacting with NASA JPL's
 `PO.DAAC <https://podaac.jpl.nasa.gov>`__
 
+
+Software DOI
+------------
+
 If you are using Podaacpy in your research, please consider citing the software |DOI|. This DOI represents all versions, and will always resolve to the latest one. If you wish to reference actual versions, then please find the appropriate DOI's over at Zenodo.
 
 
