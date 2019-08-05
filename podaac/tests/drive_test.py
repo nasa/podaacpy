@@ -22,8 +22,8 @@ class TestDrive(unittest.TestCase):
 
     def test_init_with_file(self):
         self.drive = Drive('podaac.ini', None, None)
-        self.assertEquals(self.drive.USERNAME, 'podaacdemo')
-        self.assertEquals(self.drive.PASSWORD, 'ZAnTpYoP9bgHnHb5UClG')
+        self.assertEquals(self.drive.USERNAME, 'podaacpy')
+        self.assertEquals(self.drive.PASSWORD, 'hZHYQ17yuag25zivK8F')
         self.assertEquals(self.drive.URL, 'https://podaac-tools.jpl.nasa.gov/drive/files')
 
     def test_init_with_username_password_url(self):
