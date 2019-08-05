@@ -74,3 +74,7 @@ doc.txt
 
 # Example files
 examples/*.nc
+
+# Test drive data
+podaac/tests/allData
+podaac/*.zip

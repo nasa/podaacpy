@@ -30,12 +30,11 @@ class Drive:
         '''
         config = configparser.ConfigParser()
         if file:
-            config.read_file(open(file, 'r'))
-        else:
-            config.read('podaac.ini')
-        self.USERNAME = config['drive']['urs_username']
-        self.PASSWORD = config['drive']['urs_password']
-        self.URL = config['drive']['webdav_url']
+            config_file_path = os.path.join(os.path.dirname(__file__), "tests", file)
+            config.read_file(open(config_file_path, 'r'))
+            self.USERNAME = config['drive']['urs_username']
+            self.PASSWORD = config['drive']['urs_password']
+            self.URL = config['drive']['webdav_url']
         if username:
             self.USERNAME = username
         if password:
@@ -88,7 +87,6 @@ class Drive:
 
         for granule_url in granule_collection:
             directory_structure, granule = os.path.split(granule_url[46:])
-            print(directory_structure + ":" + granule)
             granule_name = os.path.splitext(granule)[0]
             if path == '':
                 granule_path = os.path.join(os.path.dirname(__file__), directory_structure)
@@ -97,7 +95,11 @@ class Drive:
             r = requests.get(granule_url, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
             if r.status_code != 200:
                 raise PermissionError("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
-            os.makedirs(granule_path, exist_ok=True)
+            try:
+                from pathlib import Path
+            except ImportError:
+                from pathlib2 import Path  # python 2 backport
+            Path(granule_path).mkdir(parents=True, exist_ok=True)
             with open(granule_path + "/" + granule, 'wb') as f:
                 for chunk in r:
                     f.write(chunk)
