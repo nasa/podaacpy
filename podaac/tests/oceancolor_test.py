@@ -30,7 +30,6 @@ class TestOceanColor(unittest.TestCase):
                 dtype='L3b', add_url='1', results_as_file='1', search='*DAY_CHL*')
 
         assert data != None
-        print(data)
         assert isinstance(data, str)
         assert len(data) != 0
 

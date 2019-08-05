@@ -114,7 +114,7 @@ class OceanColor:
             print(error)
             raise
 
-        return response.text
+        return str(response.text)
 
     def get_file(self, url='', path=''):
         '''It is possible to mimic FTP bulk data downloads using the \
