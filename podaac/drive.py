@@ -95,7 +95,11 @@ class Drive:
             r = requests.get(granule_url, auth=HTTPBasicAuth(self.USERNAME, self.PASSWORD), stream=True)
             if r.status_code != 200:
                 raise PermissionError("Granule: '%s' not downloaded. Please check authentication configuration and try again." % (granule))
-            os.makedirs(granule_path)
+            try:
+                from pathlib import Path
+            except ImportError:
+                from pathlib2 import Path  # python 2 backport
+            Path(granule_path).mkdir(exist_ok=True)
             with open(granule_path + "/" + granule, 'wb') as f:
                 for chunk in r:
                     f.write(chunk)
