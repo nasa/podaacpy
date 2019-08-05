@@ -30,12 +30,11 @@ class Drive:
         '''
         config = configparser.ConfigParser()
         if file:
-            config.read_file(open(file, 'r'))
-        else:
-            config.read('podaac.ini')
-        self.USERNAME = config['drive']['urs_username']
-        self.PASSWORD = config['drive']['urs_password']
-        self.URL = config['drive']['webdav_url']
+            config_file_path = os.path.join(os.path.dirname(__file__), "tests", file)
+            config.read_file(open(config_file_path, 'r'))
+            self.USERNAME = config['drive']['urs_username']
+            self.PASSWORD = config['drive']['urs_password']
+            self.URL = config['drive']['webdav_url']
         if username:
             self.USERNAME = username
         if password:
@@ -88,7 +87,6 @@ class Drive:
 
         for granule_url in granule_collection:
             directory_structure, granule = os.path.split(granule_url[46:])
-            print(directory_structure + ":" + granule)
             granule_name = os.path.splitext(granule)[0]
             if path == '':
                 granule_path = os.path.join(os.path.dirname(__file__), directory_structure)
