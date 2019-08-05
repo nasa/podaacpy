@@ -99,7 +99,7 @@ class Drive:
                 from pathlib import Path
             except ImportError:
                 from pathlib2 import Path  # python 2 backport
-            Path(granule_path).mkdir(exist_ok=True)
+            Path(granule_path).mkdir(parents=True, exist_ok=True)
             with open(granule_path + "/" + granule, 'wb') as f:
                 for chunk in r:
                     f.write(chunk)
