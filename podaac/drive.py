@@ -98,7 +98,7 @@ class Drive:
             try:
                 os.makedirs(granule_path)
             except OSError as e:
-                if e.errno != errno.EEXIST:
+                if e.errno != e.errno.EEXIST:
                     raise
             with open(granule_path + "/" + granule, 'wb') as f:
                 for chunk in r:
