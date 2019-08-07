@@ -1,7 +1,7 @@
 podaacpy
 ========
 
-| |DOI| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Anaconda-Server Version| |Anaconda-Server Downloads|
+| |DOI| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Anaconda-Server Version| |Anaconda-Server Downloads| |DeepSource|
 
 |image7|
 
@@ -188,4 +188,6 @@ Copyright and Export Classification
 .. |Anaconda-Server Downloads| image:: https://anaconda.org/conda-forge/podaacpy/badges/downloads.svg
    :target: https://anaconda.org/conda-forge/podaacpy
 .. |image7| image:: https://podaac.jpl.nasa.gov/sites/default/files/image/custom_thumbs/podaac_logo.png
+.. |DeepSource| image:: https://static.deepsource.io/deepsource-badge-light.svg
+    :target: https://deepsource.io/gh/nasa/podaacpy/?ref=repository-badge
 
