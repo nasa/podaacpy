@@ -257,3 +257,20 @@ class TestPodaac(unittest.TestCase):
         assert data != None
         assert isinstance(data, list)
         assert len(data) != 0
+
+    # test case for the function
+    # list_level4_dataset_short_names()
+    def test_mine_opendap_urls_from_granule_search(self):
+        test_dataset_id = 'PODAAC-ASOP2-25X01'
+        start_time = '2013-01-01T01:30:00Z'
+        end_time = '2014-01-01T00:00:00Z'
+        bbox = '-45,-45,45,45'
+        start_index = '1'
+        _format = 'atom'
+        granules = self.podaac.granule_search(
+            dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, _format=_format)
+        data = self.podaac_utils.mine_opendap_urls_from_granule_search(granule_search_response=granules)
+
+        assert data != None
+        assert isinstance(data, list)
+        assert len(data) != 0

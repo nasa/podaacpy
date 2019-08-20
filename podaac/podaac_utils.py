@@ -225,3 +225,21 @@ class PodaacUtils:
         strp_granule_list = \
             [i.replace('<title>','').replace('</title>','') for i in granule_list]
         return strp_granule_list
+
+    def mine_opendap_urls_from_granule_search(self, granule_search_response=''):
+        ''' Convenience function which extracts the PO.DAAC OPeNDAP URLs from \
+           a given granule search obtained using podaac.granule_search(). \
+           The response of this function is an array of strings denoting the \
+           PO.DAAC OPeNDAP URLs to the granules.
+           :param granule_search_response: the output response of a podaac.granule_search()
+            :type path: :mod:`string`
+            :returns: prints an array of PO.DAAC OPeNDAP URLs.
+        '''
+        from bs4 import BeautifulSoup
+        soup = BeautifulSoup(granule_search_response, 'html.parser')
+        opendap_list = []
+        for opendap_link in soup.find_all('link'):
+            href = opendap_link.get('href')
+            if 'opendap.jpl.nasa.gov/opendap/' in href:
+                opendap_list.append(href)
+        return opendap_list
