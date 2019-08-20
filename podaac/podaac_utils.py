@@ -227,10 +227,10 @@ class PodaacUtils:
         return strp_granule_list
 
     @staticmethod
-    def mine_opendap_urls_from_granule_search(self, granule_search_response=''):
-        """ Convenience function which extracts the PO.DAAC OPeNDAP URLs from \
-                a given granule search obtained using podaac.granule_search(). \
-                The response of this function is an array of strings denoting the \
+    def mine_opendap_urls_from_granule_search(granule_search_response=''):
+        """ Convenience function which extracts the PO.DAAC OPeNDAP URLs from
+                a given granule search obtained using podaac.granule_search().
+                The response of this function is an array of strings denoting the
                 PO.DAAC OPeNDAP URLs to the granules.
 
         :param granule_search_response: the output response of a podaac.granule_search()
