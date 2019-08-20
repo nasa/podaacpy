@@ -24,7 +24,7 @@ class PodaacUtils:
 
     
     def __init__(self):
-    	'''Sets the base WebServices URL to https://podaac.jpl.nasa.gov/ws/'''
+        """Sets the base WebServices URL to https://podaac.jpl.nasa.gov/ws/"""
         self.URL = 'https://podaac.jpl.nasa.gov/ws/'
 
     def list_all_available_extract_granule_dataset_ids(self):

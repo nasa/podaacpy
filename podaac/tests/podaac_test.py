@@ -175,7 +175,7 @@ class TestPodaac(unittest.TestCase):
         self.podaac.granule_subset(input_file_path=path1, path=path2)
 
         if os.path.isfile(path2 +
-                      '/subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc') is True
+                      '/subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc') is True:
             os.remove(path2 +
                       '/subsetted-ascat_20160409_113000_metopa_49153_eps_o_250_2401_ovw.l2.nc')
 
