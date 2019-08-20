@@ -34,6 +34,7 @@ HEADERS = {
 class Podaac:
 
     def __init__(self):
+        """Sets the base WebServices URL to https://podaac.jpl.nasa.gov/ws/"""
         self.URL = 'https://podaac.jpl.nasa.gov/ws/'
 
     def dataset_metadata(self, dataset_id='', short_name='', _format='iso'):
@@ -79,7 +80,7 @@ class Podaac:
 
     def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='',
                        instrument='', satellite='', file_format='', status='', process_level='', sort_by='',
-                       bbox='', items_per_page='7', pretty='True', _format='atom', full='False'):
+                       bbox='', items_per_page='7', _format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
                 dataset_id, short_name, start_time, end_time, bbox, and others.
@@ -132,10 +133,6 @@ class Podaac:
                 Possible values: 1B, 2, 2P, 3, 4
         :type processLevel: :mod:`string`
 
-        :param pretty: "true" to enable pretty output for xml. \
-                If pretty is not specified, pretty is set to true.
-        :type pretty: :mod:`boolean`
-
         :param _format: response format. If format is not specified, \
                 format is set to atom. Possible values: atom, html.
         :type _format: :mod:`string`
@@ -163,8 +160,8 @@ class Podaac:
         '''
         try:
             url = self.URL + 'search/dataset/?'
-            url = url + 'itemsPerPage=' + items_per_page + '&pretty=' + \
-                pretty + '&format=' + _format + '&full=' + full
+            url = url + 'itemsPerPage=' + items_per_page + '&format=' + \
+                _format + '&full=' + full
 
             if keyword:
                 url = url + '&keyword=' + keyword
@@ -339,7 +336,7 @@ class Podaac:
         return granule_md.text
 
     def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc',
-                       items_per_page='7', _format='atom', pretty='True'):
+                       items_per_page='7', _format='atom'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -392,11 +389,6 @@ class Podaac:
                 format is set to atom. Possible values: atom, html.
         :type _format: :mod:`string`
 
-        :param pretty: "true" to enable pretty output for xml. \
-                If pretty is not specified, pretty is set to true. Possible \
-                values: true, false.
-        :type pretty: :mod:`boolean`
-
         :returns: an xml response based on the requested 'format'. Options \
                 are 'atom' and 'html'.
 
@@ -418,7 +410,7 @@ class Podaac:
                 url = url + '&startIndex=' + start_index
 
             url = url + '&sortBy=' + sort_by + \
-                '&itemsPerPage=' + items_per_page + '&format=' + _format + '&pretty=' + pretty
+                '&itemsPerPage=' + items_per_page + '&format=' + _format
             granules = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
             if granules.status_code in status_codes:
