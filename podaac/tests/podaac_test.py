@@ -40,8 +40,11 @@ class TestPodaac(unittest.TestCase):
 
         assert dataset_md is not None
         assert str(short_name['id']) == dataset_short_name
-        assert_raises(requests.exceptions.HTTPError, self.podaac.dataset_metadata,
-                      'PODAAC-CCF35-01AD5', 'CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK', 'is')
+        assert_raises(requests.exceptions.HTTPError, 
+            self.podaac.dataset_metadata,
+            'PODAAC-CCF35-01AD5', 
+            'CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK', 
+            'is')
         assert_raises(Exception, self.podaac.dataset_metadata,
                       short_name='CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK')
 
@@ -101,8 +104,20 @@ class TestPodaac(unittest.TestCase):
         process_level = '2'
         sort_by = 'timeAsc'
         bbox = '-45,-45,45,45'
-        datasets = self.podaac.dataset_search(dataset_id=dataset_id, short_name=short_name, start_time=start_time, end_time=end_time, start_index=start_index,
-                                              keyword=keyword, instrument=instrument, satellite=satellite, file_format=file_format, status=status, process_level=process_level, sort_by=sort_by, bbox=bbox)
+        datasets = self.podaac.dataset_search(
+            dataset_id=dataset_id, 
+            short_name=short_name, 
+            start_time=start_time, 
+            end_time=end_time, 
+            start_index=start_index,
+            keyword=keyword, 
+            instrument=instrument, 
+            satellite=satellite, 
+            file_format=file_format, 
+            status=status, 
+            process_level=process_level, 
+            sort_by=sort_by, 
+            bbox=bbox)
         root = ET.fromstring(datasets.encode('utf-8'))
         service_name = "PO.DAAC Dataset Search Service"
         test_service_name = root[3][0].text
@@ -121,7 +136,12 @@ class TestPodaac(unittest.TestCase):
         start_index = '1'
         _format = 'atom'
         granules = self.podaac.granule_search(
-            dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, _format=_format)
+            dataset_id=test_dataset_id, 
+            start_time=start_time, 
+            end_time=end_time, 
+            bbox=bbox, 
+            start_index=start_index, 
+            _format=_format)
         root = ET.fromstring(granules.encode('utf-8'))
         dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
             '{https://podaac.jpl.nasa.gov/opensearch/}datasetId').text.rsplit('.')[0]
@@ -268,8 +288,14 @@ class TestPodaac(unittest.TestCase):
         start_index = '1'
         _format = 'atom'
         granules = self.podaac.granule_search(
-            dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, _format=_format)
-        data = self.podaac_utils.mine_opendap_urls_from_granule_search(granule_search_response=granules)
+            dataset_id=test_dataset_id, 
+            start_time=start_time, 
+            end_time=end_time, 
+            bbox=bbox, 
+            start_index=start_index, 
+            _format=_format)
+        data = self.podaac_utils.mine_opendap_urls_from_granule_search(
+            granule_search_response=granules)
 
         assert data is not None
         assert isinstance(data, list)

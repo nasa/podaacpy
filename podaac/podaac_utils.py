@@ -235,7 +235,6 @@ class PodaacUtils:
             :type path: :mod:`string`
             :returns: prints an array of PO.DAAC OPeNDAP URLs.
         '''
-        from bs4 import BeautifulSoup
         soup = BeautifulSoup(granule_search_response, 'html.parser')
         opendap_list = []
         for opendap_link in soup.find_all('link'):
