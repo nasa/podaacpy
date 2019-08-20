@@ -41,10 +41,10 @@ class TestPodaac(unittest.TestCase):
         assert dataset_md is not None
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError,
-            self.podaac.dataset_metadata,
-            'PODAAC-CCF35-01AD5', 
-            'CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK',
-            'is')
+                      self.podaac.dataset_metadata,
+                      'PODAAC-CCF35-01AD5',
+                      'CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK',
+                      'is')
         assert_raises(Exception, self.podaac.dataset_metadata,
                       short_name='CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK')
 
@@ -79,7 +79,8 @@ class TestPodaac(unittest.TestCase):
 
         assert granule_md is not None
         assert dataset_id_ == dataset_id
-        assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
+        assert_raises(requests.exceptions.HTTPError,
+                      self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', _format='iso')
         assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md,
                       short_name='ASCATA-L2-25km', _format='iso')
@@ -105,19 +106,12 @@ class TestPodaac(unittest.TestCase):
         sort_by = 'timeAsc'
         bbox = '-45,-45,45,45'
         datasets = self.podaac.dataset_search(
-            dataset_id=dataset_id,
-            short_name=short_name,
-            start_time=start_time,
-            end_time=end_time,
-            start_index=start_index,
-            keyword=keyword,
-            instrument=instrument,
-            satellite=satellite,
-            file_format=file_format,
-            status=status,
-            process_level=process_level,
-            sort_by=sort_by,
-            bbox=bbox)
+                      dataset_id=dataset_id, short_name=short_name,
+                      start_time=start_time, end_time=end_time,
+                      start_index=start_index, keyword=keyword,
+                      instrument=instrument, satellite=satellite,
+                      file_format=file_format, status=status,
+                      process_level=process_level, sort_by=sort_by, bbox=bbox)
         root = ET.fromstring(datasets.encode('utf-8'))
         service_name = "PO.DAAC Dataset Search Service"
         test_service_name = root[3][0].text
@@ -136,12 +130,12 @@ class TestPodaac(unittest.TestCase):
         start_index = '1'
         _format = 'atom'
         granules = self.podaac.granule_search(
-            dataset_id=test_dataset_id,
-            start_time=start_time,
-            end_time=end_time,
-            bbox=bbox,
-            start_index=start_index,
-            _format=_format)
+                      dataset_id=test_dataset_id,
+                      start_time=start_time,
+                      end_time=end_time,
+                      bbox=bbox,
+                      start_index=start_index,
+                      _format=_format)
         root = ET.fromstring(granules.encode('utf-8'))
         dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
             '{https://podaac.jpl.nasa.gov/opensearch/}datasetId').text.rsplit('.')[0]
@@ -159,7 +153,9 @@ class TestPodaac(unittest.TestCase):
         image_variable = 'wind_speed'
         path = os.path.dirname(os.path.abspath(__file__))
         image_data = self.podaac.granule_preview(
-            dataset_id=dataset_id, image_variable=image_variable, path=path)
+                      dataset_id=dataset_id,
+                      image_variable=image_variable,
+                      path=path)
 
         assert image_data is not None
 
@@ -288,14 +284,14 @@ class TestPodaac(unittest.TestCase):
         start_index = '1'
         _format = 'atom'
         granules = self.podaac.granule_search(
-            dataset_id=test_dataset_id,
-            start_time=start_time,
-            end_time=end_time,
-            bbox=bbox,
-            start_index=start_index,
-            _format=_format)
+                      dataset_id=test_dataset_id,
+                      start_time=start_time,
+                      end_time=end_time,
+                      bbox=bbox,
+                      start_index=start_index,
+                      _format=_format)
         data = self.podaac_utils.mine_opendap_urls_from_granule_search(
-            granule_search_response=granules)
+                      granule_search_response=granules)
 
         assert data is not None
         assert isinstance(data, list)
