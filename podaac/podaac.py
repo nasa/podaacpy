@@ -34,6 +34,7 @@ HEADERS = {
 class Podaac:
 
     def __init__(self):
+        '''Sets the base WebServices URL to https://podaac.jpl.nasa.gov/ws/'''
         self.URL = 'https://podaac.jpl.nasa.gov/ws/'
 
     def dataset_metadata(self, dataset_id='', short_name='', _format='iso'):
