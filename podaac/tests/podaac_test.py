@@ -38,7 +38,7 @@ class TestPodaac(unittest.TestCase):
         root = ET.fromstring(dataset_md.encode('utf-8'))
         short_name = root[1][0].attrib
 
-        assert dataset_md != None
+        assert dataset_md is not None
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError, self.podaac.dataset_metadata,
                       'PODAAC-CCF35-01AD5', 'CCMP_MEASURES_ATLAS_L4_OW_L3_5A_5DAY_WIND_VECTORS_FLK', 'is')
@@ -56,7 +56,7 @@ class TestPodaac(unittest.TestCase):
         root = ET.fromstring(granule_md.encode('utf-8'))
         short_name = root[1][0].attrib
 
-        assert granule_md != None
+        assert granule_md is not None
         assert str(short_name['id']) == dataset_short_name
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.granule_metadata, dataset_id='PODAAC', _format='is')
@@ -74,7 +74,7 @@ class TestPodaac(unittest.TestCase):
         root = ET.fromstring(granule_md.encode('utf-8'))
         dataset_id_ = root[0][3].text
 
-        assert granule_md != None
+        assert granule_md is not None
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError, self.podaac.load_last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', _format='iso')
@@ -107,7 +107,7 @@ class TestPodaac(unittest.TestCase):
         service_name = "PO.DAAC Dataset Search Service"
         test_service_name = root[3][0].text
 
-        assert datasets != None
+        assert datasets is not None
         assert test_service_name == service_name
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.dataset_search, _format='iso')
@@ -126,7 +126,7 @@ class TestPodaac(unittest.TestCase):
         dataset_id = root.find('{http://www.w3.org/2005/Atom}entry').find(
             '{https://podaac.jpl.nasa.gov/opensearch/}datasetId').text.rsplit('.')[0]
 
-        assert granules != None
+        assert granules is not None
         assert test_dataset_id == dataset_id
         assert_raises(requests.exceptions.HTTPError,
                       self.podaac.granule_search, dataset_id='PODAAC', _format='html')
@@ -141,7 +141,7 @@ class TestPodaac(unittest.TestCase):
         image_data = self.podaac.granule_preview(
             dataset_id=dataset_id, image_variable=image_variable, path=path)
 
-        assert image_data != None
+        assert image_data is not None
 
         path = os.path.join(os.path.dirname(__file__),
                             dataset_id + '.png')
@@ -181,7 +181,7 @@ class TestPodaac(unittest.TestCase):
         granule_name = self.podaac.extract_l4_granule(
             dataset_id, path)
 
-        assert granule_name != None
+        assert granule_name is not None
         assert_raises(Exception, self.podaac.extract_l4_granule,
                       dataset_id='ABCDEF')
 
@@ -192,7 +192,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_available_granule_search_dataset_ids(self):
         data = self.podaac_utils.list_all_available_granule_search_dataset_ids()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -201,7 +201,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_available_granule_search_dataset_short_names(self):
         data = self.podaac_utils.list_all_available_granule_search_dataset_short_names()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -210,7 +210,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_available_granule_search_level2_dataset_ids(self):
         data = self.podaac_utils.list_available_granule_search_level2_dataset_ids()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -219,7 +219,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_available_granule_search_level2_dataset_short_names(self):
         data = self.podaac_utils.list_available_granule_search_level2_dataset_short_names()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -227,7 +227,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_available_extract_granule_dataset_ids(self):
         data = self.podaac_utils.list_all_available_extract_granule_dataset_ids()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -236,7 +236,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_available_extract_granule_dataset_short_names(self):
         data = self.podaac_utils.list_all_available_extract_granule_dataset_short_names()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -245,7 +245,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_level4_dataset_ids(self):
         data = self.podaac_utils.list_level4_dataset_ids()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -254,7 +254,7 @@ class TestPodaac(unittest.TestCase):
     def test_list_level4_dataset_short_names(self):
         data = self.podaac_utils.list_level4_dataset_short_names()
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
 
@@ -271,6 +271,6 @@ class TestPodaac(unittest.TestCase):
             dataset_id=test_dataset_id, start_time=start_time, end_time=end_time, bbox=bbox, start_index=start_index, _format=_format)
         data = self.podaac_utils.mine_opendap_urls_from_granule_search(granule_search_response=granules)
 
-        assert data != None
+        assert data is not None
         assert isinstance(data, list)
         assert len(data) != 0
