@@ -21,7 +21,6 @@ except:
     import podaac as p
 
 class PodaacUtils:
-
     
     def __init__(self):
         """Sets the base WebServices URL to https://podaac.jpl.nasa.gov/ws/"""
@@ -227,8 +226,9 @@ class PodaacUtils:
             [i.replace('<title>','').replace('</title>','') for i in granule_list]
         return strp_granule_list
 
+    @staticmethod
     def mine_opendap_urls_from_granule_search(self, granule_search_response=''):
-        ''' Convenience function which extracts the PO.DAAC OPeNDAP URLs from \
+        """ Convenience function which extracts the PO.DAAC OPeNDAP URLs from \
                 a given granule search obtained using podaac.granule_search(). \
                 The response of this function is an array of strings denoting the \
                 PO.DAAC OPeNDAP URLs to the granules.
@@ -237,7 +237,7 @@ class PodaacUtils:
         :type path: :mod:`string`
 
         :returns: prints an array of PO.DAAC OPeNDAP URLs.
-        '''
+        """
         soup = BeautifulSoup(granule_search_response, 'html.parser')
         opendap_list = []
         for opendap_link in soup.find_all('link'):
