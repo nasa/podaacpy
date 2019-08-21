@@ -33,8 +33,9 @@ _classifiers = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 _description = 'PO.DAAC Python API'
+_dependency_links=['http://github.com/lewismc/nexuscli/tarball/master#egg=nexuscli-1.0']
 _download_url = 'http://pypi.python.org/pypi/podaacpy/'
-_requirements = ["beautifulsoup4", "configparser", "defusedxml", "future", "pathlib2", "requests"]
+_requirements = ["beautifulsoup4", "configparser", "defusedxml", "future", "nexuscli @ git+ssh://git@github.com/lewismc/nexuscli@v1.0#egg=nexuscli", "pathlib2", "requests"]
 _keywords = ['dataset', 'granule', 'compliance', 'nasa', 'jpl', 'podaac']
 _license = 'Apache License, Version 2.0'
 _long_description = 'A python utility library for interacting with NASA JPLs PO.DAAC'
@@ -65,6 +66,7 @@ setup(
     author=_author,
     author_email=_author_email,
     classifiers=_classifiers,
+    dependency_links=['http://github.com/lewismc/nexuscli/tarball/master#egg=nexuscli'],
     description=_description,
     download_url=_download_url,
     include_package_data=True,
