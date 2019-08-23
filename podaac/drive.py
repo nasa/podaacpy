@@ -30,7 +30,6 @@ class Drive:
         '''
         config = configparser.ConfigParser()
         if file:
-            print(os.path.dirname(__file__))
             config_file_path = os.path.join(os.path.dirname(__file__), file)
             config.read_file(open(config_file_path, 'r'))
             self.USERNAME = config['drive']['urs_username']
