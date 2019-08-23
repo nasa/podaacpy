@@ -80,7 +80,7 @@ class Podaac:
 
     def dataset_search(self, keyword='', start_time='', end_time='', start_index='', dataset_id='', short_name='',
                        instrument='', satellite='', file_format='', status='', process_level='', sort_by='',
-                       bbox='', items_per_page='7', _format='atom', full='False'):
+                       bbox='', items_per_page='50', _format='atom', full='False'):
         '''Dataset Search service searches PO.DAAC's dataset catalog, over \
                 Level 2, Level 3, and Level 4 datasets, using the following parameters: \
                 dataset_id, short_name, start_time, end_time, bbox, and others.
@@ -104,7 +104,7 @@ class Podaac:
 
         :param items_per_page: number of results per page for \
                 opensearch result. If format is not specified, format is set \
-                to 7. The value range is from 0 to 400
+                to 50. The value range is from 0 to 400
         :type items_per_page: :mod:`int`
 
         :param dataset_id: dataset persistent ID. \
@@ -288,7 +288,8 @@ class Podaac:
 
         return granule_md.text
 
-    def load_last24hours_datacasting_granule_md(self, dataset_id='', short_name='', _format='datacasting', items_per_page=7):
+    def last24hours_datacasting_granule_md(self, dataset_id='',
+                                           short_name='', _format='datacasting', items_per_page=50):
         '''Granule metadata service retrieves metadata for a list \
                 of granules archived within the last 24 hours in Datacasting \
                 format.
@@ -304,7 +305,7 @@ class Podaac:
         :param _format: metadata format. Must set to 'datacasting'.
         :type _format: :mod:`string`
 
-        :param items_per_page: number of results per page. Default value is 7. \
+        :param items_per_page: number of results per page. Default value is 50. \
                 The value range is from 0 to 5000.
         :type items_per_page: :mod:`int`
 
@@ -336,7 +337,7 @@ class Podaac:
         return granule_md.text
 
     def granule_search(self, dataset_id='', start_time='', end_time='', bbox='', start_index='', sort_by='timeAsc',
-                       items_per_page='7', _format='atom'):
+                       items_per_page='50', _format='atom'):
         '''Search Granule does granule searching on PO.DAAC level 2 swath \
                 datasets (individual orbits of a satellite), and level 3 & 4 \
                 gridded datasets (time averaged to span the globe). Coverage \
@@ -377,7 +378,7 @@ class Podaac:
         :type start_index: :mod:`int`
 
         :param items_per_page: number of results per page for opensearch \
-                result. If format is not specified, format is set to 7. The \
+                result. If format is not specified, format is set to 50. The \
                 value range is from 0 to 400
         :type items_per_page: :mod:`int`
 

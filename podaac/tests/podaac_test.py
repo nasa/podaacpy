@@ -66,13 +66,13 @@ class TestPodaac(unittest.TestCase):
         assert_raises(Exception,
                       self.podaac.granule_metadata, _format='is')
 
-    # test case for the function load_last24hours_datacasting_granule_md()
-    def test_load_last24hours_datacasting_granule_md(self):
+    # test case for the function last24hours_datacasting_granule_md()
+    def test_last24hours_datacasting_granule_md(self):
         dataset_id = 'PODAAC-ASOP2-25X01'
         dataset_short_name = 'ASCATA-L2-25km'
         _format = 'datacasting'
         items_per_page = 10
-        granule_md = self.podaac.load_last24hours_datacasting_granule_md(
+        granule_md = self.podaac.last24hours_datacasting_granule_md(
             dataset_id, dataset_short_name, _format, items_per_page)
         root = ET.fromstring(granule_md.encode('utf-8'))
         dataset_id_ = root[0][3].text
@@ -80,9 +80,9 @@ class TestPodaac(unittest.TestCase):
         assert granule_md is not None
         assert dataset_id_ == dataset_id
         assert_raises(requests.exceptions.HTTPError,
-                      self.podaac.load_last24hours_datacasting_granule_md,
+                      self.podaac.last24hours_datacasting_granule_md,
                       'PODAAC-ASOP2-25X01', 'ASCATA-L2-25km', _format='iso')
-        assert_raises(Exception, self.podaac.load_last24hours_datacasting_granule_md,
+        assert_raises(Exception, self.podaac.last24hours_datacasting_granule_md,
                       short_name='ASCATA-L2-25km', _format='iso')
 
     # test case for the function dataset_variables
