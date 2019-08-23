@@ -25,7 +25,8 @@ class L2SS:
     def __init__(self):
         self.URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
 
-    def dataset_search(self, dataset_id='', variable=None, sensor=None, provider=None, start_time='', end_time='', start_index='', items_per_page='50'):
+    def dataset_search(self, dataset_id='', variable=None, sensor=None, provider=None,
+                       start_time='', end_time='', start_index='', items_per_page='50'):
         ''' Dataset search service lists available datasets and returns them.
 
             :param dataset_id: Search dataset belong to given PODAAC Dataset persistent ID.
@@ -123,7 +124,8 @@ class L2SS:
 
         return variables.text
 
-    def granule_search(self, dataset_id='', bbox='', start_time='', end_time='', name='', sort='', start_index='', items_per_page='50'):
+    def granule_search(self, dataset_id='', bbox='', start_time='', end_time='',
+                       name='', sort='', start_index='', items_per_page='50'):
         ''' Granule Search retrieves all base granule information (datasetId, start time, end time) \
             matching the specified datasetId, date, and region. This approach may change if \
             the data/querying turns out to be too expensive. Response is structured in a minimalistic\
