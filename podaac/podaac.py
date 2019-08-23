@@ -27,7 +27,7 @@ import zipfile
 URL = 'https://podaac.jpl.nasa.gov/ws/'
 IMAGE_URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/preview/'
 HEADERS = {
-    'User-Agent': 'Podaacpy Python Library v2.3.0'
+    'User-Agent': 'Podaacpy Python Library v2.4.0'
 }
 
 
