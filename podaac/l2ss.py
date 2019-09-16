@@ -25,7 +25,8 @@ class L2SS:
     def __init__(self):
         self.URL = 'https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/'
 
-    def dataset_search(self, dataset_id='', variable=None, sensor=None, provider=None, start_time='', end_time='', start_index='', items_per_page=''):
+    def dataset_search(self, dataset_id='', variable=None, sensor=None, provider=None,
+                       start_time='', end_time='', start_index='', items_per_page='50'):
         ''' Dataset search service lists available datasets and returns them.
 
             :param dataset_id: Search dataset belong to given PODAAC Dataset persistent ID.
@@ -51,7 +52,7 @@ class L2SS:
                 the dataset will be used. Example: 2019-12-31T23:59:59-06:00Z
             :type end_time: :mod:`string`
 
-            :param items_per_page: number of results to return.
+            :param items_per_page: number of results to return. Defaults to 50.
             :type items_per_page: :mod:`string`
 
             :param start_index: start index of result.
@@ -123,7 +124,8 @@ class L2SS:
 
         return variables.text
 
-    def granule_search(self, dataset_id='', bbox='', start_time='', end_time='', name='', sort='', start_index='', items_per_page=''):
+    def granule_search(self, dataset_id='', bbox='', start_time='', end_time='',
+                       name='', sort='', start_index='', items_per_page='50'):
         ''' Granule Search retrieves all base granule information (datasetId, start time, end time) \
             matching the specified datasetId, date, and region. This approach may change if \
             the data/querying turns out to be too expensive. Response is structured in a minimalistic\
@@ -152,7 +154,7 @@ class L2SS:
                 Example: sort='Granule-Name asc'
             :type sort: :mod:`string`
 
-            :param items_per_page: number of results to return.
+            :param items_per_page: number of results to return. Default to 50.
             :type items_per_page: :mod:`string`
 
             :param start_index: start index of result.

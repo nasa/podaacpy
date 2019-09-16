@@ -86,7 +86,7 @@ For more information on this function, see :doc:`webservices`
 
 Additionally, we can search metadata for list of granules archived within the last 24 hours in `Datacasting <http://datacasting.jpl.nasa.gov/xml_specification/>`_ format. ::
 
-  result = p.load_last24hours_datacasting_granule_md(dataset_id='PODAAC-GHMG2-2PO01')
+  result = p.last24hours_datacasting_granule_md(dataset_id='PODAAC-GHMG2-2PO01')
 
 The variable **result** now contains an XML response containing a list of data granules which can be processed appropriately.
 For more information on this function, see :doc:`webservices`
