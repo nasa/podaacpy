@@ -12,31 +12,12 @@
    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    # See the License for the specific language governing permissions and
    # limitations under the License.
+   
+Apache SDAP NEXUS
+*****************
 
-Welcome to podaacpy's documentation!
-=========================================
+.. autoclass:: nexus.NEXUS
+    :members:
 
-Contents:
-
-.. toctree::
-   :maxdepth: 4
-
-   introduction
-   quickstart
-   utilities
-   webservices
-   mcc
-   l2ss
-   oceancolor
-   drive
-   nexus
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+.. autoclass:: nexus.NEXUSOW
+    :members:
