@@ -89,7 +89,7 @@ From the cheeseshop
 
 ::
 
-    pip install podaacpy
+    pip3 install podaacpy
     
 or from conda
 
@@ -102,7 +102,7 @@ or from source
 ::
 
     git clone https://github.com/nasa/podaacpy.git && cd podaacpy
-    python setup.py install
+    python3 setup.py install
 
 Quickstart
 ----------
