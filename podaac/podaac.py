@@ -61,11 +61,8 @@ class Podaac:
             url = self.URL + 'metadata/dataset/?'
             if dataset_id:
                 url = url + 'datasetId=' + dataset_id
-            else:
-                raise Exception("Dataset Id is required")
             if short_name:
                 url = url + '&shortName=' + short_name
-
             url = url + '&format=' + _format
             metadata = requests.get(url, headers=HEADERS)
             status_codes = [404, 400, 503, 408]
