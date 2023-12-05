@@ -1,6 +1,9 @@
 podaacpy
 ========
 
+podaacpy has been retired please use https://github.com/podaac/data-subscriber 
+------------------------------------------------------------------------------
+
 |DOI| |license| |PyPI| |documentation| |Travis| |Coveralls| |Requirements Status| |Anaconda-Server Version| |Anaconda-Server Downloads| 
 
 |DeepSource|
